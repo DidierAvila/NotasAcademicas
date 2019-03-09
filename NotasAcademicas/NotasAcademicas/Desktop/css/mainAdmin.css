@@ -1,0 +1,64 @@
+﻿#panelLeft {
+    overflow-y:auto;
+    top:60px;
+}
+
+#panelRigth {
+    overflow-y:auto;
+    top:60px;
+}
+
+.mnuAdmin {
+
+}
+
+.panel-heading {
+    background-color:red;
+}
+
+.btnPermisosCampo {
+    cursor:pointer;
+    padding:2px;
+}
+
+.btnBorrar {
+
+}
+
+.btnAdicionarPermisosCampo {
+
+}
+
+.btnActualizarPermisosCampo {
+
+}
+
+.PC_BOTONES {
+}
+
+.PC_NOMBREARCHIVADOR {
+}
+
+.PC_NOMBREUSUARIO {
+}
+
+.PC_CAMPO {
+}
+
+.PC_VALOR {
+}
+
+.PC_CONDICION {
+}
+
+.PC_ID {
+}
+
+.PC_TIPOOBJETO {
+}
+
+.PC_TIPOPERMISO {
+}
+
+.PC_GRUPO {
+}

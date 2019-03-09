@@ -1,0 +1,218 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Configuration;
+using System.Web.Configuration;
+using Newtonsoft.Json;
+using System.Data;
+
+namespace NotasAcademicas.Controllers
+{
+    /// <summary>
+    /// Descripción breve de Controlador
+    /// </summary>
+    public class Controlador : IHttpHandler
+    {
+
+        public void ProcessRequest(HttpContext context)
+        {
+            string result = string.Empty;
+            string tipoContenido = "text/json";
+            context.Response.ContentType = tipoContenido;
+
+            try
+            {
+                string error = string.Empty;
+                int op = int.Parse(context.Request["op"].ToString());
+                Configuration cfg = WebConfigurationManager.OpenWebConfiguration(context.Request.ApplicationPath);
+                string servidorAdmin = ConfigurationManager.AppSettings["servidorAdmin"].ToString();
+                string driverAdmin = ConfigurationManager.AppSettings["driverAdmin"].ToString();
+                string nombreDBConsulta = ConfigurationManager.AppSettings["nombreDBConsulta"].ToString();
+
+                switch (op)
+                {
+                    case 200:
+                        {
+                            #region Autenticar admin
+
+                            string usuarioBd = context.Request.QueryString["usuario"];
+                            string contrasenaAdminEnc = context.Request.QueryString["contrasena"];
+
+                            //negocio.configurarDB(usuarioBd, contrasenaAdminEnc, nombreDBConsulta, driverAdmin, servidorAdmin, ref error);
+
+                            bool res = true; //negocio.AutenticarAdmin(usuarioBd, contrasenaAdminEnc, nombreDBConsulta, driverAdmin, servidorAdmin, ref error);
+                            if (error.Length > 0)
+                            {
+                                throw new Exception(error);
+                            }
+
+                            cfg.AppSettings.Settings["usuarioBd"].Value = "Alejo"; //cfg.AppSettings.Settings["usuarioBd"].Value != usuarioBd ? usuarioBd : cfg.AppSettings.Settings["usuarioBd"].Value;
+                            cfg.AppSettings.Settings["contrasena"].Value = "123"; //cfg.AppSettings.Settings["contrasena"].Value != contrasenaAdminEnc ? NegocioCI.Encriptar(contrasenaAdminEnc, ref error) : cfg.AppSettings.Settings["contrasena"].Value;
+                            cfg.Save();
+
+                            tipoContenido = "text/json";
+                            result = JsonConvert.SerializeObject(res);
+
+                            #endregion Autenticar admin
+                        }
+                        break;
+                    case 300:
+                        {
+                        }
+                        break;
+                    case 400:
+                        {
+                            
+                        }
+                        break;
+                    case 500:
+                       
+                        break;
+                    case 600:
+                        {
+                           
+                        }
+                        break;
+                    case 700:
+                        {
+                          
+                        }
+                        break;
+                    case 800:
+                        {
+                            #region Connection to DB
+
+                            string action = context.Request["action"];
+                            string NameServerDB = string.Empty;
+                            string PortServerDB = string.Empty;
+                            string NameDataBase = string.Empty;
+                            string UserDataBase = string.Empty;
+                            string PasswordDataBase = string.Empty;
+                            string DatabaseEngine = string.Empty;
+                            string value = string.Empty;
+
+                            if (action.Equals("Consult"))
+                            {
+                                NameServerDB = cfg.AppSettings.Settings["servidorAdmin"].Value;
+                                PortServerDB = cfg.AppSettings.Settings["puertoServidor"].Value;
+                                NameDataBase = cfg.AppSettings.Settings["nombreDBConsulta"].Value;
+                                UserDataBase = cfg.AppSettings.Settings["usuarioBd"].Value;
+                                PasswordDataBase = "123";//NegocioCI.Desencriptar(cfg.AppSettings.Settings["contrasena"].Value, ref error);
+                                DatabaseEngine = cfg.AppSettings.Settings["driverAdmin"].Value;
+
+                                tipoContenido = "text/json";
+                                value = "<div class=\"panel panel-default\" id=\"panelDataBase\">"
+                                          + "<div class=\"panel-body\">"
+                                             + "<form id=\"formDataBase\">"
+                                               + "<h3 style=\"text-align: center; margin-top: 0px\"><strong>Conexión a BD</strong></h3>"
+                                               + "<br/>"
+                                               + "<div class=\"row\">"
+                                                   + "<div class=\"col-md-6\">"
+                                                    + "<b style=\"font-size: 17px;\">Servidor base de datos</b>"
+                                                    + "<input id=\"DataBaseServer\" type=\"text\" value= '" + NameServerDB + "' class=\"form-control\" placeholder=\"Servidor base de datos\" />"
+                                                  + "</div>"
+                                                  + "<div class=\"col-md-6\">"
+                                                    + "<b style=\"font-size: 17px;\">Puerto base de datos</b>"
+                                                    + "<input id=\"PortDataBase\" type=\"text\" value= '" + PortServerDB + "' class=\"form-control\" placeholder=\"Puerto servidor de la base de datos\" />"
+                                                  + "</div>"
+                                               + "</div>"
+                                               + "<br/>"
+                                               + "<div class=\"row\">"
+                                                  + "<div class=\"col-md-6\">"
+                                                    + "<b style=\"font-size: 17px;\">Nombre base de datos</b>"
+                                                    + "<input id=\"DataBaseName\" type=\"text\" value= '" + NameDataBase + "' class=\"form-control\" placeholder=\"Nombre de la base de datos\" />"
+                                                  + "</div>"
+                                                  + "<div class=\"col-md-6\">"
+                                                    + "<b style=\"font-size: 17px;\">Usuario base de datos</b>"
+                                                    + "<input id=\"UserBaseDatosData\" type=\"text\" value= '" + UserDataBase + "' class=\"form-control\" placeholder=\"Usuario de la base de datos\" />"
+                                                  + "</div>"
+                                               + "</div>"
+                                               + "<br/>"
+                                               + "<div class=\"row\">"
+                                                   + "<div class=\"col-md-6\">"
+                                                       + "<b style=\"font-size: 17px;\">Contraseña usuario base de datos</b>"
+                                                       + "<input id=\"PasswordUserDataBase\" type=\"password\" value= '" + PasswordDataBase + "' class=\"form-control\" placeholder=\"Contraseña de la base de datos\" />"
+                                                   + "</div>"
+                                                   + "<div class=\"col-md-6\">"
+                                                       + "<b style=\"font-size: 17px;\">Motor base de datos</b>"
+                                                       + "<select id=\"MotorDb\" class=\"form-control\">"
+                                                           + "<option>MSSQL</option>"
+                                                           + "<option>MYSQL</option>"
+                                                           + "<option>ORACLE</option>"
+                                                       + "</select>"
+                                                   + "</div>"
+                                               + "</div>"
+                                               + "<br/>"
+                                               + "<div class=\"form-group-lg\">"
+                                                  + "<a href=\"#\" id=\"btnGuardarConfDB\" class=\"btn btn-info btn-lg colorFondo\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> Guardar</a>"
+                                               + "</div>"
+                                             + "</form>"
+                                          + "</div>"
+                                      + "</div>";
+
+                                result = JsonConvert.SerializeObject(value);
+                            }
+                            else
+                            {
+                                NameServerDB = context.Request["NameServer"];
+                                PortServerDB = context.Request["PortServer"];
+                                NameDataBase = context.Request["NameDataBase"];
+                                UserDataBase = context.Request["UserDataBase"];
+                                PasswordDataBase = context.Request["PasswordUserDB"];
+                                PasswordDataBase = context.Request["DatabaseEngine"];
+
+                                cfg.AppSettings.Settings["servidorAdmin"].Value = NameServerDB;
+                                cfg.AppSettings.Settings["puertoServidor"].Value = PortServerDB;
+                                cfg.AppSettings.Settings["nombreDBConsulta"].Value = NameDataBase;
+                                cfg.AppSettings.Settings["usuarioBd"].Value = UserDataBase;
+                                cfg.AppSettings.Settings["contrasena"].Value = "123";//NegocioCI.Encriptar(PasswordDataBase, ref error);
+                                cfg.AppSettings.Settings["driverAdmin"].Value = DatabaseEngine;
+
+                                cfg.Save();
+                                value = "Ok";
+                                result = JsonConvert.SerializeObject(value);
+                            }
+
+                            #endregion
+                        }
+                        break;
+                    case 900:
+                        {
+                           
+                        }
+                        break;
+                    case 910:
+                        {
+                            
+                        }
+                        break;
+                    case 920:
+                        {
+                            #region
+
+                            #endregion
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                tipoContenido = "text";
+                result = "ERROR: " + ex.Message;
+            }
+
+            context.Response.ContentType = tipoContenido;
+            context.Response.Write(result);
+        }
+
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }
+    }
+}
