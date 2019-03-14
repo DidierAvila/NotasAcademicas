@@ -1,0 +1,1141 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Notas académicas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="../font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/jquery-ui-autocomplete.css" rel="stylesheet" />
+    <link href="../DataTables-1.10.2/media/css/jquery.dataTables.css" rel="stylesheet" />
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="css/jquery.contextMenu.css" rel="stylesheet" />
+
+    <link href="css/general.css" rel="stylesheet" />
+    <link href="css/general.min.css" rel="stylesheet" />
+    <link href="css/mainUser.css" rel="stylesheet" />
+    <link href="css/mainAdmin.css" rel="stylesheet" />
+    <link href="css/mainMenu.css" rel="stylesheet" />
+    <link rel="icon" href="../imagenes/FabiconNtAc.ico" />
+    <link href="css/fullcalendar.min.css" rel="stylesheet" />
+    <link href="css/fullcalendar.print.min.css" rel="stylesheet" />
+
+    <script src="../jquery/jquery-2.0.2.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
+    <script src="../jquery/jquery.storageapi.min.js"></script>
+    <script src="../jquery/jquery.ui-contextmenu.min.js"></script>
+    <script src="../DataTables-1.10.2/media/js/jquery.dataTables.min.js"></script>
+    <script src="scripts/general.js"></script>
+    <script src="scripts/Main.js"></script>
+    <script src="scripts/fullcalendar.min.js"></script>
+    <script src="scripts/moment.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color: #ffffff" href="Main.html"><span class="glyphicon glyphicon-book"></span> Notas académicas</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" style="margin-right:0px">
+                <li class="active"><a style="background-color: #2c93c6; color: #ffffff" id="btnAyuda" href="#"><span class="glyphicon glyphicon-question-sign"></span> Ayuda</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right:0px;background-color: #2c93c6;">
+                <li id="btnLogOut"><a style="color: #ffffff" href="#"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+            </ul>
+            <div style="float:right; margin-right:12px; margin-top:14px">
+                <label class="colorBlanco"><span class="glyphicon glyphicon-user"></span> Usuario:</label>
+                <a style="color: #ffffff" href="javascript:MyProfile()">Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="padding-left:0px">
+
+        <div id="panelLeft" class="col-lg-3 col-md-6 col-sm-6" style="width:18%">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default mnuAdmin" id="mnuHome">
+                    <div class="panel-heading" role="tab" id="headingHome">
+                        <h4 class="panel-title">
+                            <a class="botonIconoNormal" id="btnHome" data-toggle="collapse" data-parent="#accordion" href="javascript:Home()" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa glyphicon glyphicon-home"></i> Home
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="panel panel-default mnuAdmin" id="mnuNewItinerario">
+                    <div class="panel-heading" role="tab" id="headingNewItinerario">
+                        <h4 class="panel-title">
+                            <a class="botonIconoNormal" id="btnNewItinerario" data-toggle="collapse" data-parent="#accordion" href="javascript:NewItinerary()" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa glyphicon glyphicon-plus"></i> Notas
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="panel panel-default mnuAdmin" id="mnuNotes">
+                    <div class="panel-heading" role="tab" id="headingNotes">
+                        <h4 class="panel-title">
+                            <a class="botonIconoNormal" id="btnNotes" data-toggle="collapse" data-parent="#accordion" href="#collapseSellos" aria-expanded="true" aria-controls="collapseOne">
+                                <span class="glyphicon glyphicon-plus"></span> Notas
+                            </a>
+                        </h4>
+                    </div>
+                    <div class="panel-body container-fluid">
+                        <div id="collapseSellos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <ul class="nav nav-pills nav-stacked">
+                                <li class="list-group">
+                                    <a id="adminalimentac" href="javascript:AdminAlimentacionTerrestre();" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 1</a>
+                                    <a id="adminhotelasumido" href="javascript:AdminHotelAsumido()" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 2</a>
+                                    <a id="admintarifapeaje" href="javascript:AdminTarifaPeaje()" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 3</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default mnuAdmin" id="mnuMyItinerary">
+                    <div class="panel-heading" role="tab" id="headingMyItinerary">
+                        <h4 class="panel-title">
+                            <a class="botonIconoNormal" id="btnMyItinerary" data-toggle="collapse" data-parent="#accordion" href="javascript:MyItinerary()" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa glyphicon glyphicon-calendar"></i> Calendario
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="panel panel-default mnuAdmin" id="mnuLegalizeItinerary">
+                    <div class="panel-heading" role="tab" id="headingLegalizeItinerary">
+                        <h4 class="panel-title">
+                            <a class="botonIconoNormal" id="btnLegalizeItinerary" data-toggle="collapse" data-parent="#accordion" href="javascript:LegalizeItinerary()" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa glyphicon glyphicon-edit"></i> Informes
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+
+                <div class="panel panel-default mnuAdmin" id="mnuMyProfile">
+                    <div class="panel-heading" role="tab" id="headingMyProfile">
+                        <h4 class="panel-title">
+                            <a class="botonIconoNormal" id="btnMyProfile" data-toggle="collapse" data-parent="#accordion" href="javascript:MyProfile()" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa glyphicon glyphicon-user"></i> Mi perfil
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelRigth" class="col-lg-9 col-md-6 col-sm-6 mccontent" style="width:82%">
+            <div class="panel panel-default" id="panelHome">
+                <div class="panel-body">
+                    <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 46% 15px 46%;">Home</strong></h3>
+                    <br />
+                    <img src="../imagenes/Banner2.png" style="margin-left:35%" />
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="panelNewItinerary">
+                <div class="panel-body">
+                    <form id="formNewItinerary">
+                        <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 41% 15px 40%;">Notas</strong></h3>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Departamento de origen</b>
+                                <input list="DeptHometown" name="DeptHometown" class="Cargo form-control" />
+                                <datalist id="DeptHometown"></datalist>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Ciudad de origen</b>
+                                <input list="Hometown" name="Hometown" class="Cargo form-control" />
+                                <datalist id="Hometown"></datalist>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Fecha de salida</b>
+                                <input id="DepartureDate" name="DepartureDate" type="date" class="form-control" />
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Hora salida</b>
+                                <input id="DepartureTime" name="DepartureTime" type="time" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Departamento de destino</b>
+                                <input list="DeptDestinationCity" name="DeptDestinationCity" class="Cargo form-control" />
+                                <datalist id="DeptDestinationCity"></datalist>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Ciudad de destino</b>
+                                <input list="DestinationCity" name="DestinationCity" class="Cargo form-control" />
+                                <datalist id="DestinationCity"></datalist>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Fecha de llegada</b>
+                                <input id="ArrivalDate" name="ArrivalDate" type="date" class="form-control" />
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Hora llegada</b>
+                                <input id="ArrivalTime" name="ArrivalTime" type="time" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Tipo De Transporte</b>
+                                <select id="TypeTransport" name="TypeTransport" class="form-control">
+                                    <option>Vehículo</option>
+                                    <option>Avión</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Centro De Costos</b>
+                                <input id="Centro" name="DepartureTime" type="text" class="form-control" placeholder="Centro de costos" />
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Vuelo Internacional</b>
+                                <div>
+                                    <input id="CheckInternationalFlight" name="CheckInternationalFlight" style="height:25px; width:20px; float:left" type="checkbox" class="checkbox" />
+                                    <input id="ValorVueloInter" type="text" class="form-control" style="float:left; width:85%; margin-left:5%" placeholder="Vuelo Internacional" />
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Motivo de viaje</b>
+                                <textarea id="ReasonTrip" class="form-control" style="height:83px" placeholder="Motivo de viaje"></textarea>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Gastos Adicionales</b>
+                                <textarea id="AdditionalCosts" class="form-control" style="height:83px" placeholder="Gastos Adicionales"></textarea>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Asumir Hotel?</b>
+                                <div>
+                                    <input id="CheckHotel" style="height: 25px; width: 20px; float:left" type="checkbox" class="checkbox" />
+                                    <input id="ValorHotel" style="float:left; width:85%; margin-left:5%" type="text" class="form-control" placeholder="Asumir Hotel" />
+                                </div>
+                                <b style="font-size: 16px;">Necesita Hotel?</b>
+                                <input id="CheckAsumirHotel" style="height:25px; width:20px" type="checkbox" class="checkbox" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6" style="width:100%">
+                                <b style="font-size: 16px;">Observaciones</b>
+                                <textarea id="Observations" class="form-control" placeholder="Observaciones"></textarea>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 Itr">
+                                <a href="#" id="btnGuardarTrayecto" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar Trayecto</a>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <a href="#" id="btnInforPasajero" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span> Información pasajero</a>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <a href="#" id="btnVerRelGastos" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span> Ver relación de gastos</a>
+                            </div>
+                        </div>
+                        <br />
+                        <div id="DataGridTrayectos">
+                            <table class="dataTable no-footer" role="grid" aria-describedby="tblsecretariasgerencia_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Login</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" class="odd selected">
+                                        <td>Dato1</td>
+                                        <td>Dato2</td>
+                                    </tr>
+                                    <tr role="row" class="odd selected">
+                                        <td>Dato1</td>
+                                        <td>Dato2</td>
+                                    </tr>
+                                    <tr role="row" class="odd selected">
+                                        <td>Dato1</td>
+                                        <td>Dato2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="panelMyItinerary">
+                <div class="panel-body">
+                    <form id="formMyItinerary">
+                        <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 41% 15px 41%;">Mi Calendario</strong></h3>
+                        <br />
+                        <div id="calendar" class="fc fc-unthemed fc-ltr" style="background-color:aliceblue">
+                            <div class="fc-toolbar fc-header-toolbar">
+                                <div class="fc-left">
+                                    <div class="fc-button-group">
+                                        <button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left" aria-label="prev"><span class="fc-icon fc-icon-left-single-arrow"></span></button><button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right" aria-label="next"><span class="fc-icon fc-icon-right-single-arrow"></span></button>
+                                    </div><button type="button" class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right">today</button>
+                                </div><div class="fc-right"><div class="fc-button-group"><button type="button" class="fc-month-button fc-button fc-state-default fc-corner-left fc-state-active">month</button><button type="button" class="fc-agendaWeek-button fc-button fc-state-default">week</button><button type="button" class="fc-agendaDay-button fc-button fc-state-default">day</button><button type="button" class="fc-listWeek-button fc-button fc-state-default fc-corner-right">list</button></div></div><div class="fc-center"><h2>January 2019</h2></div><div class="fc-clear"></div>
+                            </div>
+                            <div class="fc-view-container" style="">
+                                <div class="fc-view fc-month-view fc-basic-view" style="">
+                                    <table class="">
+                                        <thead class="fc-head">
+                                            <tr>
+                                                <td class="fc-head-container fc-widget-header">
+                                                    <div class="fc-row fc-widget-header">
+                                                        <table class="">
+                                                            <thead><tr><th class="fc-day-header fc-widget-header fc-sun"><span>Sun</span></th><th class="fc-day-header fc-widget-header fc-mon"><span>Mon</span></th><th class="fc-day-header fc-widget-header fc-tue"><span>Tue</span></th><th class="fc-day-header fc-widget-header fc-wed"><span>Wed</span></th><th class="fc-day-header fc-widget-header fc-thu"><span>Thu</span></th><th class="fc-day-header fc-widget-header fc-fri"><span>Fri</span></th><th class="fc-day-header fc-widget-header fc-sat"><span>Sat</span></th></tr></thead>
+                                                        </table>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="fc-body">
+                                            <tr>
+                                                <td class="fc-widget-content">
+                                                    <div class="fc-scroller fc-day-grid-container" style="overflow: hidden; height: 648px;">
+                                                        <div class="fc-day-grid fc-unselectable">
+                                                            <div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 108px;">
+                                                                <div class="fc-bg">
+                                                                    <table class="">
+                                                                        <tbody><tr><td class="fc-day fc-widget-content fc-sun fc-other-month fc-past" data-date="2018-12-30"></td><td class="fc-day fc-widget-content fc-mon fc-other-month fc-past" data-date="2018-12-31"></td><td class="fc-day fc-widget-content fc-tue fc-past" data-date="2019-01-01"></td><td class="fc-day fc-widget-content fc-wed fc-past" data-date="2019-01-02"></td><td class="fc-day fc-widget-content fc-thu fc-past" data-date="2019-01-03"></td><td class="fc-day fc-widget-content fc-fri fc-past" data-date="2019-01-04"></td><td class="fc-day fc-widget-content fc-sat fc-past" data-date="2019-01-05"></td></tr></tbody>
+                                                                    </table>
+                                                                </div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-other-month fc-past" data-date="2018-12-30"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-12-30&quot;,&quot;type&quot;:&quot;day&quot;}">30</a></td><td class="fc-day-top fc-mon fc-other-month fc-past" data-date="2018-12-31"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2018-12-31&quot;,&quot;type&quot;:&quot;day&quot;}">31</a></td><td class="fc-day-top fc-tue fc-past" data-date="2019-01-01"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-01&quot;,&quot;type&quot;:&quot;day&quot;}">1</a></td><td class="fc-day-top fc-wed fc-past" data-date="2019-01-02"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-02&quot;,&quot;type&quot;:&quot;day&quot;}">2</a></td><td class="fc-day-top fc-thu fc-past" data-date="2019-01-03"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-03&quot;,&quot;type&quot;:&quot;day&quot;}">3</a></td><td class="fc-day-top fc-fri fc-past" data-date="2019-01-04"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-04&quot;,&quot;type&quot;:&quot;day&quot;}">4</a></td><td class="fc-day-top fc-sat fc-past" data-date="2019-01-05"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-05&quot;,&quot;type&quot;:&quot;day&quot;}">5</a></td></tr></thead><tbody><tr><td></td><td></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable"><div class="fc-content"> <span class="fc-title">All Day Event</span></div><div class="fc-resizer fc-end-resizer"></div></a></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+                                                            </div>
+                                                            <div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 108px;">
+                                                                <div class="fc-bg">
+                                                                    <table class="">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2019-01-06"></td>
+                                                                                <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2019-01-07"></td>
+                                                                                <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2019-01-08"></td>
+                                                                                <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2019-01-09"></td>
+                                                                                <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2019-01-10"></td>
+                                                                                <td class="fc-day fc-widget-content fc-fri fc-past" data-date="2019-01-11"></td>
+                                                                                <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2019-01-12"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="fc-content-skeleton">
+                                                                    <table>
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <td class="fc-day-top fc-sun fc-past" data-date="2019-01-06"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-06&quot;,&quot;type&quot;:&quot;day&quot;}">6</a></td>
+                                                                                <td class="fc-day-top fc-mon fc-past" data-date="2019-01-07"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-07&quot;,&quot;type&quot;:&quot;day&quot;}">7</a></td>
+                                                                                <td class="fc-day-top fc-tue fc-past" data-date="2019-01-08"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-08&quot;,&quot;type&quot;:&quot;day&quot;}">8</a></td>
+                                                                                <td class="fc-day-top fc-wed fc-past" data-date="2019-01-09"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-09&quot;,&quot;type&quot;:&quot;day&quot;}">9</a></td>
+                                                                                <td class="fc-day-top fc-thu fc-past" data-date="2019-01-10"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-10&quot;,&quot;type&quot;:&quot;day&quot;}">10</a></td>
+                                                                                <td class="fc-day-top fc-fri fc-past" data-date="2019-01-11"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-11&quot;,&quot;type&quot;:&quot;day&quot;}">11</a></td>
+                                                                                <td class="fc-day-top fc-sat fc-past" data-date="2019-01-12"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-12&quot;,&quot;type&quot;:&quot;day&quot;}">12</a></td>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody><tr><td rowspan="6"></td><td class="fc-event-container" colspan="3"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable"><div class="fc-content"> <span class="fc-title">Long Event</span></div><div class="fc-resizer fc-end-resizer"></div></a></td><td rowspan="6"></td><td class="fc-event-container" colspan="2"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable"><div class="fc-content"> <span class="fc-title">Conference</span></div><div class="fc-resizer fc-end-resizer"></div></a></td></tr><tr><td rowspan="5"></td><td rowspan="5"></td><td class="fc-event-container" rowspan="5"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">4p</span> <span class="fc-title">Repeating Event</span></div></a></td><td rowspan="5"></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">10:30a</span> <span class="fc-title">Meeting</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">12p</span> <span class="fc-title">Lunch</span></div></a></td></tr><tr><td class="fc-event-container fc-limited"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">2:30p</span> <span class="fc-title">Meeting</span></div></a></td><td class="fc-more-cell" rowspan="1"><div><a class="fc-more">+3 more</a></div></td></tr><tr class="fc-limited"><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">5:30p</span> <span class="fc-title">Happy Hour</span></div></a></td></tr><tr class="fc-limited"><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">8p</span> <span class="fc-title">Dinner</span></div></a></td></tr></tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 108px;">
+                                                                <div class="fc-bg">
+                                                                    <table class="">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2019-01-13"></td>
+                                                                                <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2019-01-14"></td>
+                                                                                <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2019-01-15"></td>
+                                                                                <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2019-01-16"></td>
+                                                                                <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2019-01-17"></td>
+                                                                                <td class="fc-day fc-widget-content fc-fri fc-past" data-date="2019-01-18"></td>
+                                                                                <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2019-01-19"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div><div class="fc-content-skeleton">
+                                                                    <table>
+                                                                        <thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2019-01-13"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-13&quot;,&quot;type&quot;:&quot;day&quot;}">13</a></td><td class="fc-day-top fc-mon fc-past" data-date="2019-01-14"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-14&quot;,&quot;type&quot;:&quot;day&quot;}">14</a></td><td class="fc-day-top fc-tue fc-past" data-date="2019-01-15"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-15&quot;,&quot;type&quot;:&quot;day&quot;}">15</a></td><td class="fc-day-top fc-wed fc-past" data-date="2019-01-16"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-16&quot;,&quot;type&quot;:&quot;day&quot;}">16</a></td><td class="fc-day-top fc-thu fc-past" data-date="2019-01-17"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-17&quot;,&quot;type&quot;:&quot;day&quot;}">17</a></td><td class="fc-day-top fc-fri fc-past" data-date="2019-01-18"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-18&quot;,&quot;type&quot;:&quot;day&quot;}">18</a></td><td class="fc-day-top fc-sat fc-past" data-date="2019-01-19"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-19&quot;,&quot;type&quot;:&quot;day&quot;}">19</a></td></tr></thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">7a</span> <span class="fc-title">Birthday Party</span></div></a></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable"><div class="fc-content"><span class="fc-time">4p</span> <span class="fc-title">Repeating Event</span></div></a></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                            <div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 108px;">
+                                                                <div class="fc-bg">
+                                                                    <table class="">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td class="fc-day fc-widget-content fc-sun fc-past" data-date="2019-01-20"></td>
+                                                                                <td class="fc-day fc-widget-content fc-mon fc-past" data-date="2019-01-21"></td>
+                                                                                <td class="fc-day fc-widget-content fc-tue fc-past" data-date="2019-01-22"></td>
+                                                                                <td class="fc-day fc-widget-content fc-wed fc-past" data-date="2019-01-23"></td>
+                                                                                <td class="fc-day fc-widget-content fc-thu fc-past" data-date="2019-01-24"></td>
+                                                                                <td class="fc-day fc-widget-content fc-fri fc-past" data-date="2019-01-25"></td>
+                                                                                <td class="fc-day fc-widget-content fc-sat fc-past" data-date="2019-01-26"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2019-01-20"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-20&quot;,&quot;type&quot;:&quot;day&quot;}">20</a></td><td class="fc-day-top fc-mon fc-past" data-date="2019-01-21"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-21&quot;,&quot;type&quot;:&quot;day&quot;}">21</a></td><td class="fc-day-top fc-tue fc-past" data-date="2019-01-22"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-22&quot;,&quot;type&quot;:&quot;day&quot;}">22</a></td><td class="fc-day-top fc-wed fc-past" data-date="2019-01-23"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-23&quot;,&quot;type&quot;:&quot;day&quot;}">23</a></td><td class="fc-day-top fc-thu fc-past" data-date="2019-01-24"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-24&quot;,&quot;type&quot;:&quot;day&quot;}">24</a></td><td class="fc-day-top fc-fri fc-past" data-date="2019-01-25"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-25&quot;,&quot;type&quot;:&quot;day&quot;}">25</a></td><td class="fc-day-top fc-sat fc-past" data-date="2019-01-26"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-26&quot;,&quot;type&quot;:&quot;day&quot;}">26</a></td></tr></thead><tbody><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div>
+                                                            </div><div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 108px;"><div class="fc-bg"><table class=""><tbody><tr><td class="fc-day fc-widget-content fc-sun fc-past" data-date="2019-01-27"></td><td class="fc-day fc-widget-content fc-mon fc-past" data-date="2019-01-28"></td><td class="fc-day fc-widget-content fc-tue fc-past" data-date="2019-01-29"></td><td class="fc-day fc-widget-content fc-wed fc-past" data-date="2019-01-30"></td><td class="fc-day fc-widget-content fc-thu fc-past" data-date="2019-01-31"></td><td class="fc-day fc-widget-content fc-fri fc-other-month fc-past" data-date="2019-02-01"></td><td class="fc-day fc-widget-content fc-sat fc-other-month fc-past" data-date="2019-02-02"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><thead><tr><td class="fc-day-top fc-sun fc-past" data-date="2019-01-27"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-27&quot;,&quot;type&quot;:&quot;day&quot;}">27</a></td><td class="fc-day-top fc-mon fc-past" data-date="2019-01-28"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-28&quot;,&quot;type&quot;:&quot;day&quot;}">28</a></td><td class="fc-day-top fc-tue fc-past" data-date="2019-01-29"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-29&quot;,&quot;type&quot;:&quot;day&quot;}">29</a></td><td class="fc-day-top fc-wed fc-past" data-date="2019-01-30"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-30&quot;,&quot;type&quot;:&quot;day&quot;}">30</a></td><td class="fc-day-top fc-thu fc-past" data-date="2019-01-31"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-01-31&quot;,&quot;type&quot;:&quot;day&quot;}">31</a></td><td class="fc-day-top fc-fri fc-other-month fc-past" data-date="2019-02-01"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-01&quot;,&quot;type&quot;:&quot;day&quot;}">1</a></td><td class="fc-day-top fc-sat fc-other-month fc-past" data-date="2019-02-02"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-02&quot;,&quot;type&quot;:&quot;day&quot;}">2</a></td></tr></thead><tbody><tr><td></td><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable fc-resizable" href="http://google.com/"><div class="fc-content"> <span class="fc-title">Click for Google</span></div><div class="fc-resizer fc-end-resizer"></div></a></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></div></div><div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 108px;">
+                                                                <div class="fc-bg"><table class=""><tbody><tr><td class="fc-day fc-widget-content fc-sun fc-other-month fc-past" data-date="2019-02-03"></td><td class="fc-day fc-widget-content fc-mon fc-other-month fc-past" data-date="2019-02-04"></td><td class="fc-day fc-widget-content fc-tue fc-other-month fc-past" data-date="2019-02-05"></td><td class="fc-day fc-widget-content fc-wed fc-other-month fc-past" data-date="2019-02-06"></td><td class="fc-day fc-widget-content fc-thu fc-other-month fc-past" data-date="2019-02-07"></td><td class="fc-day fc-widget-content fc-fri fc-other-month fc-past" data-date="2019-02-08"></td><td class="fc-day fc-widget-content fc-sat fc-other-month fc-past" data-date="2019-02-09"></td></tr></tbody></table></div><div class="fc-content-skeleton">
+                                                                    <table>
+                                                                        <thead><tr><td class="fc-day-top fc-sun fc-other-month fc-past" data-date="2019-02-03"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-03&quot;,&quot;type&quot;:&quot;day&quot;}">3</a></td><td class="fc-day-top fc-mon fc-other-month fc-past" data-date="2019-02-04"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-04&quot;,&quot;type&quot;:&quot;day&quot;}">4</a></td><td class="fc-day-top fc-tue fc-other-month fc-past" data-date="2019-02-05"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-05&quot;,&quot;type&quot;:&quot;day&quot;}">5</a></td><td class="fc-day-top fc-wed fc-other-month fc-past" data-date="2019-02-06"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-06&quot;,&quot;type&quot;:&quot;day&quot;}">6</a></td><td class="fc-day-top fc-thu fc-other-month fc-past" data-date="2019-02-07"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-07&quot;,&quot;type&quot;:&quot;day&quot;}">7</a></td><td class="fc-day-top fc-fri fc-other-month fc-past" data-date="2019-02-08"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-08&quot;,&quot;type&quot;:&quot;day&quot;}">8</a></td><td class="fc-day-top fc-sat fc-other-month fc-past" data-date="2019-02-09"><a class="fc-day-number" data-goto="{&quot;date&quot;:&quot;2019-02-09&quot;,&quot;type&quot;:&quot;day&quot;}">9</a></td></tr></thead>
+                                                                        <tbody>
+                                                                            <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="UrlPlatformDocuware">Url Platform Docuware</label>
+                            <input id="UrlPlatformDocuwarecs" name="UrlPlatformDocuware" type="text" class="form-control" placeholder="URL del servicio REST de Docuware" />
+                        </div>
+                        <br />
+
+                        <div class="form-group-lg">
+                            <label for="HorasCorreccionDwStoreDateTime">Horas corrección DwStoreDateTime</label>
+                            <input id="HorasCorreccionDwStoreDateTismes" name="HorasCorreccionDwStoreDateTime" type="text" class="form-control" placeholder="Cantidad de horas a sumar o restar al campo DWSTOREDATETIME para corregir el problema de este campo que guarda en ocaciones con 5 horas de diferencia" />
+                        </div>
+                        <div id="DataGridMisItinerarios">
+                            <table class="dataTable no-footer" role="grid" aria-describedby="tblsecretariasgerencia_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th>Login</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr role="row" class="odd selected">
+                                        <td>Dato1</td>
+                                        <td>Dato2</td>
+                                    </tr>
+                                    <tr role="row" class="odd selected">
+                                        <td>Dato1</td>
+                                        <td>Dato2</td>
+                                    </tr>
+                                    <tr role="row" class="odd selected">
+                                        <td>Dato1</td>
+                                        <td>Dato2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+
+                            <a href="#" id="btnGuardarDocuwasress" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="panelLegalizeItinerary">
+                <div class="panel-body">
+                    <form id="formLegalizeItinerary">
+                        <h3 style="text-align:center"><strong>Informes</strong></h3>
+                        <br />
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="BaseDatosDataDocuware">Base de datos de los archivadores</label>
+                            <input id="BaseDatosDataDocsuwssareds" name="BaseDatosDataDocuware" type="text" class="form-control" placeholder="Nombre de la base de datos de los datos de los archivadores de Docuware" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="BaseDatosSistemaDocuware">Base de datos del sistema</label>
+                            <input id="BaseDatosSistemaDocusswarsed" name="BaseDatosSistemaDocuware" type="text" class="form-control" placeholder="Nombre de la base de datos de sistema de Docuware" />
+                        </div>
+                        <br />
+
+                        <div class="form-group-lg">
+                            <label for="CompaniaDocuware">Compañia Docuware</label>
+                            <input id="CompaniaDocsuswares" name="CompaniaDocuware" type="text" class="form-control" placeholder="Nombre de la compañia a a cual esta licenciado Docuware" />
+                        </div>
+                        <br />
+
+                        <div class="form-group-lg">
+                            <label for="ServidorDbDocuware">Servidor base datos</label>
+                            <input id="ServidorDbDocuwsadfres" name="ServidorDbDocuware" type="text" class="form-control" placeholder="Usuario de base de datos de Docuware" />
+                        </div>
+                        <br />
+
+                        <div class="form-group-lg">
+                            <label for="UsuarioDbDocuware">Usuario base de datos </label>
+                            <input id="UsuarioDbDocuwssdares" name="UsuarioDbDocuware" type="text" class="form-control" placeholder="Usuario de base de datos de Docuware" />
+                        </div>
+                        <br />
+
+                        <div class="form-group-lg">
+                            <label for="ContrasenaDbDocuware">Contrasena base de datos</label>
+                            <input id="ContrasenaDbDocusdwarses" name="ContrasenaDbDocuware" type="password" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="MotorDbDocuware">Motor base de datos Docuware</label>
+
+                            <select id="MotorDbDocuwaresass" name="MotorDbDocuware" class="form-control">
+                                <option>MSSQL</option>
+                                <option>MYSQL</option>
+                                <option>ORACLE</option>
+                            </select>
+                        </div>
+
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="UrlPlatformDocuware">Url Platform Docuware</label>
+                            <input id="UrlPlatformDocuwarassecs" name="UrlPlatformDocuware" type="text" class="form-control" placeholder="URL del servicio REST de Docuware" />
+                        </div>
+                        <br />
+
+                        <div class="form-group-lg">
+                            <label for="HorasCorreccionDwStoreDateTime">Horas corrección DwStoreDateTime</label>
+                            <input id="HorasCorreccionDwStoreDasfteTismes" name="HorasCorreccionDwStoreDateTime" type="text" class="form-control" placeholder="Cantidad de horas a sumar o restar al campo DWSTOREDATETIME para corregir el problema de este campo que guarda en ocaciones con 5 horas de diferencia" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+
+                            <a href="#" id="btnGuardarDocuwassdfress" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default" id="panelMyProfile">
+                <div class="panel-body">
+                    <form id="formMyProfile">
+                        <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 41% 15px 40%;">Mi Perfil</strong></h3>
+                        <br />
+                        <h4 style="text-align:center"><b>Información Personal</b></h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Nombres</b>
+                                <input id="UserName" name="UserName" type="text" class="form-control" placeholder="Nombres" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Apellidos</b>
+                                <input id="LastName" name="LastName" type="text" class="form-control" placeholder="Apellidos" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Sexo</b>
+                                <div>
+                                    <label style="margin: 5px;"><input id="CheckFemale" name="CheckFemale" style="height:15px; width:15px;" type="checkbox" />&nbsp;Femenino</label>
+                                    <label style="margin: 5px;"><input id="CheckMale" name="CheckMale" style="height:15px; width:15px;" type="checkbox" />&nbsp;Masculino</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Tipo Documento</b>
+                                <select id="TypeDocument" name="TypeDocument" class="form-control">
+                                    <option>CC</option>
+                                    <option>TE</option>
+                                    <option>DE</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Documento</b>
+                                <input id="UserDocument" name="UserDocument" type="number" class="form-control" placeholder="Cedula" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Email</b>
+                                <input id="UserEmail" name="UserEmail" type="email" class="form-control" placeholder="Email" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Celular</b>
+                                <input id="UserPhone" name="UserPhone" type="number" class="form-control" placeholder="Celular" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Fecha Nacimiento</b>
+                                <input id="UserBirthDate" name="UserBirthDate" type="date" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Nacionalidad</b>
+                                <input id="nationality" name="nationality" type="text" class="form-control" placeholder="Nacionalidad" />
+                            </div>
+                        </div>
+                        <br />
+                        <h4 style="text-align:center"><b>Información Del Programa</b></h4>
+                        <hr />
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Programa Académico</b>
+                                <input id="CareerPrograms" name="CareerPrograms" type="text" class="form-control" placeholder="Programa Académico" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Nivel Actual</b>
+                                <input id="CurrentLevel" name="CurrentLevel" type="text" class="form-control" placeholder="Nivel Actual" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Promedio General</b>
+                                <input id="GeneralAverage" name="GeneralAverage" type="text" class="form-control" placeholder="Promedio General" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Fecha Ingreso</b>
+                                <input id="DateAdmission" name="DateAdmission" type="date" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Sede</b>
+                                <input id="headquarters" name="headquarters" type="text" class="form-control" placeholder="Sede" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Contraseña</b>
+                                <input id="UserPassword" name="UserPassword" type="password" class="form-control" placeholder="Contraseña" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <a href="#" id="btnGuardarDoMyProfiledfress" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br />
+            <br />
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="modalHome" style="visibility: visible">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formHome">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModColaborador">Colaborador:</label>
+                            <select id="ModHomeSel" name="ModColaborador" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModSupervisor">Supervisor:</label>
+                            <select id="ModHomeSupervisor" name="ModSupervisor" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModAutorizador">Autorizador:</label>
+                            <select id="ModHomeAutorizador" name="ModAutorizador" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <a href="#" id="btnGuardarModHomeColaborador" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalModNewItinerary">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formModNewItinerary">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModColaborador">Colaborador:</label>
+                            <select id="ModColaboradorNew" name="ModColaborador" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModSupervisor">Supervisor:</label>
+                            <select id="ModSupervisorNew" name="ModSupervisor" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModAutorizador">Autorizador:</label>
+                            <select id="ModAutorizadorNew" name="ModAutorizador" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <a href="#" id="btnGuardarModNewItinerary" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalAdminUser">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body" style="overflow: hidden">
+                    <form id="formModUsuarios" style="overflow-y: scroll">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Login">Login:</label>
+                            <input id="Login" name="Login" type="text" class="form-control" placeholder="Login" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Cedula">Cedula:</label>
+                            <input id="Cedula" name="Cedula" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Nombre">Nombre Completo:</label>
+                            <input id="Nombre" name="Nombre" type="text" class="form-control" placeholder="Nombre" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Celular">Celular:</label>
+                            <input id="Celular" name="Celular" type="tel" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="AviancaPlus">AviancaPlus:</label>
+                            <input id="AviancaPlus" name="AviancaPlus" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="OnePass">OnePass:</label>
+                            <input id="OnePass" name="OnePass" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Gerencia">Gerencia:</label>
+                            <select id="Gerencia" name="Activo" class="form-control"></select>
+
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Cargo">Cargo:</label>
+                            <select id="Cargo" name="Activo" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Email">Email:</label>
+                            <input id="Email" name="Email" type="email" class="form-control" placeholder="Email" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="FechaNacimiento">Fecha de Nacimiento:</label>
+                            <input id="FechaNacimiento" name="FechaNacimiento" type="datetime-local" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Activo">Activo:</label>
+                            <select id="Activo" name="Activo" class="form-control">
+                                <option>1</option>
+                                <option>0</option>
+                            </select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+
+                            <a href="#" id="btnGuardarModUsuario" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalModColaboradoresAutorizadores">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formModColaboradoresAutorizadores">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModColaborador">Colaborador:</label>
+                            <select id="ModColaborador" name="ModColaborador" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModSupervisor">Supervisor:</label>
+                            <select id="ModSupervisor" name="ModSupervisor" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModAutorizador">Autorizador:</label>
+                            <select id="ModAutorizador" name="ModAutorizador" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <a href="#" id="btnGuardarModColaborador" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalModSecretariasGerencia">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formModSecretariasGerencia">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModSecretaria">Secretaria:</label>
+                            <select id="ModSecretaria" name="ModSecretaria" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModGerencia">Gerencia:</label>
+                            <select id="ModGerencia" name="ModGerencia" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <a href="#" id="btnGuardarModSecretariasGerencia" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalModAlimentacionTerrestre">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formModAlimentacionTerrestre">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModAlimentaciondia">Alimentacion Dia:</label>
+                            <input id="ModAlimentaciondia" name="ModAlimentaciondia" type="text" class="form-control" placeholder="Alimentacion Dia" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModAlimentaciondiaValor">Valor Tarifa:</label>
+                            <input id="ModAlimentaciondiaValor" name="ModAlimentaciondiaValor" type="number" class="form-control" placeholder="Valor Tarifa" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <a href="#" id="btnGuardarModAlimentacionTerrestre" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalModHotelAsumido">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formModHotelAsumido">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTipoViaje">Tipo Viaje:</label>
+                            <input id="ModTipoViaje" name="ModTipoViaje" type="text" class="form-control" placeholder="Tipo Viaje" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModValorViaje">Valor Tarifa:</label>
+                            <input id="ModValorViaje" name="ModValorViaje" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <a href="#" id="btnGuardarModHotelAsumido" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalTarifaPeaje">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formModTarifaPeaje">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModDepartamentoOrigen">Departamento Origen:</label>
+                            <select id="ModDepartamentoOrigen" name="ModDepartamentoOrigen" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModMunicipioOrigen">Municipio Origen:</label>
+                            <select id="ModMunicipioOrigen" name="ModMunicipioOrigen" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModDepartamentoDestino">Departamento Destino:</label>
+                            <select id="ModDepartamentoDestino" name="ModDepartamentoDestino" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModMunicipioDestino">Municipio Destino:</label>
+                            <select id="ModMunicipioDestino" name="ModMunicipioDestino" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModCosto">Costo:</label>
+                            <input id="ModCosto" name="ModCosto" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+
+                            <a href="#" id="btnGuardarModTarifaPeaje" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalTarifaTerrestre">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formModTarifaTerrestre">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTerrestreDepartamentoOrigen">Departamento Origen:</label>
+                            <select id="ModTerrestreDepartamentoOrigen" name="ModTerrestreDepartamentoOrigen" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTerrestreMunicipioOrigen">Municipio Origen:</label>
+                            <select id="ModTerrestreMunicipioOrigen" name="ModTerrestreMunicipioOrigen" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTerrestreDepartamentoDestino">Departamento Destino:</label>
+                            <select id="ModTerrestreDepartamentoDestino" name="ModTerrestreDepartamentoDestino" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTerrestreMunicipioDestino">Municipio Destino:</label>
+                            <select id="ModTerrestreMunicipioDestino" name="ModTerrestreMunicipioDestino" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTerrestrePrimerDia">Primer Dia:</label>
+                            <input id="ModTerrestrePrimerDia" name="ModTerrestrePrimerDia" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTerrestreSegundoDia">Segundo Dia:</label>
+                            <input id="ModTerrestreSegundoDia" name="ModTerrestreSegundoDia" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTerrestreTransporte">Transporte:</label>
+                            <!--<input id="ModTerrestreTransporte" name="ModTerrestreTransporte" type="text" class="form-control" />-->
+                            <select id="ModTerrestreTransporte" name="ModTerrestreTransporte" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+
+                            <a href="#" id="btnGuardarModTarifaTerrestre" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalAlerta">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="jumbotron">
+                    <p id="alertamensaje"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalModTarifaExtranjero">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="formModTarifaExtranjero">
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModCargoExtranjero">Tipo Viaje:</label>
+                            <input list="Cargos" name="ModCargoExtranjero" id="ModCargoExtranjero" class="Cargo" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="ModTarifaExtranjero">Valor Tarifa:</label>
+                            <input id="ModTarifaExtranjero" name="ModTarifaExtranjero" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <a href="#" id="btnGuardarModTarifaExtranjero" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <footer id="barraBase" class="navbar-default navbar-fixed-bottom text-center" style="height:23px">
+        <p style="float:left; color:#ffffff; margin:4px; font-size:12px">© 2019 Notas académicas</p>
+        <p style="color:#ffffff; margin:4px; font-size:13px">Gestión de proyectos</p>
+        <nav class="row">
+        </nav>
+    </footer>
+</body>
+</html>

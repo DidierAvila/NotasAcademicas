@@ -55,7 +55,6 @@
                                             <label class="colorBlanco tamanoLabelForm" for="txtUsuario">Usuario:</label>
                                             <input id="txtUsuario" type="text" class="form-control" placeholder="Ingrese el usuario">
                                         </div>
-
                                         <div class="form-group">
                                             <label class="colorBlanco tamanoLabelForm" for="txtContrasena">Contraseña:</label>
                                             <input type="password" class="form-control" id="txtContrasena"  placeholder="Ingrese la contraseña">

@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Web.Configuration;
 using Newtonsoft.Json;
 using System.Data;
+using NotasAcademicasNegocio.Negocio;
 
 namespace NotasAcademicas.Controllers
 {
@@ -26,39 +27,41 @@ namespace NotasAcademicas.Controllers
                 string error = string.Empty;
                 int op = int.Parse(context.Request["op"].ToString());
                 Configuration cfg = WebConfigurationManager.OpenWebConfiguration(context.Request.ApplicationPath);
-                string servidorAdmin = ConfigurationManager.AppSettings["servidorAdmin"].ToString();
-                string driverAdmin = ConfigurationManager.AppSettings["driverAdmin"].ToString();
-                string nombreDBConsulta = ConfigurationManager.AppSettings["nombreDBConsulta"].ToString();
 
                 switch (op)
                 {
                     case 200:
                         {
-                            #region Autenticar admin
+                            #region Login Student
+                            bool res = true;
+                            string user = context.Request["usuario"];
+                            string password = context.Request["contrasena"];
+                            string typeUser = context.Request["typeUser"];
 
-                            string usuarioBd = context.Request.QueryString["usuario"];
-                            string contrasenaAdminEnc = context.Request.QueryString["contrasena"];
+                            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(typeUser))
+                            {
+                                res = false;
+                            }
 
-                            //negocio.configurarDB(usuarioBd, contrasenaAdminEnc, nombreDBConsulta, driverAdmin, servidorAdmin, ref error);
+                            Negocio negocio = new Negocio();
+                            NotasAcademicasNegocio.Utility.PLogin pLogin;
+                            pLogin = negocio.Login(user, password, typeUser);
 
-                            bool res = true; //negocio.AutenticarAdmin(usuarioBd, contrasenaAdminEnc, nombreDBConsulta, driverAdmin, servidorAdmin, ref error);
                             if (error.Length > 0)
                             {
                                 throw new Exception(error);
                             }
 
-                            cfg.AppSettings.Settings["usuarioBd"].Value = "Alejo"; //cfg.AppSettings.Settings["usuarioBd"].Value != usuarioBd ? usuarioBd : cfg.AppSettings.Settings["usuarioBd"].Value;
-                            cfg.AppSettings.Settings["contrasena"].Value = "123"; //cfg.AppSettings.Settings["contrasena"].Value != contrasenaAdminEnc ? NegocioCI.Encriptar(contrasenaAdminEnc, ref error) : cfg.AppSettings.Settings["contrasena"].Value;
-                            cfg.Save();
-
                             tipoContenido = "text/json";
-                            result = JsonConvert.SerializeObject(res);
+                            result = JsonConvert.SerializeObject(pLogin);
 
-                            #endregion Autenticar admin
+                            #endregion Login
                         }
                         break;
                     case 300:
                         {
+                            string IdCurrentUser = context.Request["usuario"];
+
                         }
                         break;
                     case 400:

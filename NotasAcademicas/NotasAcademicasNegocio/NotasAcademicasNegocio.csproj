@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7651C59A-FA11-4052-865E-E639B3B56EB3}</ProjectGuid>
+    <ProjectGuid>{E4865604-D852-4129-AB92-D82A4AC9D7B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NotasAcademicasNegocio</RootNamespace>
@@ -30,8 +30,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Common, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.Common.4.3.0\lib\net451\System.Data.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlClient, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.6.0\lib\net46\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,8 +55,60 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\Poco\Student.cs" />
+    <Compile Include="Datos\Estudiante.cs">
+      <DependentUpon>NotasAcademicas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\Materia.cs">
+      <DependentUpon>NotasAcademicas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\NotasAcademicas.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotasAcademicas.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\NotasAcademicas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotasAcademicas.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\NotasAcademicas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NotasAcademicas.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Datos\Profesor.cs">
+      <DependentUpon>NotasAcademicas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Negocio\Negocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Utility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Datos\NotasAcademicas.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NotasAcademicas.edmx</DependentUpon>
+      <LastGenOutput>NotasAcademicas.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Datos\NotasAcademicas.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NotasAcademicas.edmx</DependentUpon>
+      <LastGenOutput>NotasAcademicas.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Datos\NotasAcademicas.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NotasAcademicas.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Datos\NotasAcademicas.edmx.diagram">
+      <DependentUpon>NotasAcademicas.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
