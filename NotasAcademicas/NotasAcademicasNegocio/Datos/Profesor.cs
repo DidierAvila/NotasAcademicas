@@ -17,11 +17,15 @@ namespace NotasAcademicasNegocio.Datos
         public int IdProfesor { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
-        public int Documento { get; set; }
+        public string Documento { get; set; }
         public string Email { get; set; }
-        public int Telefono { get; set; }
+        public string Telefono { get; set; }
         public bool Estado { get; set; }
+        public string Sexo { get; set; }
         public System.DateTime FechaNacimiento { get; set; }
+        public string Nacionalidad { get; set; }
+        public string Direccion { get; set; }
         public System.DateTime FechaIngreso { get; set; }
+        public string Clave { get; set; }
     }
 }

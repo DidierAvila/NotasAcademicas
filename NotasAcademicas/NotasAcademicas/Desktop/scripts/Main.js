@@ -1,25 +1,22 @@
-﻿var loginUsuario;
+﻿var UserCurrentName;
+var CurrentUserType;
+var IdCurrentUser;
 var storage;
 var mod = true;
 var CurrentTable;
 
-$(document).ready(function () {
-    $(".collapseExample").collapse();
+$(document).ready(function () { 
     init();
     poseePermiso();
     CorregirColoresB();
+    Hide();
 
+    //Menu buttons
     $("#btnLogOut").click(function () {
         storage = $.sessionStorage;
         storage.remove('loginusuario');
         document.location.href = "LoginStudent.html";
     });
-
-    $("#panelHome").hide();
-    $("#panelNewItinerary").hide();
-    $("#panelMyItinerary").hide();
-    $("#panelLegalizeItinerary").hide();
-    $("#panelMyProfile").hide();
 
     $("#btnHome").click(function () {
         Home();
@@ -39,6 +36,7 @@ $(document).ready(function () {
 
     $("#btnMyProfile").click(function () {
         MyProfile();
+        GetCurrentProfile();
     });
 
     $("#btnPanelAdminUsuarios").click(function () {
@@ -52,10 +50,28 @@ $(document).ready(function () {
 
 function poseePermiso() {
     storage = $.sessionStorage;
-    loginUsuario = storage.get("loginusuario");
-    if (!loginUsuario) {
-        window.location.href = "LoginStudent.html";
-    }
+    UserCurrentName = storage.get("userCurrentName");
+    CurrentUserType = storage.get("typeCurrentUser");
+    IdCurrentUser = storage.get("idCurrentUser");
+
+    //if (!CurrentUserType) {
+    //    window.location.href = "LoginStudent.html";
+    //}
+    //if (!loginUsuario) {
+    //    window.location.href = "LoginStudent.html";
+    //}
+    $("#currentUserName").val(UserCurrentName);
+}
+
+//**************************Left Panel********************************
+
+function Hide() {
+    $(".collapseExample").collapse();
+    $("#panelHome").hide();
+    $("#panelNewItinerary").hide();
+    $("#panelMyItinerary").hide();
+    $("#panelLegalizeItinerary").hide();
+    $("#panelMyProfile").hide();
 }
 
 function CorregirColoresB() {
@@ -114,33 +130,50 @@ function LoadNewItinerary() {
     LoadCombo('DeptDestinationCity');
 }
 
-function getCurrentStudent() {
-    var IdCurrentStudent = 1;
-    $.ajax({
-        url: "../Controllers/Controlador.ashx?op=300&IdCurrentStudent=" + IdCurrentStudent,
-        method: "POST",
-        dataType: "json",
-        async: true,
-        success: function (result) {
-            $("#UserName").val();
+//**************************Right Panel********************************
 
-            var toAppend = '';
-            $.each(result, function (i, o) {
-                toAppend += '<option>' + o.Cargo + '</option>';
-            });
-            
-
-
-
-            $('#Cargo option').remove();
-            $('#Cargo').append(toAppend);
-            toAppend = '';
-        },
-        error: function (result) {
-            alert("failed");
-        }
-    });
+function GetCurrentProfile() {
+    if (IdCurrentUser !== '' || CurrentUserType !== '') {
+        $.ajax({
+            url: "../Controllers/Controlador.ashx?op=300&IdCurrentStudent=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
+            method: "POST",
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                if (result !== null) {
+                    if (typeUser === "student") {
+                        $("#UserName").val(result["UserName"]);
+                        $("#LastName").val(result["LastName"]);
+                        $("#UserDocument").val(result["UserDocument"]);
+                        $("#UserEmail").val(result["Email"]);
+                        $("#UserPhone").val(result["PhoneNumber"]);
+                        $("#UserBirthDate").val(result["Birthdate"]);
+                        $("#nationality").val(result["Nationality"]);
+                        $("#CareerPrograms").val(result["Career"]);
+                        $("#CurrentLevel").val(result["CurrentLevel"]);
+                        $("#GeneralAverage").val(result["GeneralAverage"]);
+                        $("#DateAdmission").val(result["AdmissionDate"]);
+                        $("#headquarters").val(result["Headquarters"]);
+                        $("#UserPassword").val(result["Password"]);
+                    } else {
+                        $("#UserName").val(result["UserName"]);
+                        $("#LastName").val(result["LastName"]);
+                    }
+                }
+                else {
+                    alert('Error:' + result["error"]);
+                }
+            },
+            error: function (result) {
+                alert("failed");
+            }
+        });
+    } else {
+        alert("Parámetros vacios!");
+    }
 }
+
+
 
 function LoadCombo(combo) {
     $.ajax({

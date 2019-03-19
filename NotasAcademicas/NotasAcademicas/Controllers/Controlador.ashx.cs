@@ -32,24 +32,21 @@ namespace NotasAcademicas.Controllers
                 {
                     case 200:
                         {
-                            #region Login Student
-                            bool res = true;
+                            #region Login
+
+                            NotasAcademicasNegocio.Utility.PLogin pLogin = null;
                             string user = context.Request["usuario"];
                             string password = context.Request["contrasena"];
                             string typeUser = context.Request["typeUser"];
 
-                            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(typeUser))
+                            if (!string.IsNullOrEmpty(user) || !string.IsNullOrEmpty(password) || !string.IsNullOrEmpty(typeUser))
                             {
-                                res = false;
-                            }
-
-                            Negocio negocio = new Negocio();
-                            NotasAcademicasNegocio.Utility.PLogin pLogin;
-                            pLogin = negocio.Login(user, password, typeUser);
-
-                            if (error.Length > 0)
-                            {
-                                throw new Exception(error);
+                                Negocio negocio = new Negocio();
+                                pLogin = negocio.Login(user, password, typeUser, ref error);
+                                if (error.Length > 0)
+                                {
+                                    throw new Exception(error);
+                                }
                             }
 
                             tipoContenido = "text/json";
@@ -60,8 +57,30 @@ namespace NotasAcademicas.Controllers
                         break;
                     case 300:
                         {
-                            string IdCurrentUser = context.Request["usuario"];
+                            #region Get Profile
 
+                            NotasAcademicasNegocio.Utility.PProfile pProfile = null;
+                            string IdCurrentUser = context.Request["IdCurrentStudent"];
+                            string typeUser = context.Request["typeUser"];
+                            string CurrentTable = string.Empty;
+
+                            if (string.IsNullOrEmpty(IdCurrentUser) || string.IsNullOrEmpty(typeUser))
+                            {
+                                CurrentTable = "Datos no pueden ser nulos!";
+                            }
+
+                            Negocio negocio = new Negocio();
+                            pProfile = negocio.GetCurrentProfileUser(int.Parse(IdCurrentUser), typeUser);
+
+                            if (error.Length > 0)
+                            {
+                                throw new Exception(error);
+                            }
+
+                            tipoContenido = "text/json";
+                            result = JsonConvert.SerializeObject(pProfile);
+
+                            #endregion Get Profile
                         }
                         break;
                     case 400:

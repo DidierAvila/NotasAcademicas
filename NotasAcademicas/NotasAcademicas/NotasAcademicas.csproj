@@ -440,6 +440,7 @@
     <Content Include="Desktop\Main.html" />
     <Content Include="Desktop\mainMenu.aspx" />
     <Content Include="Desktop\mainMenuAdmin.aspx" />
+    <Content Include="Desktop\scripts\Common.js" />
     <Content Include="Desktop\scripts\general.js" />
     <Content Include="Desktop\scripts\general.min.js" />
     <Content Include="Desktop\scripts\login.js" />

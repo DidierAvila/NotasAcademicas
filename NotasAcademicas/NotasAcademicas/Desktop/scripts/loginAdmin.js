@@ -1,28 +1,12 @@
-﻿$(document).ready(function () {
-
-    $(".imgEspera").hide();
-
-    $("#DivAlert").hide();
-
-    $("#vtnAlerta").hide();
-
-    $("#btnIngresar").click(AutenticarUsuarioAdmin);
-
-    $("#btnAdministrar").click(GoToLogin);
-
-    $(".imgEspera").show();
-
+﻿$(document).ready(function () {  
     init();
-
+    $("#btnIngresar").click(AutenticarUsuarioAdmin);
     $(".imgEspera").hide();
-
     $("#divForm").removeClass("hidden");
     $("#divForm").addClass("show");
 
     $(window).resize(cambiarTamanoVentana);
-
     cambiarTamanoVentana();
-
 });
 
 //Autentica el usuario Administrador
@@ -33,7 +17,7 @@ function AutenticarUsuarioAdmin() {
 
     user = $("#txtUsuario").val();
     pwd = $("#txtContrasena").val();
-    if (user.length == 0) {
+    if (user.length === 0) {
         $("#DivAlert").show();
         $("#vtnAlerta").show();
         $("#lblInfoError").text("Debe ingresar un usuario!");
@@ -41,7 +25,7 @@ function AutenticarUsuarioAdmin() {
         $('#vtnAlerta').attr("disabled", false);
         return;
     }
-    if (pwd.length == 0) {
+    if (pwd.length === 0) {
         $("#DivAlert").show();
         $("#vtnAlerta").show();
         $("#lblInfoError").text("Debe ingresar una contraseña!");
@@ -84,15 +68,10 @@ function AutenticarUsuarioAdmin() {
     });
 }
 
-function GoToLogin() {
-    document.location.href = "login.aspx";
-}
-
 function cambiarTamanoVentana() {
     if ($(window).width() < 780) {
         $("#divVersion").removeClass("show");
         $("#divVersion").addClass("hidden");
-
     } else {
         $("#divVersion").removeClass("hidden");
         $("#divVersion").addClass("show");

@@ -25,8 +25,8 @@ namespace NotasAcademicasNegocio.Datos
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Estudiante> Estudiante { get; set; }
         public virtual DbSet<Materia> Materia { get; set; }
+        public virtual DbSet<Estudiante> Estudiante { get; set; }
         public virtual DbSet<Profesor> Profesor { get; set; }
     }
 }

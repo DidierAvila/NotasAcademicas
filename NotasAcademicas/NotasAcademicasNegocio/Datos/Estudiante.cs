@@ -18,11 +18,16 @@ namespace NotasAcademicasNegocio.Datos
         public Nullable<int> IdProgramaAcademico { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
+        public string TipoDocumento { get; set; }
         public string Documento { get; set; }
         public Nullable<System.DateTime> FechaNacimiento { get; set; }
+        public string Sexo { get; set; }
         public Nullable<bool> Estado { get; set; }
         public Nullable<System.DateTime> FechaIngreso { get; set; }
-        public string Usuario { get; set; }
-        public string Password { get; set; }
+        public string Nacionalidad { get; set; }
+        public string Direccion { get; set; }
+        public string Clave { get; set; }
+        public string Email { get; set; }
+        public string Telefono { get; set; }
     }
 }

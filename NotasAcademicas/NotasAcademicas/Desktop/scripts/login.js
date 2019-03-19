@@ -1,28 +1,18 @@
 ﻿$(document).ready(function () {
-
-    $(".imgEspera").hide();
-
-    $("#DivAlert").hide();
-
-    $("#btnIngresar").click(AutenticarUsuarioAdmin);
-
-    $(".imgEspera").show();
-
+    $("#btnIngresar").click(Login);
+    $("#txtContrasena").click(HideDivAlert);
+    $("#txtUsuario").click(HideDivAlert);
     init();
-
+    $("#DivAlert").hide();
     $(".imgEspera").hide();
-
     $("#divForm").removeClass("hidden");
     $("#divForm").addClass("show");
-
     $(window).resize(cambiarTamanoVentana);
-
     cambiarTamanoVentana();
 });
 
-function AutenticarUsuarioAdmin() {
+function Login() {
     $(".imgEspera").show();
-    $("#vtnAlerta").hide();
 
     user = $("#txtUsuario").val();
     pwd = $("#txtContrasena").val();
@@ -57,17 +47,16 @@ function AutenticarUsuarioAdmin() {
                 $("#lblInfoError").val("Usuario y/o contraseña no valido");
                 $("#DivAlert").show();
             } else {
-                if (result.toString().indexOf("false") > -1) {
-                    $("#lblInfoError").val("Usuario y/o contraseña no valido");
+                if (result["IdCurrentUser"] === null || result["CurrentUser"] === null) {
+                    $("#lblInfoError").text("Usuario y/o contraseña no valido");
                     $("#DivAlert").show();
+                    $("#vtnAlerta").show();
                 } else {
                     storage = $.sessionStorage;
-                    storage.set("loginusuario", user);
-                    if (typeUser==="Student") {
-                        document.location.href = "Main.html";
-                    } else {
-                        document.location.href = "Main.html";
-                    }  
+                    storage.set("idCurrentUser", user);
+                    storage.set("userCurrentName", user);
+                    storage.set("typeCurrentUser", typeUser);
+                    document.location.href = "Main.html"; 
                 }
             }
         },
@@ -90,4 +79,10 @@ function cambiarTamanoVentana() {
         $("#divVersion").addClass("show");
     }
 }
+
+function HideDivAlert() {
+    $("#DivAlert").hide();
+    $(".imgEspera").hide();
+}
+
 
