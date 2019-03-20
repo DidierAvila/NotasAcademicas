@@ -60,7 +60,7 @@ function poseePermiso() {
     //if (!loginUsuario) {
     //    window.location.href = "LoginStudent.html";
     //}
-    $("#currentUserName").val(UserCurrentName);
+    $("#currentUserName").text(UserCurrentName);
 }
 
 //**************************Left Panel********************************
@@ -141,7 +141,7 @@ function GetCurrentProfile() {
             async: true,
             success: function (result) {
                 if (result !== null) {
-                    if (typeUser === "student") {
+                    if (CurrentUserType === "student") {
                         $("#UserName").val(result["UserName"]);
                         $("#LastName").val(result["LastName"]);
                         $("#UserDocument").val(result["UserDocument"]);

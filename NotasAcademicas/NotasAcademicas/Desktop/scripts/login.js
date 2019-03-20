@@ -53,8 +53,8 @@ function Login() {
                     $("#vtnAlerta").show();
                 } else {
                     storage = $.sessionStorage;
-                    storage.set("idCurrentUser", user);
-                    storage.set("userCurrentName", user);
+                    storage.set("idCurrentUser", result["IdCurrentUser"]);
+                    storage.set("userCurrentName", result["CurrentUser"]);
                     storage.set("typeCurrentUser", typeUser);
                     document.location.href = "Main.html"; 
                 }
