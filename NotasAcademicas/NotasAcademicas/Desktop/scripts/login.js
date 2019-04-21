@@ -13,7 +13,6 @@
 
 function Login() {
     $(".imgEspera").show();
-
     user = $("#txtUsuario").val();
     pwd = $("#txtContrasena").val();
     typeUser = $("#txtTypeUser").val();

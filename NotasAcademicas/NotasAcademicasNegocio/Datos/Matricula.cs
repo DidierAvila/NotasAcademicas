@@ -12,26 +12,21 @@ namespace NotasAcademicasNegocio.Datos
     using System;
     using System.Collections.Generic;
     
-    public partial class Materia
+    public partial class Matricula
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Materia()
+        public Matricula()
         {
-            this.DetalleNotas = new HashSet<DetalleNotas>();
+            this.DetalleEstudiantes = new HashSet<DetalleEstudiantes>();
         }
     
-        public int IdMateria { get; set; }
-        public string Dependencia { get; set; }
-        public string Modalidad { get; set; }
-        public string Codigo { get; set; }
-        public string Nombre { get; set; }
+        public int IdMatricula { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
         public Nullable<bool> Estado { get; set; }
-        public string Prerrequisito { get; set; }
-        public Nullable<int> Nivel { get; set; }
-        public Nullable<int> NumeroCredito { get; set; }
+        public string PeriodoAcademico { get; set; }
     
+        public virtual DetalleNotas DetalleNotas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleNotas> DetalleNotas { get; set; }
-        public virtual DetalleMatricula DetalleMatricula { get; set; }
+        public virtual ICollection<DetalleEstudiantes> DetalleEstudiantes { get; set; }
     }
 }

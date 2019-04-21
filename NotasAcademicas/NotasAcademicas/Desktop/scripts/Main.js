@@ -30,8 +30,8 @@ $(document).ready(function () {
         MyItinerary();
     });
 
-    $("#btnLegalizeItinerary").click(function () {
-        LegalizeItinerary();
+    $("#btnMattersStuden").click(function () {
+        GetCurrentMatters();
     });
 
     $("#btnMyProfile").click(function () {
@@ -45,6 +45,15 @@ $(document).ready(function () {
 
     $('#modalAlerta').on('hide.bs.modal', function () {
         $("#alertamensaje").html('');
+    });
+
+    $("#btnGuardarDoMyProfiledfress").click(function () {
+        modColaboradorAutorizador($("#ModColaborador").val()
+            , $("#ModAutorizador").val());
+    });
+
+    $('#modalAdminUser').on('hide.bs.modal', function () {
+        mod = true;
     });
 });
 
@@ -72,6 +81,7 @@ function Hide() {
     $("#panelMyItinerary").hide();
     $("#panelLegalizeItinerary").hide();
     $("#panelMyProfile").hide();
+    $("#panelNotesStuden").hide();
 }
 
 function CorregirColoresB() {
@@ -87,15 +97,6 @@ function CorregirColoresB() {
 function Home() {
     $("#panelHome").show();
     $("#panelNewItinerary").hide();
-    $("#panelMyItinerary").hide();
-    $("#panelLegalizeItinerary").hide();
-    $("#panelMyProfile").hide();
-}
-
-function NewItinerary() {
-    LoadNewItinerary();
-    $("#panelNewItinerary").show();
-    $("#panelHome").hide();
     $("#panelMyItinerary").hide();
     $("#panelLegalizeItinerary").hide();
     $("#panelMyProfile").hide();
@@ -125,9 +126,10 @@ function MyProfile() {
     $("#panelMyItinerary").hide();
 }
 
-function LoadNewItinerary() {
-    LoadCombo('DeptHometown');
-    LoadCombo('DeptDestinationCity');
+function GetCurrentMattersMenu(){
+    $("#panelHome").hide();
+    $("#panelMyProfile").hide();
+    $("#panelMyItinerary").hide();
 }
 
 //**************************Right Panel********************************
@@ -141,20 +143,28 @@ function GetCurrentProfile() {
             async: true,
             success: function (result) {
                 if (result !== null) {
+                    var items = ["CC", "TI", "PASAPORTE"];
+                    $("#UserName").val(result["UserName"]);
+                    $("#LastName").val(result["LastName"]);
+                    $("#UserDocument").val(result["Document"]);
+                    $("#UserEmail").val(result["Email"]);
+                    $("#UserPhone").val(result["PhoneNumber"]);
+                    $("#Nationality").val(result["Nationality"]);
+                    $("#UserPassword").val(result["Password"]);
+                    $("#UserBirthDate").val(result["Birthdate"]);
+                    if (result["Gender"] === "Masculino") {
+                        $("#CheckFemale").prop('checked', true);
+                    } else {
+                        $("#CheckMale").prop('checked', true);
+                    }
+                    $("#TypeDocument").val(result["DocumentType"]);
+
                     if (CurrentUserType === "student") {
-                        $("#UserName").val(result["UserName"]);
-                        $("#LastName").val(result["LastName"]);
-                        $("#UserDocument").val(result["UserDocument"]);
-                        $("#UserEmail").val(result["Email"]);
-                        $("#UserPhone").val(result["PhoneNumber"]);
-                        $("#UserBirthDate").val(result["Birthdate"]);
-                        $("#nationality").val(result["Nationality"]);
                         $("#CareerPrograms").val(result["Career"]);
                         $("#CurrentLevel").val(result["CurrentLevel"]);
                         $("#GeneralAverage").val(result["GeneralAverage"]);
                         $("#DateAdmission").val(result["AdmissionDate"]);
-                        $("#headquarters").val(result["Headquarters"]);
-                        $("#UserPassword").val(result["Password"]);
+                        $("#headquarters").val(result["Headquarters"]);             
                     } else {
                         $("#UserName").val(result["UserName"]);
                         $("#LastName").val(result["LastName"]);
@@ -173,7 +183,47 @@ function GetCurrentProfile() {
     }
 }
 
+function GetCurrentMatters() {
+    if (IdCurrentUser !== '' || CurrentUserType !== '') {
+        $.ajax({
+            url: "../Controllers/Controlador.ashx?op=400&IdCurrentStudent=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
+            method: "POST",
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                if (result !== null) {
+                    $("#ulNotes").children().remove();
+                    
+                    var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+                    $.each(obj, function (i, o) {
+                        //'<a id="adminalimentac" href="javascript:AdminAlimentacionTerrestre();" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 1</a>';
+                        $("#ulNotes").append("<a id=" + i + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + o + "</a>");
+                    });
 
+                    //$("#ulNotes").append(
+                    //    + '<a id="adminalimentac">didier</a>'
+                    //    + '<a id="adminalimentac" href="javascript:AdminAlimentacionTerrestre();" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 1</a>'
+                    //    + '<a id="adminhotelasumido" href="javascript:AdminHotelAsumido()" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 2</a>'
+                    //    + '<a id="admintarifapeaje" href="javascript:AdminTarifaPeaje()" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 3</a>'
+                    //);
+
+                    //if (CurrentUserType === "student") {
+
+                    //} else {
+                    //}
+                }
+                else {
+                    alert('Error:' + result["error"]);
+                }
+            },
+            error: function (result) {
+                alert("failed");
+            }
+        });
+    } else {
+        alert("Parámetros vacios!");
+    }
+}
 
 function LoadCombo(combo) {
     $.ajax({
@@ -197,8 +247,4 @@ function FillComboBox(resultTable, combo) {
             $("#" + combo).append("<option id =" + o.Codigo + ">" + o.Municipio + "</option>");
         });
     }
-}
-
-function LoadGridView(gridView) {
-
 }

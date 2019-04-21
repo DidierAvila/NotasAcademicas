@@ -7,6 +7,7 @@ using System.Web.Configuration;
 using Newtonsoft.Json;
 using System.Data;
 using NotasAcademicasNegocio.Negocio;
+using NotasAcademicasNegocio.Utility;
 
 namespace NotasAcademicas.Controllers
 {
@@ -70,7 +71,7 @@ namespace NotasAcademicas.Controllers
                             }
 
                             Negocio negocio = new Negocio();
-                            pProfile = negocio.GetCurrentProfileUser(int.Parse(IdCurrentUser), typeUser);
+                            pProfile = negocio.GetCurrentProfileUser(int.Parse(IdCurrentUser), typeUser, ref error);
 
                             if (error.Length > 0)
                             {
@@ -85,7 +86,27 @@ namespace NotasAcademicas.Controllers
                         break;
                     case 400:
                         {
-                            
+                            #region
+                            List<PCurrentMatterView> pCurrentMatterViewsList = new List<PCurrentMatterView>();
+                            string IdCurrentUser = context.Request["IdCurrentStudent"];
+                            string typeUser = context.Request["typeUser"];
+                            string CurrentTable = string.Empty;
+
+                            if (string.IsNullOrEmpty(IdCurrentUser) || string.IsNullOrEmpty(typeUser))
+                            {
+                                CurrentTable = "Datos no pueden ser nulos!";
+                            }
+                            Negocio negocio = new Negocio();
+                            pCurrentMatterViewsList = negocio.GetCurrentMatters(int.Parse(IdCurrentUser), typeUser, ref error);
+
+                            if (error.Length > 0)
+                            {
+                                throw new Exception(error);
+                            }
+
+                            tipoContenido = "text/json";
+                            result = JsonConvert.SerializeObject(pCurrentMatterViewsList);
+                            #endregion
                         }
                         break;
                     case 500:

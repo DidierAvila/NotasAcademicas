@@ -4,11 +4,22 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f2c74f85d1314ed79bf32e2e5f3dd5b4" Name="Diagram1">
+      <Diagram DiagramId="c38dba826c6544fd9ab41b861aa07d5b" Name="Diagram1" ZoomLevel="85">
+        <EntityTypeShape EntityType="NotasAcademicasModel.Estudiante" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NotasAcademicasModel.Materia" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NotasAcademicasModel.Estudiante" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="NotasAcademicasModel.Profesor" Width="1.5" PointX="2.75" PointY="3.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="NotasAcademicasModel.Profesor" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NotasAcademicasModel.Matricula" Width="1.5" PointX="4.75" PointY="6" />
+        <EntityTypeShape EntityType="NotasAcademicasModel.DetalleMatricula" Width="1.5" PointX="10" PointY="1.875" />
+        <EntityTypeShape EntityType="NotasAcademicasModel.DetalleNotas" Width="1.5" PointX="7" PointY="1.375" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Estudiante" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Materia" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_DetalleMatricula_Materia" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Matricula" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_DetalleMatricula_Profesor" />
+        <EntityTypeShape EntityType="NotasAcademicasModel.DetalleEstudiantes" Width="1.5" PointX="8" PointY="5.625" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Estudiante" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Matricula" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

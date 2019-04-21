@@ -14,18 +14,31 @@ namespace NotasAcademicasNegocio.Datos
     
     public partial class Profesor
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Profesor()
+        {
+            this.DetalleMatricula = new HashSet<DetalleMatricula>();
+        }
+    
         public int IdProfesor { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public string Documento { get; set; }
         public string Email { get; set; }
         public string Telefono { get; set; }
-        public bool Estado { get; set; }
+        public Nullable<bool> Estado { get; set; }
         public string Sexo { get; set; }
-        public System.DateTime FechaNacimiento { get; set; }
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
         public string Nacionalidad { get; set; }
         public string Direccion { get; set; }
-        public System.DateTime FechaIngreso { get; set; }
+        public Nullable<System.DateTime> FechaIngreso { get; set; }
         public string Clave { get; set; }
+        public string TipoDocumento { get; set; }
+        public string Facultad { get; set; }
+        public string GradoEscolaridad { get; set; }
+        public string TituloProfesional { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleMatricula> DetalleMatricula { get; set; }
     }
 }

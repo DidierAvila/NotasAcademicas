@@ -32,21 +32,14 @@
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" style="color: #ffffff" href="Main.html"><span class="glyphicon glyphicon-book"></span> Notas académicas</a>
-            <input type="text" id="txtTypeUser" value="student" style="display:none" disabled />
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="margin-right:0px">
                 <li class="active"><a style="background-color: #2c93c6; color: #ffffff" id="btnAyuda" href="#"><span class="glyphicon glyphicon-question-sign"></span> Ayuda</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right" style="margin-right:0px;background-color: #2c93c6;">
-                <li id="btnLogOut"><a style="color: #ffffff" href="#"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                <li id="btnLogOut"><a style="color: #ffffff" href="LoginStudent.html"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
             </ul>
             <div style="float:right; margin-right:12px; margin-top:14px">
                 <label class="colorBlanco"><span class="glyphicon glyphicon-user"></span> Usuario:</label>
@@ -56,9 +49,10 @@
     </nav>
 
     <div class="container-fluid" style="padding-left:0px">
-
+        <!-- Menu -->
         <div id="panelLeft" class="col-lg-3 col-md-6 col-sm-6" style="width:18%">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <!-- Home -->
                 <div class="panel panel-default mnuAdmin" id="mnuHome">
                     <div class="panel-heading" role="tab" id="headingHome">
                         <h4 class="panel-title">
@@ -69,21 +63,30 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default mnuAdmin" id="mnuNewItinerario">
-                    <div class="panel-heading" role="tab" id="headingNewItinerario">
+                <!-- Notes Studen-->
+                <div class="panel panel-default mnuAdmin" id="mnuMattersStuden">
+                    <div class="panel-heading" role="tab" id="headingMattersStuden">
                         <h4 class="panel-title">
-                            <a class="botonIconoNormal" id="btnNewItinerario" data-toggle="collapse" data-parent="#accordion" href="javascript:NewItinerary()" aria-expanded="true" aria-controls="collapseOne">
-                                <i class="fa glyphicon glyphicon-plus"></i> Notas
+                            <a class="botonIconoNormal" id="btnMattersStuden" data-toggle="collapse" data-parent="#accordion" href="javascript:GetCurrentMattersMenu(),#collapseSellos" aria-expanded="true" aria-controls="collapseOne">
+                                <span class="glyphicon glyphicon-plus"></span> Notas
                             </a>
                         </h4>
                     </div>
+                    <div class="panel-body container-fluid">
+                        <div id="collapseSellos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <ul  class="nav nav-pills nav-stacked">
+                                <li id="ulNotes" class="list-group"/>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="panel panel-default mnuAdmin" id="mnuNotes">
-                    <div class="panel-heading" role="tab" id="headingNotes">
+                <!-- Notes Teacher-->
+                <div class="panel panel-default mnuAdmin" id="mnuMattersTeacher">
+                    <div class="panel-heading" role="tab" id="headingMattersTeacher">
                         <h4 class="panel-title">
-                            <a class="botonIconoNormal" id="btnNotes" data-toggle="collapse" data-parent="#accordion" href="#collapseSellos" aria-expanded="true" aria-controls="collapseOne">
-                                <span class="glyphicon glyphicon-plus"></span> Notas
+                            <a class="botonIconoNormal" id="btnMatters" data-toggle="collapse" data-parent="" href="" aria-expanded="true" aria-controls="collapseOne">
+                                <span class="glyphicon glyphicon-plus"></span> Asignaturas
                             </a>
                         </h4>
                     </div>
@@ -110,16 +113,7 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default mnuAdmin" id="mnuLegalizeItinerary">
-                    <div class="panel-heading" role="tab" id="headingLegalizeItinerary">
-                        <h4 class="panel-title">
-                            <a class="botonIconoNormal" id="btnLegalizeItinerary" data-toggle="collapse" data-parent="#accordion" href="javascript:LegalizeItinerary()" aria-expanded="true" aria-controls="collapseOne">
-                                <i class="fa glyphicon glyphicon-edit"></i> Informes
-                            </a>
-                        </h4>
-                    </div>
-                </div>
-
+                <!--My Profile -->
                 <div class="panel panel-default mnuAdmin" id="mnuMyProfile">
                     <div class="panel-heading" role="tab" id="headingMyProfile">
                         <h4 class="panel-title">
@@ -132,153 +126,21 @@
             </div>
         </div>
 
+        <!-- Contenedores -->
         <div id="panelRigth" class="col-lg-9 col-md-6 col-sm-6 mccontent" style="width:82%">
+            <!-- Home -->
             <div class="panel panel-default" id="panelHome">
                 <div class="panel-body">
                     <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 46% 15px 46%;">Home</strong></h3>
                     <br />
-                    <img src="../imagenes/Banner2.png" style="margin-left:35%" />
+                    <img src="../imagenes/Banner2.png" style="margin-left:35%"/>
                 </div>
             </div>
 
-            <div class="panel panel-default" id="panelNewItinerary">
+            <!--  -->
+            <div class="panel panel-default" id="panelNotesStuden">
                 <div class="panel-body">
-                    <form id="formNewItinerary">
-                        <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 41% 15px 40%;">Notas</strong></h3>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Departamento de origen</b>
-                                <input list="DeptHometown" name="DeptHometown" class="Cargo form-control" />
-                                <datalist id="DeptHometown"></datalist>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Ciudad de origen</b>
-                                <input list="Hometown" name="Hometown" class="Cargo form-control" />
-                                <datalist id="Hometown"></datalist>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Fecha de salida</b>
-                                <input id="DepartureDate" name="DepartureDate" type="date" class="form-control" />
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Hora salida</b>
-                                <input id="DepartureTime" name="DepartureTime" type="time" class="form-control" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Departamento de destino</b>
-                                <input list="DeptDestinationCity" name="DeptDestinationCity" class="Cargo form-control" />
-                                <datalist id="DeptDestinationCity"></datalist>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Ciudad de destino</b>
-                                <input list="DestinationCity" name="DestinationCity" class="Cargo form-control" />
-                                <datalist id="DestinationCity"></datalist>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Fecha de llegada</b>
-                                <input id="ArrivalDate" name="ArrivalDate" type="date" class="form-control" />
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Hora llegada</b>
-                                <input id="ArrivalTime" name="ArrivalTime" type="time" class="form-control" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Tipo De Transporte</b>
-                                <select id="TypeTransport" name="TypeTransport" class="form-control">
-                                    <option>Vehículo</option>
-                                    <option>Avión</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Centro De Costos</b>
-                                <input id="Centro" name="DepartureTime" type="text" class="form-control" placeholder="Centro de costos" />
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Vuelo Internacional</b>
-                                <div>
-                                    <input id="CheckInternationalFlight" name="CheckInternationalFlight" style="height:25px; width:20px; float:left" type="checkbox" class="checkbox" />
-                                    <input id="ValorVueloInter" type="text" class="form-control" style="float:left; width:85%; margin-left:5%" placeholder="Vuelo Internacional" />
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Motivo de viaje</b>
-                                <textarea id="ReasonTrip" class="form-control" style="height:83px" placeholder="Motivo de viaje"></textarea>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Gastos Adicionales</b>
-                                <textarea id="AdditionalCosts" class="form-control" style="height:83px" placeholder="Gastos Adicionales"></textarea>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Asumir Hotel?</b>
-                                <div>
-                                    <input id="CheckHotel" style="height: 25px; width: 20px; float:left" type="checkbox" class="checkbox" />
-                                    <input id="ValorHotel" style="float:left; width:85%; margin-left:5%" type="text" class="form-control" placeholder="Asumir Hotel" />
-                                </div>
-                                <b style="font-size: 16px;">Necesita Hotel?</b>
-                                <input id="CheckAsumirHotel" style="height:25px; width:20px" type="checkbox" class="checkbox" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6" style="width:100%">
-                                <b style="font-size: 16px;">Observaciones</b>
-                                <textarea id="Observations" class="form-control" placeholder="Observaciones"></textarea>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 Itr">
-                                <a href="#" id="btnGuardarTrayecto" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar Trayecto</a>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <a href="#" id="btnInforPasajero" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span> Información pasajero</a>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <a href="#" id="btnVerRelGastos" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span> Ver relación de gastos</a>
-                            </div>
-                        </div>
-                        <br />
-                        <div id="DataGridTrayectos">
-                            <table class="dataTable no-footer" role="grid" aria-describedby="tblsecretariasgerencia_info">
-                                <thead>
-                                    <tr role="row">
-                                        <th>Login</th>
-                                        <th>Role</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr role="row" class="odd selected">
-                                        <td>Dato1</td>
-                                        <td>Dato2</td>
-                                    </tr>
-                                    <tr role="row" class="odd selected">
-                                        <td>Dato1</td>
-                                        <td>Dato2</td>
-                                    </tr>
-                                    <tr role="row" class="odd selected">
-                                        <td>Dato1</td>
-                                        <td>Dato2</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="panel panel-default" id="panelMyItinerary">
-                <div class="panel-body">
-                    <form id="formMyItinerary">
+                    <form id="formNotesStuden">
                         <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 41% 15px 41%;">Mi Calendario</strong></h3>
                         <br />
                         <div id="calendar" class="fc fc-unthemed fc-ltr" style="background-color:aliceblue">
@@ -529,11 +391,12 @@
                 </div>
             </div>
 
+            <!--My Profile-->
             <div class="panel panel-default" id="panelMyProfile">
                 <div class="panel-body">
+                    <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 44% 15px 44%;">Mi Perfil</strong></h3>
+                    <br />
                     <form id="formMyProfile">
-                        <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 41% 15px 40%;">Mi Perfil</strong></h3>
-                        <br />
                         <h4 style="text-align:center"><b>Información Personal</b></h4>
                         <hr />
                         <div class="row">
@@ -549,7 +412,7 @@
                         <br />
                         <div class="row">
                             <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Sexo</b>
+                                <b style="font-size: 16px;">Género</b>
                                 <div>
                                     <label style="margin: 5px;"><input id="CheckFemale" name="CheckFemale" style="height:15px; width:15px;" type="checkbox" />&nbsp;Femenino</label>
                                     <label style="margin: 5px;"><input id="CheckMale" name="CheckMale" style="height:15px; width:15px;" type="checkbox" />&nbsp;Masculino</label>
@@ -558,9 +421,9 @@
                             <div class="col-md-6 Itr">
                                 <b style="font-size: 16px;">Tipo Documento</b>
                                 <select id="TypeDocument" name="TypeDocument" class="form-control">
-                                    <option>CC</option>
-                                    <option>TE</option>
-                                    <option>DE</option>
+                                    <option id="CC">CC</option>
+                                    <option id="TE">TE</option>
+                                    <option id="DE">DE</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
@@ -587,11 +450,11 @@
                             </div>
                             <div class="col-md-6">
                                 <b style="font-size: 16px;">Nacionalidad</b>
-                                <input id="nationality" name="nationality" type="text" class="form-control" placeholder="Nacionalidad" />
+                                <input id="Nationality" name="Nationality" type="text" class="form-control" placeholder="Nacionalidad" />
                             </div>
                         </div>
                         <br />
-                        <h4 style="text-align:center"><b>Información Del Programa</b></h4>
+                        <h4 style="text-align:center"><b>Información del programa</b></h4>
                         <hr />
                         <br />
                         <div class="row">
@@ -627,8 +490,8 @@
                             </div>
                         </div>
                         <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarDoMyProfiledfress" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        <div class="form-group-lg" style="text-align:center">
+                            <a href="#" id="btnGuardarDoMyProfiledfress" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
                         </div>
                     </form>
                 </div>
