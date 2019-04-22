@@ -97,7 +97,7 @@ namespace NotasAcademicas.Controllers
                                 CurrentTable = "Datos no pueden ser nulos!";
                             }
                             Negocio negocio = new Negocio();
-                            pCurrentMatterViewsList = negocio.GetCurrentMatters(int.Parse(IdCurrentUser), typeUser, ref error);
+                            pCurrentMatterViewsList = negocio.GetCurrentMattersByUser(int.Parse(IdCurrentUser), typeUser, ref error);
 
                             if (error.Length > 0)
                             {
@@ -110,7 +110,29 @@ namespace NotasAcademicas.Controllers
                         }
                         break;
                     case 500:
-                       
+                        {
+                            #region
+                            List<PCMatterView> pCurrentMatterViewsList = new List<PCMatterView>();
+                            string IdRegistration = context.Request["IdRegistration"];
+                            string typeUser = context.Request["typeUser"];
+                            string CurrentTable = string.Empty;
+
+                            if (string.IsNullOrEmpty(IdRegistration) || string.IsNullOrEmpty(typeUser))
+                            {
+                                CurrentTable = "Datos no pueden ser nulos!";
+                            }
+                            Negocio negocio = new Negocio();
+                            pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdRegistration), typeUser, ref error);
+
+                            if (error.Length > 0)
+                            {
+                                throw new Exception(error);
+                            }
+
+                            tipoContenido = "text/json";
+                            result = JsonConvert.SerializeObject(pCurrentMatterViewsList);
+                            #endregion
+                        }
                         break;
                     case 600:
                         {

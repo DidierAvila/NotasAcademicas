@@ -54,8 +54,23 @@ namespace NotasAcademicasNegocio.Utility
         public int NamberCredits { get; set; }
     }
 
+    public class PCMatterView
+    {
+        public string IdMatter { get; set; }
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Dependence { get; set; }
+        public string Modality { get; set; }
+        public string Status { get; set; }
+        public string Prerequisites { get; set; }
+        public int Level { get; set; }
+        public int NamberCredits { get; set; }
+        public List<string> Qualifications { get; set; }
+    }
+
     public class PCurrentMatterView
     {
+        public int IdRegistration { get; set; }
         public string IdMatter { get; set; }
         public string NameMatter { get; set; }
         public string Code { get; set; }

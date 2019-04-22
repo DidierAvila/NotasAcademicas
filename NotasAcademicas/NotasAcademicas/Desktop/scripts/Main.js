@@ -77,7 +77,7 @@ function poseePermiso() {
 function Hide() {
     $(".collapseExample").collapse();
     $("#panelHome").hide();
-    $("#panelNewItinerary").hide();
+    $("#panelCalendary").hide();
     $("#panelMyItinerary").hide();
     $("#panelLegalizeItinerary").hide();
     $("#panelMyProfile").hide();
@@ -97,7 +97,7 @@ function CorregirColoresB() {
 function Home() {
     $("#panelHome").show();
     $("#panelNewItinerary").hide();
-    $("#panelMyItinerary").hide();
+    $("#panelCalendary").hide();
     $("#panelLegalizeItinerary").hide();
     $("#panelMyProfile").hide();
 }
@@ -193,12 +193,47 @@ function GetCurrentMatters() {
             success: function (result) {
                 if (result !== null) {
                     $("#ulNotes").children().remove();
-                    
-                    var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
-                    $.each(obj, function (i, o) {
-                        //'<a id="adminalimentac" href="javascript:AdminAlimentacionTerrestre();" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 1</a>';
-                        $("#ulNotes").append("<a id=" + i + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + o + "</a>");
+                    for (var i = 0; i < result.length; i++) {
+                        $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + ");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                    }
+                    $("#panelHome").hide();
+                    $("#panelMyProfile").hide();
+                    $("#panelMyItinerary").hide();
+                }
+                else {
+                    alert('Error:' + result["error"]);
+                }
+            },
+            error: function (result) {
+                alert("failed");
+            }
+        });
+    } else {
+        alert("Parámetros vacios!");
+    }
+}
+
+function GetCurrentDetailMatters(IdRegistration) {
+    if (IdRegistration !== '' || CurrentUserType !== '') {
+        $.ajax({
+            url: "../Controllers/Controlador.ashx?op=500&IdRegistration=" + IdRegistration + "&typeUser=" + CurrentUserType,
+            method: "POST",
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                if (result !== null) {
+                    $("#panelNotesStuden").show();
+                    $(document).ready(function () {
+                        $('#example').DataTable();
                     });
+                    var currentArray = result;
+                    var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+                    for (var i = 0; i < result.length; i++) {
+                        //$("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                    }
+                    //$.each(result, function (i, o) {
+                    //    $("#ulNotes").append("<a id=" + i + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + o + "</a>");
+                    //});
 
                     //$("#ulNotes").append(
                     //    + '<a id="adminalimentac">didier</a>'
@@ -222,29 +257,5 @@ function GetCurrentMatters() {
         });
     } else {
         alert("Parámetros vacios!");
-    }
-}
-
-function LoadCombo(combo) {
-    $.ajax({
-        url: "../controladores/controladorCI.ashx",
-        method: "POST",
-        data: { "op": 900, "action": combo },
-        dataType: "json",
-        async: true,
-        success: function (result) {
-            FillComboBox(result, combo);
-        },
-        error: function (result) {
-            return null;
-        }
-    });
-}
-
-function FillComboBox(resultTable, combo) {
-    if (resultTable !== null) {
-        $.each(resultTable, function (i, o) {
-            $("#" + combo).append("<option id =" + o.Codigo + ">" + o.Municipio + "</option>");
-        });
     }
 }
