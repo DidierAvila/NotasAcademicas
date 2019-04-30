@@ -41,9 +41,11 @@
             <ul class="nav navbar-nav navbar-right" style="margin-right:0px;background-color: #2c93c6;">
                 <li id="btnLogOut"><a style="color: #ffffff" href="LoginStudent.html"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
             </ul>
-            <div style="float:right; margin-right:12px; margin-top:14px">
-                <label class="colorBlanco"><span class="glyphicon glyphicon-user"></span> Usuario:</label>
+            <div style="float:right; margin-right:17px; margin-top:14px">
+                <label class="colorBlanco"><span class="glyphicon glyphicon-education"></span> Usuario:</label>
                 <a id="currentUserName" style="color: #ffffff" href="javascript:MyProfile()"></a>
+                <label class="colorBlanco" style="margin-left:10px"><span class="glyphicon glyphicon-user"></span> Rol:</label>
+                <label id="currentRole" style="color: #ffffff">Estudiante</label>
             </div>
         </div>
     </nav>
@@ -62,7 +64,6 @@
                         </h4>
                     </div>
                 </div>
-
                 <!-- Notes Studen-->
                 <div class="panel panel-default mnuAdmin" id="mnuMattersStuden">
                     <div class="panel-heading" role="tab" id="headingMattersStuden">
@@ -74,18 +75,17 @@
                     </div>
                     <div class="panel-body container-fluid">
                         <div id="collapseSellos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                            <ul  class="nav nav-pills nav-stacked">
-                                <li id="ulNotes" class="list-group"/>
+                            <ul class="nav nav-pills nav-stacked">
+                                <li id="ulNotes" class="list-group" />
                             </ul>
                         </div>
                     </div>
                 </div>
-
                 <!-- Notes Teacher-->
                 <div class="panel panel-default mnuAdmin" id="mnuMattersTeacher">
                     <div class="panel-heading" role="tab" id="headingMattersTeacher">
                         <h4 class="panel-title">
-                            <a class="botonIconoNormal" id="btnMatters" data-toggle="collapse" data-parent="" href="" aria-expanded="true" aria-controls="collapseOne">
+                            <a class="botonIconoNormal" id="btnMatters" data-toggle="collapse" data-parent=""  href="#collapseSellos" aria-expanded="true" aria-controls="collapseOne">
                                 <span class="glyphicon glyphicon-plus"></span> Asignaturas
                             </a>
                         </h4>
@@ -102,23 +102,22 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="panel panel-default mnuAdmin" id="mnuMyItinerary">
-                    <div class="panel-heading" role="tab" id="headingMyItinerary">
-                        <h4 class="panel-title">
-                            <a class="botonIconoNormal" id="btnMyItinerary" data-toggle="collapse" data-parent="#accordion" href="javascript:MyItinerary()" aria-expanded="true" aria-controls="collapseOne">
-                                <i class="fa glyphicon glyphicon-calendar"></i> Calendario
-                            </a>
-                        </h4>
-                    </div>
-                </div>
-
                 <!--My Profile -->
                 <div class="panel panel-default mnuAdmin" id="mnuMyProfile">
                     <div class="panel-heading" role="tab" id="headingMyProfile">
                         <h4 class="panel-title">
                             <a class="botonIconoNormal" id="btnMyProfile" data-toggle="collapse" data-parent="#accordion" href="javascript:MyProfile()" aria-expanded="true" aria-controls="collapseOne">
                                 <i class="fa glyphicon glyphicon-user"></i> Mi perfil
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+                <!-- Calendary -->
+                <div class="panel panel-default mnuAdmin" id="mnuCalendary">
+                    <div class="panel-heading" role="tab" id="headingCalendary">
+                        <h4 class="panel-title">
+                            <a class="botonIconoNormal" id="btnCalendary" data-toggle="collapse" data-parent="#accordion" href="javascript:Calendary()" aria-expanded="true" aria-controls="collapseOne">
+                                <i class="fa glyphicon glyphicon-calendar"></i> Calendario
                             </a>
                         </h4>
                     </div>
@@ -136,67 +135,83 @@
                     <img src="../imagenes/Banner2.png" style="margin-left:35%" />
                 </div>
             </div>
-
             <!-- Notes Studen -->
             <div class="panel panel-default" id="panelNotesStuden">
                 <div class="panel-body">
                     <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 41% 15px 41%;">Detalles Notas</strong></h3>
                     <br />
-                    <form id="formMyProfile" style="text-align:center">
+                    <br />
+                    <form id="formMyProfile">
                         <div class="row">
                             <div class="col-md-2">
-                                <b style="font-size: 16px;">Nombre</b>
+                                <b style="font-size: 15px;">Nombre</b>
                                 <br />
-                                <b style="font-size: 16px;">Cálculo I</b>
+                                <b id="nameMatter" style="font-size: 14px;" />
                             </div>
-                            <div class="col-md-2">
-                                <b style="font-size: 16px;">Código</b>
+                            <div class="col-md-1">
+                                <b style="font-size: 15px;">Código</b>
                                 <br />
-                                <b style="font-size: 16px;">900</b>
+                                <b id="codeMatter" style="font-size: 14px;" />
                             </div>
-                            <div class="col-md-2">
-                                <b style="font-size: 16px;">Profesor</b>
+                            <div class="col-md-3">
+                                <b style="font-size: 15px;">Profesor</b>
                                 <br />
-                                <b style="font-size: 16px;">Carlos Castaño</b>
+                                <b id="teacherMatterName" style="font-size: 14px;" />
                             </div>
-                            <div class="col-md-2">
-                                <b style="font-size: 16px;">Número creditos</b>
+                            <div class="col-md-1">
+                                <b style="font-size: 15px;">Número creditos</b>
                                 <br />
-                                <b style="font-size: 16px;">4</b>
+                                <b id="numberCredits" style="font-size: 14px;" />
                             </div>
-                            <div class="col-md-2">
-                                <b style="font-size: 16px;">Número creditos</b>
+                            <div class="col-md-1">
+                                <b style="font-size: 15px;">Nivel</b>
                                 <br />
-                                <b style="font-size: 16px;">Cálculo</b>
+                                <b id="levelMatter" style="font-size: 14px;" />
+                            </div>
+                            <div class="col-md-1">
+                                <b style="font-size: 15px;">Periodo académico</b>
+                                <br />
+                                <b id="CademicPeriod" style="font-size: 14px;" />
+                            </div>
+                            <div class="col-md-3">
+                                <b style="font-size: 15px;">Horario</b>
+                                <br />
+                                <b id="schedule" style="font-size: 14px;" />
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="row" style="text-align:center">
+                            <div class="col-md-10">
+                                <b style="font-size: 17px;">Resultados notas</b>
                             </div>
                         </div>
                         <br />
-                        <div class="row">
-                            <div class="col-md-12">
-                                <b style="font-size: 16px;">Resultados notas</b>
+                        <div class="row" style="margin:0px auto">
+                            <div class="col-md-2" style="border:1px solid black;">
+                                <b style="font-size: 16px;">Calificaciones</b>
+                                <br />
+                                <b style="font-size: 16px;">Valor</b>
                             </div>
-                        </div>
-                        <br />
-                        <div class="row">
                             <div class="col-md-2" style="border:1px solid black;">
                                 <b style="font-size: 16px;">Nota 1</b>
                                 <br />
-                                <b style="font-size: 16px;">4.5</b>
+                                <b id="noteOne" style="font-size: 16px;" />
                             </div>
-                            <div class="col-md-3" style="border:1px solid black;">
+                            <div class="col-md-2" style="border:1px solid black;">
                                 <b style="font-size: 16px;">Nota 2</b>
                                 <br />
-                                <b style="font-size: 16px;">4</b>
+                                <b id="noteTwo" style="font-size: 16px;" />
                             </div>
                             <div class="col-md-2" style="border:1px solid black;">
                                 <b style="font-size: 16px;">Nota 3</b>
                                 <br />
-                                <b style="font-size: 16px;">3</b>
+                                <b id="noteThree" style="font-size: 16px;" />
                             </div>
-                            <div class="col-md-3" style="border:1px solid black;">
+                            <div class="col-md-2" style="border:1px solid black;">
                                 <b style="font-size: 16px;">Nota 4</b>
                                 <br />
-                                <b style="font-size: 16px;">3.5</b>
+                                <b id="noteFour" style="font-size: 16px;" />
                             </div>
                             <div class="col-md-2" style="border:1px solid black;">
                                 <b style="font-size: 16px;">Total notas</b>
@@ -204,11 +219,201 @@
                                 <b style="font-size: 16px;">3.5</b>
                             </div>
                         </div>
-                        <br />
                     </form>
                 </div>
             </div>
-
+            <!-- Notes Studen -->
+            <div class="panel panel-default" id="panelNotesTeacher">
+                <div class="panel-body">
+                    <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 41% 15px 41%;">Detalles Notas</strong></h3>
+                    <br />
+                    <br />
+                    <form id="formMyProfile">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <b style="font-size: 15px;">Nombre</b>
+                                <br />
+                                <b id="nameMatter" style="font-size: 14px;" />
+                            </div>
+                            <div class="col-md-1">
+                                <b style="font-size: 15px;">Código</b>
+                                <br />
+                                <b id="codeMatter" style="font-size: 14px;" />
+                            </div>
+                            <div class="col-md-3">
+                                <b style="font-size: 15px;">Profesor</b>
+                                <br />
+                                <b id="teacherMatterName" style="font-size: 14px;" />
+                            </div>
+                            <div class="col-md-1">
+                                <b style="font-size: 15px;">Número creditos</b>
+                                <br />
+                                <b id="numberCredits" style="font-size: 14px;" />
+                            </div>
+                            <div class="col-md-1">
+                                <b style="font-size: 15px;">Nivel</b>
+                                <br />
+                                <b id="levelMatter" style="font-size: 14px;" />
+                            </div>
+                            <div class="col-md-1">
+                                <b style="font-size: 15px;">Periodo académico</b>
+                                <br />
+                                <b id="CademicPeriod" style="font-size: 14px;" />
+                            </div>
+                            <div class="col-md-3">
+                                <b style="font-size: 15px;">Horario</b>
+                                <br />
+                                <b id="schedule" style="font-size: 14px;" />
+                            </div>
+                            <br />
+                        </div>
+                        <br />
+                        <div class="row" style="text-align:center">
+                            <div class="col-md-10">
+                                <b style="font-size: 17px;">Resultados notas</b>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" style="margin:0px auto">
+                            <div class="col-md-2" style="border:1px solid black;">
+                                <b style="font-size: 16px;">Calificaciones</b>
+                                <br />
+                                <b style="font-size: 16px;">Valor</b>
+                            </div>
+                            <div class="col-md-2" style="border:1px solid black;">
+                                <b style="font-size: 16px;">Nota 1</b>
+                                <br />
+                                <b id="noteOne" style="font-size: 16px;" />
+                            </div>
+                            <div class="col-md-2" style="border:1px solid black;">
+                                <b style="font-size: 16px;">Nota 2</b>
+                                <br />
+                                <b id="noteTwo" style="font-size: 16px;" />
+                            </div>
+                            <div class="col-md-2" style="border:1px solid black;">
+                                <b style="font-size: 16px;">Nota 3</b>
+                                <br />
+                                <b id="noteThree" style="font-size: 16px;" />
+                            </div>
+                            <div class="col-md-2" style="border:1px solid black;">
+                                <b style="font-size: 16px;">Nota 4</b>
+                                <br />
+                                <b id="noteFour" style="font-size: 16px;" />
+                            </div>
+                            <div class="col-md-2" style="border:1px solid black;">
+                                <b style="font-size: 16px;">Total notas</b>
+                                <br />
+                                <b style="font-size: 16px;">3.5</b>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--My Profile-->
+            <div class="panel panel-default" id="panelMyProfile">
+                <div class="panel-body">
+                    <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 44% 15px 44%;">Mi Perfil</strong></h3>
+                    <br />
+                    <form id="formMyProfile">
+                        <h4 style="text-align:center"><b>Información Personal</b></h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Nombres</b>
+                                <input id="UserName" name="UserName" type="text" class="form-control" placeholder="Nombres" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Apellidos</b>
+                                <input id="LastName" name="LastName" type="text" class="form-control" placeholder="Apellidos" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Género</b>
+                                <div>
+                                    <label style="margin: 5px;"><input id="CheckFemale" name="CheckFemale" style="height:15px; width:15px;" type="checkbox" />&nbsp;Femenino</label>
+                                    <label style="margin: 5px;"><input id="CheckMale" name="CheckMale" style="height:15px; width:15px;" type="checkbox" />&nbsp;Masculino</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 Itr">
+                                <b style="font-size: 16px;">Tipo Documento</b>
+                                <select id="TypeDocument" name="TypeDocument" class="form-control">
+                                    <option id="CC">CC</option>
+                                    <option id="TE">TE</option>
+                                    <option id="DE">DE</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Documento</b>
+                                <input id="UserDocument" name="UserDocument" type="number" class="form-control" placeholder="Cedula" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Email</b>
+                                <input id="UserEmail" name="UserEmail" type="email" class="form-control" placeholder="Email" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Celular</b>
+                                <input id="UserPhone" name="UserPhone" type="number" class="form-control" placeholder="Celular" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Fecha Nacimiento</b>
+                                <input id="UserBirthDate" name="UserBirthDate" type="date" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Nacionalidad</b>
+                                <input id="Nationality" name="Nationality" type="text" class="form-control" placeholder="Nacionalidad" />
+                            </div>
+                        </div>
+                        <br />
+                        <h4 style="text-align:center"><b>Información del programa</b></h4>
+                        <hr />
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Programa Académico</b>
+                                <input id="CareerPrograms" name="CareerPrograms" type="text" class="form-control" placeholder="Programa Académico" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Nivel Actual</b>
+                                <input id="CurrentLevel" name="CurrentLevel" type="text" class="form-control" placeholder="Nivel Actual" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Promedio General</b>
+                                <input id="GeneralAverage" name="GeneralAverage" type="text" class="form-control" placeholder="Promedio General" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Fecha Ingreso</b>
+                                <input id="DateAdmission" name="DateAdmission" type="date" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Sede</b>
+                                <input id="headquarters" name="headquarters" type="text" class="form-control" placeholder="Sede" />
+                            </div>
+                            <div class="col-md-6">
+                                <b style="font-size: 16px;">Contraseña</b>
+                                <input id="UserPassword" name="UserPassword" type="password" class="form-control" placeholder="Contraseña" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group-lg" style="text-align:center">
+                            <a href="#" id="btnGuardarDoMyProfiledfress" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <!-- Calendary -->
             <div class="panel panel-default" id="panelCalendary">
@@ -361,209 +566,9 @@
                             <label for="HorasCorreccionDwStoreDateTime">Horas corrección DwStoreDateTime</label>
                             <input id="HorasCorreccionDwStoreDateTismes" name="HorasCorreccionDwStoreDateTime" type="text" class="form-control" placeholder="Cantidad de horas a sumar o restar al campo DWSTOREDATETIME para corregir el problema de este campo que guarda en ocaciones con 5 horas de diferencia" />
                         </div>
-                        <div id="DataGridMisItinerarios">
-                            <table class="dataTable no-footer" role="grid" aria-describedby="tblsecretariasgerencia_info">
-                                <thead>
-                                    <tr role="row">
-                                        <th>Login</th>
-                                        <th>Role</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr role="row" class="odd selected">
-                                        <td>Dato1</td>
-                                        <td>Dato2</td>
-                                    </tr>
-                                    <tr role="row" class="odd selected">
-                                        <td>Dato1</td>
-                                        <td>Dato2</td>
-                                    </tr>
-                                    <tr role="row" class="odd selected">
-                                        <td>Dato1</td>
-                                        <td>Dato2</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                         <br />
                         <div class="form-group-lg">
                             <a href="#" id="btnGuardarDocuwasress" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="panel panel-default" id="panelLegalizeItinerary">
-                <div class="panel-body">
-                    <form id="formLegalizeItinerary">
-                        <h3 style="text-align:center"><strong>Informes</strong></h3>
-                        <br />
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="BaseDatosDataDocuware">Base de datos de los archivadores</label>
-                            <input id="BaseDatosDataDocsuwssareds" name="BaseDatosDataDocuware" type="text" class="form-control" placeholder="Nombre de la base de datos de los datos de los archivadores de Docuware" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="BaseDatosSistemaDocuware">Base de datos del sistema</label>
-                            <input id="BaseDatosSistemaDocusswarsed" name="BaseDatosSistemaDocuware" type="text" class="form-control" placeholder="Nombre de la base de datos de sistema de Docuware" />
-                        </div>
-                        <br />
-
-                        <div class="form-group-lg">
-                            <label for="CompaniaDocuware">Compañia Docuware</label>
-                            <input id="CompaniaDocsuswares" name="CompaniaDocuware" type="text" class="form-control" placeholder="Nombre de la compañia a a cual esta licenciado Docuware" />
-                        </div>
-                        <br />
-
-                        <div class="form-group-lg">
-                            <label for="ServidorDbDocuware">Servidor base datos</label>
-                            <input id="ServidorDbDocuwsadfres" name="ServidorDbDocuware" type="text" class="form-control" placeholder="Usuario de base de datos de Docuware" />
-                        </div>
-                        <br />
-
-                        <div class="form-group-lg">
-                            <label for="UsuarioDbDocuware">Usuario base de datos </label>
-                            <input id="UsuarioDbDocuwssdares" name="UsuarioDbDocuware" type="text" class="form-control" placeholder="Usuario de base de datos de Docuware" />
-                        </div>
-                        <br />
-
-                        <div class="form-group-lg">
-                            <label for="ContrasenaDbDocuware">Contrasena base de datos</label>
-                            <input id="ContrasenaDbDocusdwarses" name="ContrasenaDbDocuware" type="password" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="MotorDbDocuware">Motor base de datos Docuware</label>
-
-                            <select id="MotorDbDocuwaresass" name="MotorDbDocuware" class="form-control">
-                                <option>MSSQL</option>
-                                <option>MYSQL</option>
-                                <option>ORACLE</option>
-                            </select>
-                        </div>
-
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="UrlPlatformDocuware">Url Platform Docuware</label>
-                            <input id="UrlPlatformDocuwarassecs" name="UrlPlatformDocuware" type="text" class="form-control" placeholder="URL del servicio REST de Docuware" />
-                        </div>
-                        <br />
-
-                        <div class="form-group-lg">
-                            <label for="HorasCorreccionDwStoreDateTime">Horas corrección DwStoreDateTime</label>
-                            <input id="HorasCorreccionDwStoreDasfteTismes" name="HorasCorreccionDwStoreDateTime" type="text" class="form-control" placeholder="Cantidad de horas a sumar o restar al campo DWSTOREDATETIME para corregir el problema de este campo que guarda en ocaciones con 5 horas de diferencia" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-
-                            <a href="#" id="btnGuardarDocuwassdfress" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!--My Profile-->
-            <div class="panel panel-default" id="panelMyProfile">
-                <div class="panel-body">
-                    <h3 style="text-align:center"><strong style="border-radius:4px; background-color:#216692; color:#FFF; padding:15px 44% 15px 44%;">Mi Perfil</strong></h3>
-                    <br />
-                    <form id="formMyProfile">
-                        <h4 style="text-align:center"><b>Información Personal</b></h4>
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Nombres</b>
-                                <input id="UserName" name="UserName" type="text" class="form-control" placeholder="Nombres" />
-                            </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Apellidos</b>
-                                <input id="LastName" name="LastName" type="text" class="form-control" placeholder="Apellidos" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Género</b>
-                                <div>
-                                    <label style="margin: 5px;"><input id="CheckFemale" name="CheckFemale" style="height:15px; width:15px;" type="checkbox" />&nbsp;Femenino</label>
-                                    <label style="margin: 5px;"><input id="CheckMale" name="CheckMale" style="height:15px; width:15px;" type="checkbox" />&nbsp;Masculino</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 Itr">
-                                <b style="font-size: 16px;">Tipo Documento</b>
-                                <select id="TypeDocument" name="TypeDocument" class="form-control">
-                                    <option id="CC">CC</option>
-                                    <option id="TE">TE</option>
-                                    <option id="DE">DE</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Documento</b>
-                                <input id="UserDocument" name="UserDocument" type="number" class="form-control" placeholder="Cedula" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Email</b>
-                                <input id="UserEmail" name="UserEmail" type="email" class="form-control" placeholder="Email" />
-                            </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Celular</b>
-                                <input id="UserPhone" name="UserPhone" type="number" class="form-control" placeholder="Celular" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Fecha Nacimiento</b>
-                                <input id="UserBirthDate" name="UserBirthDate" type="date" class="form-control" />
-                            </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Nacionalidad</b>
-                                <input id="Nationality" name="Nationality" type="text" class="form-control" placeholder="Nacionalidad" />
-                            </div>
-                        </div>
-                        <br />
-                        <h4 style="text-align:center"><b>Información del programa</b></h4>
-                        <hr />
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Programa Académico</b>
-                                <input id="CareerPrograms" name="CareerPrograms" type="text" class="form-control" placeholder="Programa Académico" />
-                            </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Nivel Actual</b>
-                                <input id="CurrentLevel" name="CurrentLevel" type="text" class="form-control" placeholder="Nivel Actual" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Promedio General</b>
-                                <input id="GeneralAverage" name="GeneralAverage" type="text" class="form-control" placeholder="Promedio General" />
-                            </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Fecha Ingreso</b>
-                                <input id="DateAdmission" name="DateAdmission" type="date" class="form-control" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Sede</b>
-                                <input id="headquarters" name="headquarters" type="text" class="form-control" placeholder="Sede" />
-                            </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Contraseña</b>
-                                <input id="UserPassword" name="UserPassword" type="password" class="form-control" placeholder="Contraseña" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-group-lg" style="text-align:center">
-                            <a href="#" id="btnGuardarDoMyProfiledfress" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
                         </div>
                     </form>
                 </div>

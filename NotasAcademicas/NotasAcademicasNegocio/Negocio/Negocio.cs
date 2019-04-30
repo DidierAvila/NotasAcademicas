@@ -135,11 +135,12 @@ namespace NotasAcademicasNegocio.Negocio
                     if (typeUser.Equals("student"))
                     {
 
-                        var currentMatter = (from dm in context.DetalleMatricula join de in context.DetalleEstudiantes
+                        var currentMatter = (from mt in context.Matricula join dm in context.DetalleMatricula 
+                                            on mt.IdMatricula equals dm.Id_Fr_Matricula join de in context.DetalleEstudiantes
                                             on dm.Id_Fr_Matricula equals de.Id_Fr_Matricula_E join Materia m in context.Materia
                                             on dm.IdMateria equals m.IdMateria join p in context.Profesor
                                             on dm.IdProfesor equals p.IdProfesor
-                                            where de.Id_Fr_Estudiantes_E == idCurrentUser & de.Estado == true
+                                            where de.Id_Fr_Estudiantes_E == idCurrentUser & de.Estado == true && mt.Estado == true
                                             select new {dm.Id_Fr_Matricula, m.IdMateria, m.Nombre, m.Codigo, m.NumeroCredito, p.IdProfesor, p.Nombres, p.Apellidos}).ToList();
 
                         foreach (var item in currentMatter)
@@ -187,7 +188,7 @@ namespace NotasAcademicasNegocio.Negocio
             }
         }
 
-        public List<PCMatterView> GetCurrentMatter(int idCurrentUser, string typeUser, ref string error)
+        public List<PCMatterView> GetCurrentMatter(int idCurrentUser, int idRegistration, string typeUser, ref string error)
         {
             List<PCMatterView> pcMatterViewList = new List<PCMatterView>();
             PCMatterView pCMatterView;
@@ -198,20 +199,26 @@ namespace NotasAcademicasNegocio.Negocio
                     if (typeUser.Equals("student"))
                     {
                         var currentMatter = (from dn in context.DetalleNotas
-                                             join m in context.Materia
-                                             on dn.Id_Fr_Materia_N equals m.IdMateria
-                                             join e in context.Estudiante
-                                             on dn.Id_Fr_Estudiantes_N equals e.IdEstudiante
-                                             select new { m.IdMateria, m.Nombre, m.Codigo, m.NumeroCredito, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).ToList();
+                                             join m in context.Materia on dn.Id_Fr_Materia_N equals m.IdMateria
+                                             join e in context.Estudiante on dn.Id_Fr_Estudiantes_N equals e.IdEstudiante
+                                             join dm in context.DetalleMatricula on dn.Id_Fr_Matricula_N equals dm.Id_Fr_Matricula
+                                             join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
+                                             join mt in context.Matricula on dn.Id_Fr_Matricula_N equals mt.IdMatricula
+                                             where dn.Id_Fr_Estudiantes_N == idCurrentUser && dn.Id_Fr_Matricula_N == idRegistration
+                                             select new { m.Nivel, mt.PeriodoAcademico, m.IdMateria, dm.Horario, m.Nombre, m.Codigo, p.Nombres, p.Apellidos, m.NumeroCredito, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).ToList();
 
                         foreach (var item in currentMatter)
                         {
                             pCMatterView = new PCMatterView();
                             pCMatterView.Qualifications = new List<string>();
+                            pCMatterView.Level = (int)item.Nivel;
+                            pCMatterView.Schedule = item.Horario;
+                            pCMatterView.CademicPeriod = item.PeriodoAcademico;
                             pCMatterView.IdMatter = item.IdMateria.ToString();
                             pCMatterView.Name = item.Nombre;
                             pCMatterView.NamberCredits = (int)item.NumeroCredito;
-                            pCMatterView.Code = item.Codigo;                   
+                            pCMatterView.Code = item.Codigo;
+                            pCMatterView.TeacherName = item.Nombres + " " + item.Apellidos;
                             pCMatterView.Qualifications.Add(item.Nota1.ToString());
                             pCMatterView.Qualifications.Add(item.Nota2.ToString());
                             pCMatterView.Qualifications.Add(item.Nota3.ToString());

@@ -114,6 +114,7 @@ namespace NotasAcademicas.Controllers
                             #region
                             List<PCMatterView> pCurrentMatterViewsList = new List<PCMatterView>();
                             string IdRegistration = context.Request["IdRegistration"];
+                            string IdCurrentUser = context.Request["IdCurrentUser"];
                             string typeUser = context.Request["typeUser"];
                             string CurrentTable = string.Empty;
 
@@ -122,7 +123,7 @@ namespace NotasAcademicas.Controllers
                                 CurrentTable = "Datos no pueden ser nulos!";
                             }
                             Negocio negocio = new Negocio();
-                            pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdRegistration), typeUser, ref error);
+                            pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdCurrentUser), int.Parse(IdRegistration), typeUser, ref error);
 
                             if (error.Length > 0)
                             {

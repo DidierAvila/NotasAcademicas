@@ -1,6 +1,7 @@
 ﻿var UserCurrentName;
 var CurrentUserType;
 var IdCurrentUser;
+var CurrentRole;
 var storage;
 var mod = true;
 var CurrentTable;
@@ -22,12 +23,8 @@ $(document).ready(function () {
         Home();
     });
 
-    $("#btnNewItinerario").click(function () {
-        NewItinerary();
-    });
-
-    $("#btnMyItinerary").click(function () {
-        MyItinerary();
+    $("#btnCalendary").click(function () {
+        Calendary();
     });
 
     $("#btnMattersStuden").click(function () {
@@ -62,7 +59,7 @@ function poseePermiso() {
     UserCurrentName = storage.get("userCurrentName");
     CurrentUserType = storage.get("typeCurrentUser");
     IdCurrentUser = storage.get("idCurrentUser");
-
+    CurrentRole = "Estudiante";//storage.get("currentRole");
     //if (!CurrentUserType) {
     //    window.location.href = "LoginStudent.html";
     //}
@@ -75,13 +72,16 @@ function poseePermiso() {
 //**************************Left Panel********************************
 
 function Hide() {
-    $(".collapseExample").collapse();
+    if (CurrentRole === "Estudiante") {
+        $("#mnuMattersTeacher").hide();
+    } else {
+        $("#mnuMattersStuden").hide();
+    }
     $("#panelHome").hide();
-    $("#panelCalendary").hide();
-    $("#panelMyItinerary").hide();
-    $("#panelLegalizeItinerary").hide();
     $("#panelMyProfile").hide();
     $("#panelNotesStuden").hide();
+    $("#panelCalendary").hide();
+    $("#panelNotesTeacher").hide();
 }
 
 function CorregirColoresB() {
@@ -96,40 +96,32 @@ function CorregirColoresB() {
 
 function Home() {
     $("#panelHome").show();
-    $("#panelNewItinerary").hide();
+    $("#panelMyProfile").hide();
+    $("#panelNotesStuden").hide();
     $("#panelCalendary").hide();
-    $("#panelLegalizeItinerary").hide();
-    $("#panelMyProfile").hide();
-}
-
-function MyItinerary() {
-    $("#panelMyItinerary").show();
-    $("#panelNewItinerary").hide();
-    $("#panelHome").hide();
-    $("#panelLegalizeItinerary").hide();
-    $("#panelMyProfile").hide();
-}
-
-function LegalizeItinerary() {
-    $("#panelLegalizeItinerary").show();
-    $("#panelNewItinerary").hide();
-    $("#panelHome").hide();
-    $("#panelMyItinerary").hide();
-    $("#panelMyProfile").hide();
+    $("#panelNotesTeacher").hide();
 }
 
 function MyProfile() {
     $("#panelMyProfile").show();
-    $("#panelLegalizeItinerary").hide();
-    $("#panelNewItinerary").hide();
     $("#panelHome").hide();
-    $("#panelMyItinerary").hide();
+    $("#panelNotesStuden").hide();
+    $("#panelCalendary").hide();
+    $("#panelNotesTeacher").hide();
 }
 
 function GetCurrentMattersMenu(){
     $("#panelHome").hide();
     $("#panelMyProfile").hide();
     $("#panelMyItinerary").hide();
+    $("#panelNotesTeacher").hide();
+}
+
+function Calendary() {
+    $("#panelHome").hide();
+    $("#panelMyProfile").hide();
+    $("#panelCalendary").show();
+    $("#panelNotesTeacher").hide();
 }
 
 //**************************Right Panel********************************
@@ -194,7 +186,7 @@ function GetCurrentMatters() {
                 if (result !== null) {
                     $("#ulNotes").children().remove();
                     for (var i = 0; i < result.length; i++) {
-                        $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + ");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                        $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + "," + result[i].IdMatter +");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
                     }
                     $("#panelHome").hide();
                     $("#panelMyProfile").hide();
@@ -213,19 +205,28 @@ function GetCurrentMatters() {
     }
 }
 
-function GetCurrentDetailMatters(IdRegistration) {
-    if (IdRegistration !== '' || CurrentUserType !== '') {
+function GetCurrentDetailMatters(IdRegistration, IdMatter) {
+    if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '') {
         $.ajax({
-            url: "../Controllers/Controlador.ashx?op=500&IdRegistration=" + IdRegistration + "&typeUser=" + CurrentUserType,
+            url: "../Controllers/Controlador.ashx?op=500&IdRegistration=" + IdRegistration + "&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
             method: "POST",
             dataType: "json",
             async: true,
             success: function (result) {
                 if (result !== null) {
+                    $("#CademicPeriod").text(result[IdMatter].CademicPeriod);
+                    $("#schedule").text(result[IdMatter].Schedule);
+                    $("#nameMatter").text(result[IdMatter].Name);
+                    $("#codeMatter").text(result[IdMatter].Code);
+                    $("#teacherMatterName").text(result[IdMatter].TeacherName);
+                    $("#numberCredits").text(result[IdMatter].NamberCredits);
+                    $("#levelMatter").text(result[IdMatter].Level);
+                    $("#noteOne").text(result[IdMatter].Qualifications[0]);
+                    $("#noteTwo").text(result[IdMatter].Qualifications[1]);
+                    $("#noteThree").text(result[IdMatter].Qualifications[2]);
+                    $("#noteFour").text(result[IdMatter].Qualifications[3]);
                     $("#panelNotesStuden").show();
-                    $(document).ready(function () {
-                        $('#example').DataTable();
-                    });
+
                     var currentArray = result;
                     var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
                     for (var i = 0; i < result.length; i++) {

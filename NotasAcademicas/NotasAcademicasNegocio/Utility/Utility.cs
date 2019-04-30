@@ -63,9 +63,12 @@ namespace NotasAcademicasNegocio.Utility
         public string Modality { get; set; }
         public string Status { get; set; }
         public string Prerequisites { get; set; }
+        public string TeacherName { get; set; }
         public int Level { get; set; }
         public int NamberCredits { get; set; }
+        public string CademicPeriod { get; set; }
         public List<string> Qualifications { get; set; }
+        public string Schedule { get; set; }
     }
 
     public class PCurrentMatterView
