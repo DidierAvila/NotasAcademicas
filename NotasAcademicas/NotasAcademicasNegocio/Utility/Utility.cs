@@ -38,7 +38,8 @@ namespace NotasAcademicasNegocio.Utility
         public string Headquarters { get; set; }
         public string Password { get; set; }
         public string LevelEducation { get; set; }
-        public string EducationDegree { get; set; }
+        public string profession { get; set; }
+        public string Faculty { get; set; }
     }
 
     public class PCMatter

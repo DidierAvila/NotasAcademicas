@@ -17,11 +17,11 @@ namespace NotasAcademicasNegocio.Datos
         public int Id_Fr_Matricula_N { get; set; }
         public Nullable<int> Id_Fr_Estudiantes_N { get; set; }
         public Nullable<int> Id_Fr_Materia_N { get; set; }
-        public Nullable<double> Nota1 { get; set; }
-        public Nullable<double> Nota2 { get; set; }
-        public Nullable<double> Nota3 { get; set; }
-        public Nullable<double> Nota4 { get; set; }
-        public Nullable<double> Nota5 { get; set; }
+        public Nullable<decimal> Nota1 { get; set; }
+        public Nullable<decimal> Nota2 { get; set; }
+        public Nullable<decimal> Nota3 { get; set; }
+        public Nullable<decimal> Nota4 { get; set; }
+        public Nullable<decimal> Nota5 { get; set; }
     
         public virtual Estudiante Estudiante { get; set; }
         public virtual Materia Materia { get; set; }

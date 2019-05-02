@@ -102,7 +102,7 @@ namespace NotasAcademicasNegocio.Negocio
                             pProfile.Document = profesor.Documento;
                             pProfile.Gender = profesor.Sexo;
                             pProfile.Email = profesor.Email;
-                            pProfile.EducationDegree = profesor.Email;
+                            pProfile.profession = profesor.TituloProfesional;
                             pProfile.Address = profesor.Direccion;
                             pProfile.PhoneNumber = profesor.Telefono;
                             pProfile.Birthdate = Convert.ToDateTime(profesor.FechaNacimiento).ToString("yyyy-MM-dd");
@@ -110,6 +110,7 @@ namespace NotasAcademicasNegocio.Negocio
                             pProfile.Nationality = profesor.Nacionalidad;
                             pProfile.CurrentLevel = profesor.GradoEscolaridad;
                             pProfile.Password = profesor.Clave;
+                            pProfile.Faculty = profesor.Facultad;
                         }
                     }
                 }
@@ -219,10 +220,10 @@ namespace NotasAcademicasNegocio.Negocio
                             pCMatterView.NamberCredits = (int)item.NumeroCredito;
                             pCMatterView.Code = item.Codigo;
                             pCMatterView.TeacherName = item.Nombres + " " + item.Apellidos;
-                            pCMatterView.Qualifications.Add(item.Nota1.ToString());
-                            pCMatterView.Qualifications.Add(item.Nota2.ToString());
-                            pCMatterView.Qualifications.Add(item.Nota3.ToString());
-                            pCMatterView.Qualifications.Add(item.Nota4.ToString());
+                            pCMatterView.Qualifications.Add(item.Nota1.ToString().Replace(",","."));
+                            pCMatterView.Qualifications.Add(item.Nota2.ToString().Replace(",", "."));
+                            pCMatterView.Qualifications.Add(item.Nota3.ToString().Replace(",", "."));
+                            pCMatterView.Qualifications.Add(item.Nota4.ToString().Replace(",", "."));
                             pcMatterViewList.Add(pCMatterView);
                         }
                     }
@@ -258,6 +259,38 @@ namespace NotasAcademicasNegocio.Negocio
                 error = ex.ToString();
                 return null;
                 throw;
+            }
+        }
+
+        public bool UpdateCurrentUser(int idUser, string typeUser, ref string error)
+        {
+            bool Isupdate = false;
+            try
+            {
+                using (NotasAcademicasEntities context = new NotasAcademicasEntities())
+                {
+                    if (typeUser.Equals("student"))
+                    {
+                        Estudiante estudiante = context.Estudiante.SingleOrDefault(e => e.IdEstudiante == idUser);
+
+                        if (estudiante != null)
+                        {
+                            estudiante.Telefono = "";
+                            estudiante.Email = "";
+                        }
+                        return Isupdate;
+                    }
+                    else
+                    {
+                        
+                        return Isupdate;
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                error = ex.ToString();
+                return Isupdate;
             }
         }
     }

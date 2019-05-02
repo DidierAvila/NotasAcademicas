@@ -17,8 +17,8 @@ namespace NotasAcademicasNegocio.Datos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Estudiante()
         {
-            this.DetalleNotas = new HashSet<DetalleNotas>();
             this.DetalleEstudiantes = new HashSet<DetalleEstudiantes>();
+            this.DetalleNotas = new HashSet<DetalleNotas>();
         }
     
         public int IdEstudiante { get; set; }
@@ -40,8 +40,8 @@ namespace NotasAcademicasNegocio.Datos
         public Nullable<int> NivelActual { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleNotas> DetalleNotas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleEstudiantes> DetalleEstudiantes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleNotas> DetalleNotas { get; set; }
     }
 }

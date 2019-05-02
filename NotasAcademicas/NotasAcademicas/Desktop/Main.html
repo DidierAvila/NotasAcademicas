@@ -45,7 +45,7 @@
                 <label class="colorBlanco"><span class="glyphicon glyphicon-education"></span> Usuario:</label>
                 <a id="currentUserName" style="color: #ffffff" href="javascript:MyProfile()"></a>
                 <label class="colorBlanco" style="margin-left:10px"><span class="glyphicon glyphicon-user"></span> Rol:</label>
-                <label id="currentRole" style="color: #ffffff">Estudiante</label>
+                <label id="currentRole" style="color: #ffffff"/>
             </div>
         </div>
     </nav>
@@ -85,19 +85,15 @@
                 <div class="panel panel-default mnuAdmin" id="mnuMattersTeacher">
                     <div class="panel-heading" role="tab" id="headingMattersTeacher">
                         <h4 class="panel-title">
-                            <a class="botonIconoNormal" id="btnMatters" data-toggle="collapse" data-parent=""  href="#collapseSellos" aria-expanded="true" aria-controls="collapseOne">
+                            <a class="botonIconoNormal" id="btnMattersTeacher" data-toggle="collapse" data-parent=""  href="javascript:GetCurrentMattersMenu(),#collapseSellosT" aria-expanded="true" aria-controls="collapseOne">
                                 <span class="glyphicon glyphicon-plus"></span> Asignaturas
                             </a>
                         </h4>
                     </div>
                     <div class="panel-body container-fluid">
-                        <div id="collapseSellos" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div id="collapseSellosT" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <ul class="nav nav-pills nav-stacked">
-                                <li class="list-group">
-                                    <a id="adminalimentac" href="javascript:AdminAlimentacionTerrestre();" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 1</a>
-                                    <a id="adminhotelasumido" href="javascript:AdminHotelAsumido()" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 2</a>
-                                    <a id="admintarifapeaje" href="javascript:AdminTarifaPeaje()" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 3</a>
-                                </li>
+                                <li id="ulNotesT" class="list-group"/>
                             </ul>
                         </div>
                     </div>
@@ -372,49 +368,80 @@
                             </div>
                         </div>
                         <br />
-                        <h4 style="text-align:center"><b>Información del programa</b></h4>
-                        <hr />
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Programa Académico</b>
-                                <input id="CareerPrograms" name="CareerPrograms" type="text" class="form-control" placeholder="Programa Académico" />
+                        <div id="panelStuden">
+                            <h4 style="text-align:center"><b>Información del programa</b></h4>
+                            <hr />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Programa Académico</b>
+                                    <input id="CareerPrograms" name="CareerPrograms" type="text" class="form-control" placeholder="Programa Académico" />
+                                </div>
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Nivel Actual</b>
+                                    <input id="CurrentLevel" name="CurrentLevel" type="text" class="form-control" placeholder="Nivel Actual" />
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Nivel Actual</b>
-                                <input id="CurrentLevel" name="CurrentLevel" type="text" class="form-control" placeholder="Nivel Actual" />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Promedio General</b>
+                                    <input id="GeneralAverage" name="GeneralAverage" type="text" class="form-control" placeholder="Promedio General" />
+                                </div>
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Fecha Ingreso</b>
+                                    <input id="DateAdmission" name="DateAdmission" type="date" class="form-control" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Sede</b>
+                                    <input id="headquarters" name="headquarters" type="text" class="form-control" placeholder="Sede" />
+                                </div>
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Contraseña</b>
+                                    <input id="UserPassword" name="UserPassword" type="password" class="form-control" placeholder="Contraseña" />
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group-lg" style="text-align:center">
+                                <a href="#" id="btnUpdateMyProfile" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
                             </div>
                         </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Promedio General</b>
-                                <input id="GeneralAverage" name="GeneralAverage" type="text" class="form-control" placeholder="Promedio General" />
+                        <div id="panelTeacher">
+                            <h4 style="text-align:center"><b>Información Profesional</b></h4>
+                            <hr />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Facultad</b>
+                                    <input id="faculty" name="faculty" type="text" class="form-control" placeholder="Facultad" />
+                                </div>
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Grado escolaridad</b>
+                                    <input id="educationLevel" name="educationLevel" type="text" class="form-control" placeholder="Grado escolaridad" />
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Fecha Ingreso</b>
-                                <input id="DateAdmission" name="DateAdmission" type="date" class="form-control" />
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Profesión</b>
+                                    <input id="profession" name="profession" type="text" class="form-control" placeholder="Profesión" />
+                                </div>
+                                <div class="col-md-6">
+                                    <b style="font-size: 16px;">Idiomas</b>
+                                    <input id="languages" name="languages" type="text" class="form-control" placeholder="Idiomas"  />
+                                </div>
                             </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Sede</b>
-                                <input id="headquarters" name="headquarters" type="text" class="form-control" placeholder="Sede" />
+                            <br />
+                            <div class="form-group-lg" style="text-align:center">
+                                <a href="#" id="btnUpdateMyProfileTeacher" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
                             </div>
-                            <div class="col-md-6">
-                                <b style="font-size: 16px;">Contraseña</b>
-                                <input id="UserPassword" name="UserPassword" type="password" class="form-control" placeholder="Contraseña" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-group-lg" style="text-align:center">
-                            <a href="#" id="btnGuardarDoMyProfiledfress" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
                         </div>
                     </form>
                 </div>
             </div>
-
             <!-- Calendary -->
             <div class="panel panel-default" id="panelCalendary">
                 <div class="panel-body">
@@ -556,20 +583,6 @@
                             </div>
                         </div>
                         <br />
-                        <div class="form-group-lg">
-                            <label for="UrlPlatformDocuware">Url Platform Docuware</label>
-                            <input id="UrlPlatformDocuwarecs" name="UrlPlatformDocuware" type="text" class="form-control" placeholder="URL del servicio REST de Docuware" />
-                        </div>
-                        <br />
-
-                        <div class="form-group-lg">
-                            <label for="HorasCorreccionDwStoreDateTime">Horas corrección DwStoreDateTime</label>
-                            <input id="HorasCorreccionDwStoreDateTismes" name="HorasCorreccionDwStoreDateTime" type="text" class="form-control" placeholder="Cantidad de horas a sumar o restar al campo DWSTOREDATETIME para corregir el problema de este campo que guarda en ocaciones con 5 horas de diferencia" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarDocuwasress" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
                     </form>
                 </div>
             </div>

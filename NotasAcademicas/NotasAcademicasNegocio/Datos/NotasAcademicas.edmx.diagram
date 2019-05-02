@@ -10,15 +10,16 @@
         <EntityTypeShape EntityType="NotasAcademicasModel.Profesor" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NotasAcademicasModel.Matricula" Width="1.5" PointX="4.75" PointY="6" />
         <EntityTypeShape EntityType="NotasAcademicasModel.DetalleMatricula" Width="1.5" PointX="10" PointY="1.875" />
-        <EntityTypeShape EntityType="NotasAcademicasModel.DetalleNotas" Width="1.5" PointX="7" PointY="1.375" />
-        <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Estudiante" />
-        <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Materia" />
         <AssociationConnector Association="NotasAcademicasModel.FK_DetalleMatricula_Materia" />
-        <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Matricula" />
         <AssociationConnector Association="NotasAcademicasModel.FK_DetalleMatricula_Profesor" />
         <EntityTypeShape EntityType="NotasAcademicasModel.DetalleEstudiantes" Width="1.5" PointX="8" PointY="5.625" />
         <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Estudiante" />
         <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Matricula" />
+        <EntityTypeShape EntityType="NotasAcademicasModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="NotasAcademicasModel.DetalleNotas" Width="1.5" PointX="7" PointY="0.875" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Estudiante" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Materia" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Matricula" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

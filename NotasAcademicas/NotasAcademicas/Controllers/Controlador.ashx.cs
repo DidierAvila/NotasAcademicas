@@ -63,11 +63,10 @@ namespace NotasAcademicas.Controllers
                             NotasAcademicasNegocio.Utility.PProfile pProfile = null;
                             string IdCurrentUser = context.Request["IdCurrentStudent"];
                             string typeUser = context.Request["typeUser"];
-                            string CurrentTable = string.Empty;
 
                             if (string.IsNullOrEmpty(IdCurrentUser) || string.IsNullOrEmpty(typeUser))
                             {
-                                CurrentTable = "Datos no pueden ser nulos!";
+                                throw new Exception("Datos no pueden ser nulos!");
                             }
 
                             Negocio negocio = new Negocio();
@@ -137,7 +136,29 @@ namespace NotasAcademicas.Controllers
                         break;
                     case 600:
                         {
-                           
+                            #region
+                            string IdCurrentUser = context.Request["IdCurrentStudent"];
+                            string typeUser = context.Request["typeUser"];
+                            string CurrentTable = string.Empty;
+                            bool IsUpdate = false;
+
+                            if (string.IsNullOrEmpty(IdCurrentUser) || string.IsNullOrEmpty(typeUser))
+                            {
+                                throw new Exception("Datos no pueden ser nulos!");
+                            }
+
+                            Negocio negocio = new Negocio();
+                            IsUpdate = negocio.UpdateCurrentUser(int.Parse(IdCurrentUser), typeUser, ref error);
+
+                            if (error.Length > 0)
+                            {
+                                throw new Exception(error);
+                            }
+
+                            tipoContenido = "text/json";
+                            result = JsonConvert.SerializeObject(IsUpdate);
+
+                            #endregion
                         }
                         break;
                     case 700:

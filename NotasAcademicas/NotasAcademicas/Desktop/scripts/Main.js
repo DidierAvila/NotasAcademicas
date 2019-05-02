@@ -31,6 +31,10 @@ $(document).ready(function () {
         GetCurrentMatters();
     });
 
+    $("#mnuMattersTeacher").click(function () {
+        GetCurrentMatters();
+    });
+
     $("#btnMyProfile").click(function () {
         MyProfile();
         GetCurrentProfile();
@@ -44,9 +48,8 @@ $(document).ready(function () {
         $("#alertamensaje").html('');
     });
 
-    $("#btnGuardarDoMyProfiledfress").click(function () {
-        modColaboradorAutorizador($("#ModColaborador").val()
-            , $("#ModAutorizador").val());
+    $("#btnUpdateMyProfile").click(function () {
+        $("#modalModNewItinerary").modal('toggle');
     });
 
     $('#modalAdminUser').on('hide.bs.modal', function () {
@@ -66,17 +69,20 @@ function poseePermiso() {
     //if (!loginUsuario) {
     //    window.location.href = "LoginStudent.html";
     //}
-    $("#currentUserName").text(UserCurrentName);
+    if (CurrentUserType === "student") {
+        $("#currentRole").text("Estudiante");
+        $("#mnuMattersTeacher").hide();
+        $("#panelTeacher").hide();
+    } else {
+        $("#currentRole").text("Profesor");
+        $("#mnuMattersStuden").hide();
+        $("#panelStuden").hide();
+    }
 }
 
 //**************************Left Panel********************************
 
 function Hide() {
-    if (CurrentRole === "Estudiante") {
-        $("#mnuMattersTeacher").hide();
-    } else {
-        $("#mnuMattersStuden").hide();
-    }
     $("#panelHome").hide();
     $("#panelMyProfile").hide();
     $("#panelNotesStuden").hide();
@@ -115,6 +121,7 @@ function GetCurrentMattersMenu(){
     $("#panelMyProfile").hide();
     $("#panelMyItinerary").hide();
     $("#panelNotesTeacher").hide();
+    $("#panelCalendary").hide();
 }
 
 function Calendary() {
@@ -122,6 +129,7 @@ function Calendary() {
     $("#panelMyProfile").hide();
     $("#panelCalendary").show();
     $("#panelNotesTeacher").hide();
+    $("#panelNotesStuden").hide();
 }
 
 //**************************Right Panel********************************
@@ -135,7 +143,6 @@ function GetCurrentProfile() {
             async: true,
             success: function (result) {
                 if (result !== null) {
-                    var items = ["CC", "TI", "PASAPORTE"];
                     $("#UserName").val(result["UserName"]);
                     $("#LastName").val(result["LastName"]);
                     $("#UserDocument").val(result["Document"]);
@@ -145,9 +152,9 @@ function GetCurrentProfile() {
                     $("#UserPassword").val(result["Password"]);
                     $("#UserBirthDate").val(result["Birthdate"]);
                     if (result["Gender"] === "Masculino") {
-                        $("#CheckFemale").prop('checked', true);
-                    } else {
                         $("#CheckMale").prop('checked', true);
+                    } else {
+                        $("#CheckFemale").prop('checked', true);
                     }
                     $("#TypeDocument").val(result["DocumentType"]);
 
@@ -158,8 +165,10 @@ function GetCurrentProfile() {
                         $("#DateAdmission").val(result["AdmissionDate"]);
                         $("#headquarters").val(result["Headquarters"]);             
                     } else {
-                        $("#UserName").val(result["UserName"]);
-                        $("#LastName").val(result["LastName"]);
+                        $("#faculty").val(result["Faculty"]);
+                        $("#educationLevel").val(result["CurrentLevel"]);
+                        $("#profession").val(result["profession"]);
+                        $("#languages").val("Ingles-Español");
                     }
                 }
                 else {
@@ -176,6 +185,7 @@ function GetCurrentProfile() {
 }
 
 function GetCurrentMatters() {
+    $("#panelCalendary").hide();
     if (IdCurrentUser !== '' || CurrentUserType !== '') {
         $.ajax({
             url: "../Controllers/Controlador.ashx?op=400&IdCurrentStudent=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
@@ -184,10 +194,21 @@ function GetCurrentMatters() {
             async: true,
             success: function (result) {
                 if (result !== null) {
-                    $("#ulNotes").children().remove();
-                    for (var i = 0; i < result.length; i++) {
-                        $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + "," + result[i].IdMatter +");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                    if (CurrentUserType === "student") {
+                        $("#ulNotes").children().remove();
+                        for (var i = 0; i < result.length; i++) {
+                            $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + "," + result[i].IdMatter + ");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                        }
+                    } else {
+                        $("#ulNotesT").children().remove();
+                        for (var j = 0; j < result.length; j++) {
+                            $("#ulNotesT").append("<a id=" + result[j].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[j].IdRegistration + "," + result[j].IdMatter + ");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[j].NameMatter + "</a>");
+                        }
                     }
+                    //$("#ulNotes").children().remove();
+                    //for (var i = 0; i < result.length; i++) {
+                    //    $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + "," + result[i].IdMatter +");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                    //}
                     $("#panelHome").hide();
                     $("#panelMyProfile").hide();
                     $("#panelMyItinerary").hide();
@@ -204,6 +225,8 @@ function GetCurrentMatters() {
         alert("Parámetros vacios!");
     }
 }
+
+
 
 function GetCurrentDetailMatters(IdRegistration, IdMatter) {
     if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '') {
@@ -247,6 +270,51 @@ function GetCurrentDetailMatters(IdRegistration, IdMatter) {
 
                     //} else {
                     //}
+                }
+                else {
+                    alert('Error:' + result["error"]);
+                }
+            },
+            error: function (result) {
+                alert("failed");
+            }
+        });
+    } else {
+        alert("Parámetros vacios!");
+    }
+}
+
+function UpdateCurrentUser() {
+    $("#modalModNewItinerary").display();
+    if (CurrentUserType !== '' && IdCurrentUser !== '') {
+        var currentUser = "IdCurrentUser:" + IdCurrentUser + "Email:" + $("#UserEmail").text() + "Telephono" + "";
+        $.ajax({
+            url: "../Controllers/Controlador.ashx?op=600&IdRegistration=" + IdRegistration + "&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
+            method: "POST",
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                if (result !== null) {
+                    $("#UserName").val(result["UserName"]);
+                    $("#LastName").val(result["LastName"]);
+                    $("#UserDocument").val(result["Document"]);
+                    $("#UserEmail").val(result["Email"]);
+                    $("#UserPhone").val(result["PhoneNumber"]);
+                    $("#Nationality").val(result["Nationality"]);
+                    $("#UserPassword").val(result["Password"]);
+                    $("#UserBirthDate").val(result["Birthdate"]);
+                    if (result["Gender"] === "Masculino") {
+                        $("#CheckFemale").prop('checked', true);
+                    } else {
+                        $("#CheckMale").prop('checked', true);
+                    }
+                    $("#TypeDocument").val(result["DocumentType"]);
+
+                    var currentArray = result;
+                    var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+                    for (var i = 0; i < result.length; i++) {
+                        //$("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                    }
                 }
                 else {
                     alert('Error:' + result["error"]);

@@ -92,6 +92,9 @@
     <Compile Include="Datos\Profesor.cs">
       <DependentUpon>NotasAcademicas.tt</DependentUpon>
     </Compile>
+    <Compile Include="Datos\sysdiagrams.cs">
+      <DependentUpon>NotasAcademicas.tt</DependentUpon>
+    </Compile>
     <Compile Include="Negocio\IEnumerable.cs" />
     <Compile Include="Negocio\Negocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

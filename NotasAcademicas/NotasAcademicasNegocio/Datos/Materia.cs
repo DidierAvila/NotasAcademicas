@@ -30,8 +30,8 @@ namespace NotasAcademicasNegocio.Datos
         public Nullable<int> Nivel { get; set; }
         public Nullable<int> NumeroCredito { get; set; }
     
+        public virtual DetalleMatricula DetalleMatricula { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleNotas> DetalleNotas { get; set; }
-        public virtual DetalleMatricula DetalleMatricula { get; set; }
     }
 }

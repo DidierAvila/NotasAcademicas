@@ -30,7 +30,8 @@ namespace NotasAcademicasNegocio.Datos
         public virtual DbSet<Profesor> Profesor { get; set; }
         public virtual DbSet<Matricula> Matricula { get; set; }
         public virtual DbSet<DetalleMatricula> DetalleMatricula { get; set; }
-        public virtual DbSet<DetalleNotas> DetalleNotas { get; set; }
         public virtual DbSet<DetalleEstudiantes> DetalleEstudiantes { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<DetalleNotas> DetalleNotas { get; set; }
     }
 }
