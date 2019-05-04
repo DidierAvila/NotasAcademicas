@@ -231,18 +231,29 @@ function GetCurrentDetailMatters(IdRegistration, IdMatter) {
             async: true,
             success: function (result) {
                 if (result !== null) {
-                    $("#CademicPeriod").text(result[IdMatter].CademicPeriod);
-                    $("#schedule").text(result[IdMatter].Schedule);
-                    $("#nameMatter").text(result[IdMatter].Name);
-                    $("#codeMatter").text(result[IdMatter].Code);
-                    $("#teacherMatterName").text(result[IdMatter].TeacherName);
-                    $("#numberCredits").text(result[IdMatter].NamberCredits);
-                    $("#levelMatter").text(result[IdMatter].Level);
-                    $("#noteOne").text(result[IdMatter].Qualifications[0]);
-                    $("#noteTwo").text(result[IdMatter].Qualifications[1]);
-                    $("#noteThree").text(result[IdMatter].Qualifications[2]);
-                    $("#noteFour").text(result[IdMatter].Qualifications[3]);
-                    $("#panelNotesStuden").show();
+                    if (CurrentUserType === "Student") {
+                        $("#CademicPeriod").text(result[IdMatter].CademicPeriod);
+                        $("#schedule").text(result[IdMatter].Schedule);
+                        $("#nameMatter").text(result[IdMatter].Name);
+                        $("#codeMatter").text(result[IdMatter].Code);
+                        $("#teacherMatterName").text(result[IdMatter].TeacherName);
+                        $("#numberCredits").text(result[IdMatter].NamberCredits);
+                        $("#levelMatter").text(result[IdMatter].Level);
+                        $("#noteOne").text(result[IdMatter].Qualifications[0]);
+                        $("#noteTwo").text(result[IdMatter].Qualifications[1]);
+                        $("#noteThree").text(result[IdMatter].Qualifications[2]);
+                        $("#noteFour").text(result[IdMatter].Qualifications[3]);
+                        $("#panelNotesStuden").show();
+                    } else {
+                        $("#CademicPeriodStudent").text(result[0].CademicPeriod);
+                        $("#scheduleStudent").text(result[0].Schedule);
+                        $("#nameMatterStudent").text(result[0].Name);
+                        $("#codeMatterStudent").text(result[0].Code);
+                        $("#teacherMatterNameStudent").text(result[0].TeacherName);
+                        $("#numberCreditsStudent").text(result[0].NamberCredits);
+                        $("#levelMatterStaudent").text(result[0].Level);
+                        $("#panelNotesTeacher").show();
+                    }                
                 }
                 else {
                     alert('Error:' + result["error"]);
@@ -304,6 +315,7 @@ function UpdateCurrentUser() {
 
 function GetCurrentDetailStudents(IdRegistration, IdMatter) {
     if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '') {
+        GetCurrentDetailMatters(IdRegistration, IdMatter);
         $.ajax({
             url: "../Controllers/Controlador.ashx?op=700&IdRegistration=" + IdRegistration + "&IdCurrentMatter=" + IdMatter + "&typeUser=" + CurrentUserType,
             method: "POST",

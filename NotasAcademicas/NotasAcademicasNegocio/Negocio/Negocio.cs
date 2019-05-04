@@ -268,54 +268,25 @@ namespace NotasAcademicasNegocio.Negocio
                     }
                     else
                     {
-                        //var currentMatter = (from dn in context.DetalleNotas
-                        //                     join m in context.Materia on dn.Id_Fr_Materia_N equals m.IdMateria
-                        //                     join e in context.Estudiante on dn.Id_Fr_Estudiantes_N equals e.IdEstudiante
-                        //                     join dm in context.DetalleMatricula on dn.Id_Fr_Matricula_N equals dm.Id_Fr_Matricula
-                        //                     join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
-                        //                     join mt in context.Matricula on dn.Id_Fr_Matricula_N equals mt.IdMatricula
-                        //                     where dn.Id_Fr_Materia_N == idCurrentID && dn.Id_Fr_Matricula_N == idRegistration
-                        //                     select new { e.IdEstudiante, e.Nombres, m.Nivel, mt.PeriodoAcademico, m.IdMateria, dm.Horario, m.Nombre, m.Codigo, m.NumeroCredito, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).GroupBy(m => m.IdEstudiante).ToList();
+                        var currentMatter = (from dm in context.DetalleMatricula
+                                             join m in context.Materia on dm.IdMateria equals m.IdMateria
+                                             join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
+                                             join mt in context.Matricula on dm.Id_Fr_Matricula equals mt.IdMatricula
+                                             where dm.IdMateria == idCurrentID && dm.Id_Fr_Matricula == idRegistration
+                                             select new { m.Nivel, mt.PeriodoAcademico, m.IdMateria, dm.Horario, m.Nombre, m.Codigo, p.Nombres, p.Apellidos, m.NumeroCredito }).ToList();
 
-                        var currentMatter = (from dn in context.DetalleNotas
-                                             join e in context.Estudiante on dn.Id_Fr_Estudiantes_N equals e.IdEstudiante
-                                             where dn.Id_Fr_Materia_N == idCurrentID
-                                             select new {e.Nombres, e.Apellidos, e.IdEstudiante, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).ToList();
-
-                        CurrentTable = new DataTable();
-                        CurrentTable.Columns.Add("IdStuden", typeof(int),"");
-                        CurrentTable.Columns.Add("StudenName", typeof(string), "Nombre");
-                        CurrentTable.Columns.Add("Note1", typeof(string), "Nota1");
-                        CurrentTable.Columns.Add("Note2", typeof(string), "Nota2");
-                        CurrentTable.Columns.Add("Note3", typeof(string), "Nota3");
-                        CurrentTable.Columns.Add("Note4", typeof(string), "Nota4");
 
                         foreach (var item in currentMatter)
                         {
-                            var row = CurrentTable.NewRow();
-                            row["IdStuden"] = item.IdEstudiante;
-                            row["StudenName"] = item.Nombres + " " + item.Apellidos;
-                            row["Note1"] = item.Nota1.ToString().Replace(",", ".");
-                            row["Note2"] = item.Nota1.ToString().Replace(",", ".");
-                            row["Note3"] = item.Nota1.ToString().Replace(",", ".");
-                            row["Note4"] = item.Nota1.ToString().Replace(",", ".");
-                            CurrentTable.Rows.Add(row);
-
                             pCMatterView = new PCMatterView();
-                            pCMatterView.Qualifications = new List<string>();
-                            pCMatterView.StudenName = item.Nombres + " " + item.Apellidos;
-                            pCMatterView.IdStuden = item.IdEstudiante;
-                            //pCMatterView.Schedule = item.Horario;
-                            //pCMatterView.CademicPeriod = item.PeriodoAcademico;
-                            //pCMatterView.IdMatter = item.IdMateria.ToString();
-                            //pCMatterView.Name = item.Nombre;
-                            //pCMatterView.NamberCredits = (int)item.NumeroCredito;
-                            //pCMatterView.Code = item.Codigo;
-                            //pCMatterView.TeacherName = item.Nombres;
-                            pCMatterView.Qualifications.Add(item.Nota1.ToString().Replace(",", "."));
-                            pCMatterView.Qualifications.Add(item.Nota2.ToString().Replace(",", "."));
-                            pCMatterView.Qualifications.Add(item.Nota3.ToString().Replace(",", "."));
-                            pCMatterView.Qualifications.Add(item.Nota4.ToString().Replace(",", "."));
+                            pCMatterView.Level = (int)item.Nivel;
+                            pCMatterView.Schedule = item.Horario;
+                            pCMatterView.CademicPeriod = item.PeriodoAcademico;
+                            pCMatterView.IdMatter = item.IdMateria.ToString();
+                            pCMatterView.Name = item.Nombre;
+                            pCMatterView.NamberCredits = (int)item.NumeroCredito;
+                            pCMatterView.Code = item.Codigo;
+                            pCMatterView.TeacherName = item.Nombres + " " + item.Apellidos;
                             pcMatterViewList.Add(pCMatterView);
                         }
                     }
@@ -333,8 +304,6 @@ namespace NotasAcademicasNegocio.Negocio
 
         public DataTable GetCurrentStudensByMatter(int idCurrentID, ref string error)
         {
-            List<PCMatterView> pcMatterViewList = new List<PCMatterView>();
-            PCMatterView pCMatterView;
             DataTable CurrentTable;
             try
             {
@@ -363,23 +332,6 @@ namespace NotasAcademicasNegocio.Negocio
                         row["Note3"] = item.Nota3.ToString().Replace(",", ".");
                         row["Note4"] = item.Nota4.ToString().Replace(",", ".");
                         CurrentTable.Rows.Add(row);
-
-                        //pCMatterView = new PCMatterView();
-                        //pCMatterView.Qualifications = new List<string>();
-                        //pCMatterView.StudenName = item.Nombres + " " + item.Apellidos;
-                        //pCMatterView.IdStuden = item.IdEstudiante;
-                        ////pCMatterView.Schedule = item.Horario;
-                        ////pCMatterView.CademicPeriod = item.PeriodoAcademico;
-                        ////pCMatterView.IdMatter = item.IdMateria.ToString();
-                        ////pCMatterView.Name = item.Nombre;
-                        ////pCMatterView.NamberCredits = (int)item.NumeroCredito;
-                        ////pCMatterView.Code = item.Codigo;
-                        ////pCMatterView.TeacherName = item.Nombres;
-                        //pCMatterView.Qualifications.Add(item.Nota1.ToString().Replace(",", "."));
-                        //pCMatterView.Qualifications.Add(item.Nota2.ToString().Replace(",", "."));
-                        //pCMatterView.Qualifications.Add(item.Nota3.ToString().Replace(",", "."));
-                        //pCMatterView.Qualifications.Add(item.Nota4.ToString().Replace(",", "."));
-                        //pcMatterViewList.Add(pCMatterView);
                     }
                 }
 

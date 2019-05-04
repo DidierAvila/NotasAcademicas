@@ -171,7 +171,6 @@ namespace NotasAcademicas.Controllers
                             string typeUser = context.Request["typeUser"];
                             string IdRegistration = context.Request["IdRegistration"];
                             string CurrentTable = string.Empty;
-                            bool IsUpdate = false;
 
                             if (string.IsNullOrEmpty(IdCurrentMatter) || string.IsNullOrEmpty(typeUser))
                             {
