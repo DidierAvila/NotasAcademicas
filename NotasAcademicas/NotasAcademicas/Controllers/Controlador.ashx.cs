@@ -163,7 +163,32 @@ namespace NotasAcademicas.Controllers
                         break;
                     case 700:
                         {
-                          
+                            #region
+                            List<PCMatterView> pCurrentMatterViewsList = new List<PCMatterView>();
+                            Negocio negocio = new Negocio();
+                            DataTable currentTableStudens;
+                            string IdCurrentMatter = context.Request["IdCurrentMatter"];
+                            string typeUser = context.Request["typeUser"];
+                            string IdRegistration = context.Request["IdRegistration"];
+                            string CurrentTable = string.Empty;
+                            bool IsUpdate = false;
+
+                            if (string.IsNullOrEmpty(IdCurrentMatter) || string.IsNullOrEmpty(typeUser))
+                            {
+                                throw new Exception("Datos no pueden ser nulos!");
+                            }
+
+                            currentTableStudens = negocio.GetCurrentStudensByMatter(int.Parse(IdCurrentMatter), ref error);
+
+                            if (error.Length > 0)
+                            {
+                                throw new Exception(error);
+                            }
+
+                            tipoContenido = "text/json";
+                            result = JsonConvert.SerializeObject(currentTableStudens);
+
+                            #endregion
                         }
                         break;
                     case 800:

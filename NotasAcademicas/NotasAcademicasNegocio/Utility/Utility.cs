@@ -65,6 +65,8 @@ namespace NotasAcademicasNegocio.Utility
         public string Status { get; set; }
         public string Prerequisites { get; set; }
         public string TeacherName { get; set; }
+        public string StudenName { get; set; }
+        public int IdStuden { get; set; }
         public int Level { get; set; }
         public int NamberCredits { get; set; }
         public string CademicPeriod { get; set; }
@@ -81,6 +83,7 @@ namespace NotasAcademicasNegocio.Utility
         public int NamberCredits { get; set; }
         public string IdTeacher { get; set; }
         public string NameTeacher { get; set; }
+        public string Group { get; set; }
     }
 
 }

@@ -202,13 +202,9 @@ function GetCurrentMatters() {
                     } else {
                         $("#ulNotesT").children().remove();
                         for (var j = 0; j < result.length; j++) {
-                            $("#ulNotesT").append("<a id=" + result[j].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[j].IdRegistration + "," + result[j].IdMatter + ");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[j].NameMatter + "</a>");
+                            $("#ulNotesT").append("<a id=" + result[j].IdMatter + " href=\"javascript:GetCurrentDetailStudents(" + result[j].IdRegistration + "," + result[j].IdMatter + ");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[j].NameMatter + "</a>");
                         }
                     }
-                    //$("#ulNotes").children().remove();
-                    //for (var i = 0; i < result.length; i++) {
-                    //    $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + "," + result[i].IdMatter +");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
-                    //}
                     $("#panelHome").hide();
                     $("#panelMyProfile").hide();
                     $("#panelMyItinerary").hide();
@@ -225,8 +221,6 @@ function GetCurrentMatters() {
         alert("Parámetros vacios!");
     }
 }
-
-
 
 function GetCurrentDetailMatters(IdRegistration, IdMatter) {
     if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '') {
@@ -249,27 +243,6 @@ function GetCurrentDetailMatters(IdRegistration, IdMatter) {
                     $("#noteThree").text(result[IdMatter].Qualifications[2]);
                     $("#noteFour").text(result[IdMatter].Qualifications[3]);
                     $("#panelNotesStuden").show();
-
-                    var currentArray = result;
-                    var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
-                    for (var i = 0; i < result.length; i++) {
-                        //$("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
-                    }
-                    //$.each(result, function (i, o) {
-                    //    $("#ulNotes").append("<a id=" + i + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + o + "</a>");
-                    //});
-
-                    //$("#ulNotes").append(
-                    //    + '<a id="adminalimentac">didier</a>'
-                    //    + '<a id="adminalimentac" href="javascript:AdminAlimentacionTerrestre();" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 1</a>'
-                    //    + '<a id="adminhotelasumido" href="javascript:AdminHotelAsumido()" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 2</a>'
-                    //    + '<a id="admintarifapeaje" href="javascript:AdminTarifaPeaje()" class="list-group-item"><span class="glyphicon glyphicon-book"></span> Materia 3</a>'
-                    //);
-
-                    //if (CurrentUserType === "student") {
-
-                    //} else {
-                    //}
                 }
                 else {
                     alert('Error:' + result["error"]);
@@ -327,4 +300,242 @@ function UpdateCurrentUser() {
     } else {
         alert("Parámetros vacios!");
     }
+}
+
+function GetCurrentDetailStudents(IdRegistration, IdMatter) {
+    if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '') {
+        $.ajax({
+            url: "../Controllers/Controlador.ashx?op=700&IdRegistration=" + IdRegistration + "&IdCurrentMatter=" + IdMatter + "&typeUser=" + CurrentUserType,
+            method: "POST",
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                if (result !== null) {
+                    var arrColumns = [];
+                    arrColumns.push({ "data": "IdStuden", "sTitle": "IdStuden", "orderable": true, "sType": "int" });
+                    arrColumns.push({ "data": "StudenName", "sTitle": "Nombre", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note1", "sTitle": "Note1", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note2", "sTitle": "Note2", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note3", "sTitle": "Note3", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note4", "sTitle": "Note4", "orderable": true, "sType": "string" });
+
+                    var tbl = $("#tblusuarios").DataTable({
+                        data: result,
+                        "columns": arrColumns,
+                        "language": {
+                            "lengthMenu": "Mostrar _MENU_ registros por página",
+                            "zeroRecords": "No se encontro ningún registro",
+                            "info": "Mostrando página _PAGE_ de _PAGES_",
+                            "infoEmpty": "No se encontro ningún registro",
+                            "infoFiltered": "(filtrado de  _MAX_ total registros)",
+                            "search": "Buscar:",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Siguiente",
+                                "previous": "Anterior"
+                            },
+                            "loadingRecords": "Cargando registros...",
+                            "processing": "Procesando...",
+                            "ordering": true
+                        },
+                        "fnDrawCallback": function (oSettings) {
+                            $("#tblusuarios tbody tr").contextmenu({
+                                menu: [
+                                    { title: "Eliminar", cmd: "Eliminar", uiIcon: "ui-icon-volume-off ui-icon-filter" },
+                                    { title: "Modificar", cmd: "Modificar", uiIcon: "ui-icon-volume-off ui-icon-filter" }
+                                ],
+                                select: function (event, ui) {
+                                    var celltext = ui.target.text();
+                                    var colvindex = ui.target.parent().children().index(ui.target);
+                                    var colindex = $('#tblusuarios thead tr th:eq(' + colvindex + ')').data('column-index');
+                                    switch (ui.cmd) {
+                                        case "Eliminar":
+                                            if (confirm("Desea eliminar el registro: " + tbl.row('.selected').data()['Login'] + "?") == true) {
+
+                                                $.ajax({
+                                                    url: "../controladores/controladorCI.ashx",
+                                                    method: "POST",
+                                                    data: {
+                                                        "op": 300
+                                                        , "action": "borrar"
+                                                        , "login": tbl.row('.selected').data()['Login']
+                                                    },
+                                                    dataType: "json",
+                                                    async: true,
+                                                    success: function (result) {
+                                                        tbl.row('.selected').remove();
+                                                        tbl.draw();
+                                                        alert("El registro se ha eliminado satisfactoriamente");
+                                                    },
+                                                    error: function (result) {
+                                                        alert("El registro no se ha eliminado satisfactoriamente, intentelo nuevamente.");
+                                                    }
+                                                });
+                                            }
+                                            break;
+                                        case "Modificar":
+                                            $("#Login").val(tbl.row('.selected').data()['Login']).attr('disabled', 'disabled');
+                                            $("#Cedula").val(tbl.row('.selected').data()['Cedula']);
+                                            $("#Nombre").val(tbl.row('.selected').data()['Nombre']);
+                                            $("#Celular").val(tbl.row('.selected').data()['Celular']);
+                                            $("#AviancaPlus").val(tbl.row('.selected').data()['AviancaPlus']);
+                                            $("#OnePass").val(tbl.row('.selected').data()['OnePass']);
+                                            $("#Gerencia").val(tbl.row('.selected').data()['Gerencia']);
+                                            $("#Cargo").val(tbl.row('.selected').data()['Cargo']);
+                                            $("#Email").val(tbl.row('.selected').data()['Email']);
+                                            $("#FechaNacimiento").val(tbl.row('.selected').data()['FechaNacimiento']);
+                                            $("#Activo").val(tbl.row('.selected').data()['ACTIVO']);
+
+                                            $("#modalAdminUser").modal('toggle');
+                                            break;
+                                    }
+                                },
+                                beforeOpen: function (event, ui) {
+                                    var $menu = ui.menu,
+                                        $target = ui.target,
+                                        extraData = ui.extraData;
+                                    ui.menu.zIndex(9999);
+                                }
+                            });
+                        }
+                    });
+
+                    $('#tblusuarios tbody tr:first').addClass('selected');
+
+                    $('#tblusuarios tbody').on('click', 'tr', function () {
+                        tbl.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    });
+
+                    $("#panelNotesTeacher").show();
+                }
+                else {
+                    alert('Error:' + result["error"]);
+                }
+            },
+            error: function (result) {
+                alert("failed");
+            }
+        });
+    } else {
+        alert("Parámetros vacios!");
+    }
+}
+
+function getDataUsuarios() {
+    $.ajax({
+        url: "../controladores/controladorCI.ashx",
+        method: "POST",
+        data: { "op": 300, "action": "datos" },
+        dataType: "json",
+        async: true,
+        success: function (result) {
+            var arrColumns = [];
+
+            arrColumns.push({ "data": "Login", "sTitle": "Login", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "Cedula", "sTitle": "Cedula", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "Nombre", "sTitle": "Nombre", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "Celular", "sTitle": "Celular", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "AviancaPlus", "sTitle": "AviancaPlus", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "OnePass", "sTitle": "OnePass", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "Gerencia", "sTitle": "Gerencia", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "Cargo", "sTitle": "Cargo", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "Email", "sTitle": "Email", "orderable": true, "sType": "string" });
+            arrColumns.push({ "data": "FechaNacimiento", "sTitle": "Fecha Nacimiento", "orderable": true, "sType": "date" });
+            arrColumns.push({ "data": "ACTIVO", "sTitle": "Activo", "orderable": true, "sType": "string" });
+
+            var tbl = $("#tblusuarios").DataTable({
+                data: result,
+                "columns": arrColumns,
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "zeroRecords": "No se encontro ningún registro",
+                    "info": "Mostrando página _PAGE_ de _PAGES_",
+                    "infoEmpty": "No se encontro ningún registro",
+                    "infoFiltered": "(filtrado de  _MAX_ total registros)",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                    "loadingRecords": "Cargando registros...",
+                    "processing": "Procesando...",
+                    "ordering": true
+                },
+                "fnDrawCallback": function (oSettings) {
+                    $("#tblusuarios tbody tr").contextmenu({
+                        menu: [
+                            { title: "Eliminar", cmd: "Eliminar", uiIcon: "ui-icon-volume-off ui-icon-filter" },
+                            { title: "Modificar", cmd: "Modificar", uiIcon: "ui-icon-volume-off ui-icon-filter" }
+                        ],
+                        select: function (event, ui) {
+                            var celltext = ui.target.text();
+                            var colvindex = ui.target.parent().children().index(ui.target);
+                            var colindex = $('#tblusuarios thead tr th:eq(' + colvindex + ')').data('column-index');
+                            switch (ui.cmd) {
+                                case "Eliminar":
+                                    if (confirm("Desea eliminar el registro: " + tbl.row('.selected').data()['Login'] + "?") == true) {
+
+                                        $.ajax({
+                                            url: "../controladores/controladorCI.ashx",
+                                            method: "POST",
+                                            data: {
+                                                "op": 300
+                                                , "action": "borrar"
+                                                , "login": tbl.row('.selected').data()['Login']
+                                            },
+                                            dataType: "json",
+                                            async: true,
+                                            success: function (result) {
+                                                tbl.row('.selected').remove();
+                                                tbl.draw();
+                                                alert("El registro se ha eliminado satisfactoriamente");
+                                            },
+                                            error: function (result) {
+                                                alert("El registro no se ha eliminado satisfactoriamente, intentelo nuevamente.");
+                                            }
+                                        });
+                                    }
+                                    break;
+                                case "Modificar":
+                                    $("#Login").val(tbl.row('.selected').data()['Login']).attr('disabled', 'disabled');
+                                    $("#Cedula").val(tbl.row('.selected').data()['Cedula']);
+                                    $("#Nombre").val(tbl.row('.selected').data()['Nombre']);
+                                    $("#Celular").val(tbl.row('.selected').data()['Celular']);
+                                    $("#AviancaPlus").val(tbl.row('.selected').data()['AviancaPlus']);
+                                    $("#OnePass").val(tbl.row('.selected').data()['OnePass']);
+                                    $("#Gerencia").val(tbl.row('.selected').data()['Gerencia']);
+                                    $("#Cargo").val(tbl.row('.selected').data()['Cargo']);
+                                    $("#Email").val(tbl.row('.selected').data()['Email']);
+                                    $("#FechaNacimiento").val(tbl.row('.selected').data()['FechaNacimiento']);
+                                    $("#Activo").val(tbl.row('.selected').data()['ACTIVO']);
+
+                                    $("#modalAdminUser").modal('toggle');
+                                    break;
+                            }
+                        },
+                        beforeOpen: function (event, ui) {
+                            var $menu = ui.menu,
+                                $target = ui.target,
+                                extraData = ui.extraData;
+                            ui.menu.zIndex(9999);
+                        }
+                    });
+                }
+            });
+
+            $('#tblusuarios tbody tr:first').addClass('selected');
+
+            $('#tblusuarios tbody').on('click', 'tr', function () {
+                tbl.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            });
+        },
+        error: function (result) {
+            alert("failed");
+        }
+    });
 }
