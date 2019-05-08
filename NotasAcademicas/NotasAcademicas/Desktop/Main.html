@@ -45,7 +45,7 @@
                 <label class="colorBlanco"><span class="glyphicon glyphicon-education"></span> Usuario:</label>
                 <a id="currentUserName" style="color: #ffffff" href="javascript:MyProfile()"></a>
                 <label class="colorBlanco" style="margin-left:10px"><span class="glyphicon glyphicon-user"></span> Rol:</label>
-                <label id="currentRole" style="color: #ffffff"/>
+                <label id="currentRole" style="color: #ffffff" />
             </div>
         </div>
     </nav>
@@ -85,7 +85,7 @@
                 <div class="panel panel-default mnuAdmin" id="mnuMattersTeacher">
                     <div class="panel-heading" role="tab" id="headingMattersTeacher">
                         <h4 class="panel-title">
-                            <a class="botonIconoNormal" id="btnMattersTeacher" data-toggle="collapse" data-parent=""  href="javascript:GetCurrentMattersMenu(),#collapseSellosT" aria-expanded="true" aria-controls="collapseOne">
+                            <a class="botonIconoNormal" id="btnMattersTeacher" data-toggle="collapse" data-parent="" href="javascript:GetCurrentMattersMenu(),#collapseSellosT" aria-expanded="true" aria-controls="collapseOne">
                                 <span class="glyphicon glyphicon-plus"></span> Asignaturas
                             </a>
                         </h4>
@@ -93,7 +93,7 @@
                     <div class="panel-body container-fluid">
                         <div id="collapseSellosT" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <ul class="nav nav-pills nav-stacked">
-                                <li id="ulNotesT" class="list-group"/>
+                                <li id="ulNotesT" class="list-group" />
                             </ul>
                         </div>
                     </div>
@@ -226,55 +226,55 @@
                     <br />
                     <div class="row">
                         <div class="col-md-2">
-                                <b style="font-size: 15px;">Nombre</b>
-                                <br />
-                                <b id="nameMatterStudent" style="font-size: 14px;" />
+                            <b style="font-size: 15px;">Nombre</b>
+                            <br />
+                            <b id="nameMatterStudent" style="font-size: 14px;" />
                         </div>
                         <div class="col-md-1">
-                                <b style="font-size: 15px;">Código</b>
-                                <br />
-                                <b id="codeMatterStudent" style="font-size: 14px;" />
-                            </div>
+                            <b style="font-size: 15px;">Código</b>
+                            <br />
+                            <b id="codeMatterStudent" style="font-size: 14px;" />
+                        </div>
                         <div class="col-md-3">
-                                <b style="font-size: 15px;">Profesor</b>
-                                <br />
-                                <b id="teacherMatterNameStudent" style="font-size: 14px;" />
-                            </div>
+                            <b style="font-size: 15px;">Profesor</b>
+                            <br />
+                            <b id="teacherMatterNameStudent" style="font-size: 14px;" />
+                        </div>
                         <div class="col-md-1">
-                                <b style="font-size: 15px;">Número creditos</b>
-                                <br />
-                                <b id="numberCreditsStudent" style="font-size: 14px;" />
-                            </div>
+                            <b style="font-size: 15px;">Número creditos</b>
+                            <br />
+                            <b id="numberCreditsStudent" style="font-size: 14px;" />
+                        </div>
                         <div class="col-md-1">
-                                <b style="font-size: 15px;">Nivel</b>
-                                <br />
-                                <b id="levelMatterStaudent" style="font-size: 14px;" />
-                            </div>
+                            <b style="font-size: 15px;">Nivel</b>
+                            <br />
+                            <b id="levelMatterStaudent" style="font-size: 14px;" />
+                        </div>
                         <div class="col-md-1">
-                                <b style="font-size: 15px;">Periodo académico</b>
-                                <br />
-                                <b id="CademicPeriodStudent" style="font-size: 14px;" />
-                            </div>
+                            <b style="font-size: 15px;">Periodo académico</b>
+                            <br />
+                            <b id="CademicPeriodStudent" style="font-size: 14px;" />
+                        </div>
                         <div class="col-md-3">
-                                <b style="font-size: 15px;">Horario</b>
-                                <br />
-                                <b id="scheduleStudent" style="font-size: 14px;" />
+                            <b style="font-size: 15px;">Horario</b>
+                            <br />
+                            <b id="scheduleStudent" style="font-size: 14px;" />
                         </div>
                         <br />
                     </div>
                     <br />
                     <div class="row" style="text-align:center">
-                       <div class="col-md-10">
+                        <div class="col-md-10">
                             <b style="font-size: 17px;">Resultados notas</b>
-                       </div>
+                        </div>
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-md-12">
-                           <br/>
-                           <table id="tblusuarios"></table>
-                          </div>
-                     </div>
+                            <br />
+                            <div id="currentTable"><table id="tblusuarios"></table></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!--My Profile-->
@@ -403,7 +403,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <b style="font-size: 16px;">Idiomas</b>
-                                    <input id="languages" name="languages" type="text" class="form-control" placeholder="Idiomas"  />
+                                    <input id="languages" name="languages" type="text" class="form-control" placeholder="Idiomas" />
                                 </div>
                             </div>
                             <br />
@@ -645,6 +645,170 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    <!-- modal notes -->
+    <div class="modal fade" id="modalNotes">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="cStudentName" class="modal-title" />
+                </div>
+                <div class="modal-body" style="overflow: hidden">
+                    <form style="overflow-y: scroll">
+                        <div class="form-group-lg">
+                            <label for="Login">Código estudiante</label>
+                            <input id="idUserNotes" type="number" class="form-control" />
+                        </div>
+                        <div class="form-group-lg">
+                            <label for="Login">Nota1</label>
+                            <input id="mNote1" type="number" class="form-control" placeholder="Nota 20%" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Cedula">Nota2</label>
+                            <input id="mNote2" type="number" class="form-control" placeholder="Nota 20%" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Nombre">Nota3</label>
+                            <input id="mNote3" type="number" class="form-control" placeholder="Nota 20%" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Celular">Nota4</label>
+                            <input id="mNote4" type="number" class="form-control" placeholder="Nota 20%" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="AviancaPlus">Notal final</label>
+                            <input id="mNoteTotal" type="number" class="form-control" />
+                        </div>
+                        <br />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="btnUpdateNotes" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalTeacher">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos profesor</h4>
+                </div>
+                <div class="modal-body" style="overflow: hidden">
+                    <form id="formModUsuarios" style="overflow-y: scroll">
+                        <div class="form-group-lg">
+                            <label for="Login">Login:</label>
+                            <input id="celularTeacher" type="number" class="form-control" placeholder="Login" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Cedula">Cedula:</label>
+                            <input id="Cedula" name="Cedula" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Nombre">Nombre Completo:</label>
+                            <input id="Nombre" name="Nombre" type="text" class="form-control" placeholder="Nombre" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Celular">Celular:</label>
+                            <input id="Celular" name="Celular" type="tel" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="OnePass">OnePass:</label>
+                            <input id="OnePass" name="OnePass" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Cargo">Cargo:</label>
+                            <select id="Cargo" name="Activo" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+
+                            <a href="#" id="btnGuardarModUsuario" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <div class="modal fade" id="modalStuden">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Datos Estudiante</h4>
+                </div>
+                <div class="modal-body" style="overflow: hidden">
+                    <form id="formModUsuarios" style="overflow-y: scroll">
+                        <div class="form-group-lg">
+                            <label for="Login">Login:</label>
+                            <input id="celularTeacher" type="number" class="form-control" placeholder="Login" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Cedula">Cedula:</label>
+                            <input id="Cedula" name="Cedula" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Nombre">Nombre Completo:</label>
+                            <input id="Nombre" name="Nombre" type="text" class="form-control" placeholder="Nombre" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Celular">Celular:</label>
+                            <input id="Celular" name="Celular" type="tel" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="OnePass">OnePass:</label>
+                            <input id="OnePass" name="OnePass" type="number" class="form-control" />
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+                            <label for="Cargo">Cargo:</label>
+                            <select id="Cargo" name="Activo" class="form-control"></select>
+                        </div>
+                        <br />
+                        <div class="form-group-lg">
+
+                            <a href="#" id="btnGuardarModUsuario" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
 
     <div class="modal fade" id="modalAdminUser">
         <div class="modal-dialog">

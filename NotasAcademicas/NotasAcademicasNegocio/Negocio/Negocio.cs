@@ -164,17 +164,18 @@ namespace NotasAcademicasNegocio.Negocio
                                              join m in context.Materia on dm.IdMateria equals m.IdMateria
                                              join mt in context.Matricula on dm.Id_Fr_Matricula equals mt.IdMatricula
                                              where dm.IdProfesor == idCurrentUser && mt.Estado == true
-                                             select new { dm.Id_Fr_Matricula, m.IdMateria, m.Nombre, m.Codigo, m.NumeroCredito, p.IdProfesor }).ToList();
+                                             select new { dm.Grupo, dm.Id_Fr_Matricula, m.IdMateria, m.Nombre, m.Codigo, m.NumeroCredito, p.IdProfesor }).ToList();
 
                         foreach (var item in currentMatter)
                         {
                             pCurrentMatterView = new PCurrentMatterView();
                             pCurrentMatterView.IdRegistration = item.Id_Fr_Matricula;
                             pCurrentMatterView.IdMatter = item.IdMateria.ToString();
-                            pCurrentMatterView.NameMatter = item.Nombre + "(" + item.Codigo + ")";
+                            pCurrentMatterView.NameMatter = item.Nombre + "(" + item.Grupo + ")";
                             pCurrentMatterView.NamberCredits = (int)item.NumeroCredito;
                             pCurrentMatterView.Code = item.Codigo;
                             pCurrentMatterView.IdTeacher = item.IdProfesor.ToString();
+                            pCurrentMatterView.Group = item.Grupo.ToString();
                             pCurrentMatterViewList.Add(pCurrentMatterView);
                         }
                     }
@@ -231,7 +232,6 @@ namespace NotasAcademicasNegocio.Negocio
         {
             List<PCMatterView> pcMatterViewList = new List<PCMatterView>();
             PCMatterView pCMatterView;
-            DataTable CurrentTable;
             try
             {
                 using (NotasAcademicasEntities context = new NotasAcademicasEntities())
@@ -273,7 +273,7 @@ namespace NotasAcademicasNegocio.Negocio
                                              join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
                                              join mt in context.Matricula on dm.Id_Fr_Matricula equals mt.IdMatricula
                                              where dm.IdMateria == idCurrentID && dm.Id_Fr_Matricula == idRegistration
-                                             select new { m.Nivel, mt.PeriodoAcademico, m.IdMateria, dm.Horario, m.Nombre, m.Codigo, p.Nombres, p.Apellidos, m.NumeroCredito }).ToList();
+                                             select new {dm.Grupo, m.Nivel, mt.PeriodoAcademico, m.IdMateria, dm.Horario, m.Nombre, m.Codigo, p.Nombres, p.Apellidos, m.NumeroCredito }).ToList();
 
 
                         foreach (var item in currentMatter)
@@ -302,7 +302,7 @@ namespace NotasAcademicasNegocio.Negocio
             }
         }
 
-        public DataTable GetCurrentStudensByMatter(int idCurrentID, ref string error)
+        public DataTable GetCurrentStudensByMatter(int idCurrentID, int currentGroup, ref string error)
         {
             DataTable CurrentTable;
             try
@@ -311,7 +311,7 @@ namespace NotasAcademicasNegocio.Negocio
                 {
                     var currentMatter = (from dn in context.DetalleNotas
                                          join e in context.Estudiante on dn.Id_Fr_Estudiantes_N equals e.IdEstudiante
-                                         where dn.Id_Fr_Materia_N == idCurrentID
+                                         where dn.Id_Fr_Materia_N == idCurrentID && dn.Grupo == currentGroup
                                          select new { e.Nombres, e.Apellidos, e.IdEstudiante, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).ToList();
 
                     CurrentTable = new DataTable();
@@ -321,6 +321,7 @@ namespace NotasAcademicasNegocio.Negocio
                     CurrentTable.Columns.Add("Note2", typeof(string));
                     CurrentTable.Columns.Add("Note3", typeof(string));
                     CurrentTable.Columns.Add("Note4", typeof(string));
+                    CurrentTable.Columns.Add("NoteTotal", typeof(string));
 
                     foreach (var item in currentMatter)
                     {
@@ -331,6 +332,7 @@ namespace NotasAcademicasNegocio.Negocio
                         row["Note2"] = item.Nota2.ToString().Replace(",", ".");
                         row["Note3"] = item.Nota3.ToString().Replace(",", ".");
                         row["Note4"] = item.Nota4.ToString().Replace(",", ".");
+                        row["NoteTotal"] = item.Nota4.ToString().Replace(",", ".");
                         CurrentTable.Rows.Add(row);
                     }
                 }

@@ -72,6 +72,7 @@ namespace NotasAcademicasNegocio.Utility
         public string CademicPeriod { get; set; }
         public List<string> Qualifications { get; set; }
         public string Schedule { get; set; }
+        public string Group { get; set; }
     }
 
     public class PCurrentMatterView

@@ -115,6 +115,7 @@ namespace NotasAcademicas.Controllers
                             string IdRegistration = context.Request["IdRegistration"];
                             string IdCurrentUser = context.Request["IdCurrentUser"];
                             string typeUser = context.Request["typeUser"];
+                            string IdMatter = context.Request["IdMatter"];
                             string CurrentTable = string.Empty;
 
                             if (string.IsNullOrEmpty(IdRegistration) || string.IsNullOrEmpty(typeUser))
@@ -122,7 +123,14 @@ namespace NotasAcademicas.Controllers
                                 CurrentTable = "Datos no pueden ser nulos!";
                             }
                             Negocio negocio = new Negocio();
-                            pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdCurrentUser), int.Parse(IdRegistration), typeUser, ref error);
+                            if (typeUser == "student")
+                            {
+                                pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdCurrentUser), int.Parse(IdRegistration), typeUser, ref error);
+                            }
+                            else
+                            {
+                                pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdMatter), int.Parse(IdRegistration), typeUser, ref error);
+                            }
 
                             if (error.Length > 0)
                             {
@@ -137,7 +145,7 @@ namespace NotasAcademicas.Controllers
                     case 600:
                         {
                             #region
-                            string IdCurrentUser = context.Request["IdCurrentStudent"];
+                            string IdCurrentUser = context.Request["IdCurrentUser"];
                             string typeUser = context.Request["typeUser"];
                             string CurrentTable = string.Empty;
                             bool IsUpdate = false;
@@ -168,16 +176,16 @@ namespace NotasAcademicas.Controllers
                             Negocio negocio = new Negocio();
                             DataTable currentTableStudens;
                             string IdCurrentMatter = context.Request["IdCurrentMatter"];
-                            string typeUser = context.Request["typeUser"];
                             string IdRegistration = context.Request["IdRegistration"];
+                            string CurrentGroup = context.Request["Group"];
                             string CurrentTable = string.Empty;
 
-                            if (string.IsNullOrEmpty(IdCurrentMatter) || string.IsNullOrEmpty(typeUser))
+                            if (string.IsNullOrEmpty(IdCurrentMatter) || string.IsNullOrEmpty(IdRegistration) || string.IsNullOrEmpty(CurrentGroup))
                             {
                                 throw new Exception("Datos no pueden ser nulos!");
                             }
 
-                            currentTableStudens = negocio.GetCurrentStudensByMatter(int.Parse(IdCurrentMatter), ref error);
+                            currentTableStudens = negocio.GetCurrentStudensByMatter(int.Parse(IdCurrentMatter), int.Parse(CurrentGroup), ref error);
 
                             if (error.Length > 0)
                             {

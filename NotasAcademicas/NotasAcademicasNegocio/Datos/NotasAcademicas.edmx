@@ -24,6 +24,7 @@ advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleMatricula' no tie
           <Property Name="IdMateria" Type="int" />
           <Property Name="IdProfesor" Type="int" />
           <Property Name="Horario" Type="varchar" MaxLength="100" />
+          <Property Name="Grupo" Type="int" />
         </EntityType>
         <!--Errores durante la generación:
 advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleNotas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
@@ -34,11 +35,12 @@ advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleNotas' no tiene d
           <Property Name="Id_Fr_Matricula_N" Type="int" Nullable="false" />
           <Property Name="Id_Fr_Estudiantes_N" Type="int" />
           <Property Name="Id_Fr_Materia_N" Type="int" />
-          <Property Name="Nota1" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Nota2" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Nota3" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Nota4" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Nota5" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Nota1" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="Nota2" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="Nota3" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="Nota4" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="Nota5" Type="decimal" Precision="18" Scale="1" />
+          <Property Name="Grupo" Type="int" />
         </EntityType>
         <EntityType Name="Estudiante">
           <Key>
@@ -213,7 +215,8 @@ advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleNotas' no tiene d
     [DetalleMatricula].[Id_Fr_Matricula] AS [Id_Fr_Matricula], 
     [DetalleMatricula].[IdMateria] AS [IdMateria], 
     [DetalleMatricula].[IdProfesor] AS [IdProfesor], 
-    [DetalleMatricula].[Horario] AS [Horario]
+    [DetalleMatricula].[Horario] AS [Horario], 
+    [DetalleMatricula].[Grupo] AS [Grupo]
     FROM [dbo].[DetalleMatricula] AS [DetalleMatricula]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="DetalleNotas" EntityType="Self.DetalleNotas" store:Type="Tables" store:Schema="dbo">
@@ -225,7 +228,8 @@ advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleNotas' no tiene d
     [DetalleNotas].[Nota2] AS [Nota2], 
     [DetalleNotas].[Nota3] AS [Nota3], 
     [DetalleNotas].[Nota4] AS [Nota4], 
-    [DetalleNotas].[Nota5] AS [Nota5]
+    [DetalleNotas].[Nota5] AS [Nota5], 
+    [DetalleNotas].[Grupo] AS [Grupo]
     FROM [dbo].[DetalleNotas] AS [DetalleNotas]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_DetalleEstudiantes_Estudiante" Association="Self.FK_DetalleEstudiantes_Estudiante">
@@ -383,6 +387,7 @@ advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleNotas' no tiene d
           <Property Name="Horario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Materia" Relationship="NotasAcademicasModel.FK_DetalleMatricula_Materia" FromRole="DetalleMatricula" ToRole="Materia" />
           <NavigationProperty Name="Profesor" Relationship="NotasAcademicasModel.FK_DetalleMatricula_Profesor" FromRole="DetalleMatricula" ToRole="Profesor" />
+          <Property Name="Grupo" Type="Int32" />
         </EntityType>
         <Association Name="FK_DetalleMatricula_Materia">
           <End Type="NotasAcademicasModel.Materia" Role="Materia" Multiplicity="1" />
@@ -460,14 +465,15 @@ advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleNotas' no tiene d
           <Property Name="Id_Fr_Matricula_N" Type="Int32" Nullable="false" />
           <Property Name="Id_Fr_Estudiantes_N" Type="Int32" />
           <Property Name="Id_Fr_Materia_N" Type="Int32" />
-          <Property Name="Nota1" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Nota2" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Nota3" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Nota4" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Nota5" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Nota1" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="Nota2" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="Nota3" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="Nota4" Type="Decimal" Precision="18" Scale="1" />
+          <Property Name="Nota5" Type="Decimal" Precision="18" Scale="1" />
           <NavigationProperty Name="Estudiante" Relationship="NotasAcademicasModel.FK_Notas_Estudiante" FromRole="DetalleNotas" ToRole="Estudiante" />
           <NavigationProperty Name="Materia" Relationship="NotasAcademicasModel.FK_DetalleEstudiantes_Materia" FromRole="DetalleNotas" ToRole="Materia" />
           <NavigationProperty Name="Matricula" Relationship="NotasAcademicasModel.FK_Notas_Matricula" FromRole="DetalleNotas" ToRole="Matricula" />
+          <Property Name="Grupo" Type="Int32" />
         </EntityType>
         <Association Name="FK_Notas_Estudiante">
           <End Type="NotasAcademicasModel.Estudiante" Role="Estudiante" Multiplicity="0..1" />
@@ -585,6 +591,7 @@ advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleNotas' no tiene d
           <EntitySetMapping Name="DetalleMatricula">
             <EntityTypeMapping TypeName="NotasAcademicasModel.DetalleMatricula">
               <MappingFragment StoreEntitySet="DetalleMatricula">
+                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
                 <ScalarProperty Name="Horario" ColumnName="Horario" />
                 <ScalarProperty Name="IdProfesor" ColumnName="IdProfesor" />
                 <ScalarProperty Name="IdMateria" ColumnName="IdMateria" />
@@ -616,6 +623,7 @@ advertencia 6002: La tabla o vista 'NotasAcademicas.dbo.DetalleNotas' no tiene d
           <EntitySetMapping Name="DetalleNotas">
             <EntityTypeMapping TypeName="NotasAcademicasModel.DetalleNotas">
               <MappingFragment StoreEntitySet="DetalleNotas">
+                <ScalarProperty Name="Grupo" ColumnName="Grupo" />
                 <ScalarProperty Name="Nota5" ColumnName="Nota5" />
                 <ScalarProperty Name="Nota4" ColumnName="Nota4" />
                 <ScalarProperty Name="Nota3" ColumnName="Nota3" />

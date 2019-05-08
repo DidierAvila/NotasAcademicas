@@ -40,8 +40,8 @@ $(document).ready(function () {
         GetCurrentProfile();
     });
 
-    $("#btnPanelAdminUsuarios").click(function () {
-        AdminUsuarios();
+    $("#btnUpdateMyProfileTeacher").click(function () {
+        UpdateCurrentUser();
     });
 
     $('#modalAlerta').on('hide.bs.modal', function () {
@@ -62,13 +62,10 @@ function poseePermiso() {
     UserCurrentName = storage.get("userCurrentName");
     CurrentUserType = storage.get("typeCurrentUser");
     IdCurrentUser = storage.get("idCurrentUser");
-    CurrentRole = "Estudiante";//storage.get("currentRole");
-    //if (!CurrentUserType) {
-    //    window.location.href = "LoginStudent.html";
-    //}
-    //if (!loginUsuario) {
-    //    window.location.href = "LoginStudent.html";
-    //}
+    if (!CurrentUserType || !UserCurrentName) {
+        window.location.href = "LoginStudent.html";
+    }
+    $("#currentUserName").text(UserCurrentName);
     if (CurrentUserType === "student") {
         $("#currentRole").text("Estudiante");
         $("#mnuMattersTeacher").hide();
@@ -202,7 +199,7 @@ function GetCurrentMatters() {
                     } else {
                         $("#ulNotesT").children().remove();
                         for (var j = 0; j < result.length; j++) {
-                            $("#ulNotesT").append("<a id=" + result[j].IdMatter + " href=\"javascript:GetCurrentDetailStudents(" + result[j].IdRegistration + "," + result[j].IdMatter + ");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[j].NameMatter + "</a>");
+                            $("#ulNotesT").append("<a id=" + result[j].IdMatter + " href=\"javascript:GetCurrentDetailStudents(" + result[j].IdRegistration + "," + result[j].IdMatter + "," + result[j].Group +");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[j].NameMatter + "</a>");
                         }
                     }
                     $("#panelHome").hide();
@@ -222,10 +219,10 @@ function GetCurrentMatters() {
     }
 }
 
-function GetCurrentDetailMatters(IdRegistration, IdMatter) {
+function GetCurrentDetailMatters(IdRegistration, IdMatter ) {
     if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '') {
         $.ajax({
-            url: "../Controllers/Controlador.ashx?op=500&IdRegistration=" + IdRegistration + "&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
+            url: "../Controllers/Controlador.ashx?op=500&IdRegistration=" + IdRegistration + "&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType + "&IdMatter=" + IdMatter,
             method: "POST",
             dataType: "json",
             async: true,
@@ -269,36 +266,42 @@ function GetCurrentDetailMatters(IdRegistration, IdMatter) {
 }
 
 function UpdateCurrentUser() {
-    $("#modalModNewItinerary").display();
     if (CurrentUserType !== '' && IdCurrentUser !== '') {
         var currentUser = "IdCurrentUser:" + IdCurrentUser + "Email:" + $("#UserEmail").text() + "Telephono" + "";
         $.ajax({
-            url: "../Controllers/Controlador.ashx?op=600&IdRegistration=" + IdRegistration + "&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
+            url: "../Controllers/Controlador.ashx?op=600&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
             method: "POST",
             dataType: "json",
             async: true,
             success: function (result) {
                 if (result !== null) {
-                    $("#UserName").val(result["UserName"]);
-                    $("#LastName").val(result["LastName"]);
-                    $("#UserDocument").val(result["Document"]);
-                    $("#UserEmail").val(result["Email"]);
-                    $("#UserPhone").val(result["PhoneNumber"]);
-                    $("#Nationality").val(result["Nationality"]);
-                    $("#UserPassword").val(result["Password"]);
-                    $("#UserBirthDate").val(result["Birthdate"]);
-                    if (result["Gender"] === "Masculino") {
-                        $("#CheckFemale").prop('checked', true);
-                    } else {
-                        $("#CheckMale").prop('checked', true);
+                    if (CurrentUserType === "student") {
+                        $("#modalStuden").modal('toggle');
                     }
-                    $("#TypeDocument").val(result["DocumentType"]);
+                    else {
+                        $("#modalTeacher").modal('toggle');
+                    }
 
-                    var currentArray = result;
-                    var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
-                    for (var i = 0; i < result.length; i++) {
-                        //$("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
-                    }
+                    //$("#UserName").val(result["UserName"]);
+                    //$("#LastName").val(result["LastName"]);
+                    //$("#UserDocument").val(result["Document"]);
+                    //$("#UserEmail").val(result["Email"]);
+                    //$("#UserPhone").val(result["PhoneNumber"]);
+                    //$("#Nationality").val(result["Nationality"]);
+                    //$("#UserPassword").val(result["Password"]);
+                    //$("#UserBirthDate").val(result["Birthdate"]);
+                    //if (result["Gender"] === "Masculino") {
+                    //    $("#CheckFemale").prop('checked', true);
+                    //} else {
+                    //    $("#CheckMale").prop('checked', true);
+                    //}
+                    //$("#TypeDocument").val(result["DocumentType"]);
+
+                    //var currentArray = result;
+                    //var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+                    //for (var i = 0; i < result.length; i++) {
+                    //    $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                    //}
                 }
                 else {
                     alert('Error:' + result["error"]);
@@ -313,23 +316,26 @@ function UpdateCurrentUser() {
     }
 }
 
-function GetCurrentDetailStudents(IdRegistration, IdMatter) {
-    if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '') {
+function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
+    if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '' && Group !== '') {
         GetCurrentDetailMatters(IdRegistration, IdMatter);
         $.ajax({
-            url: "../Controllers/Controlador.ashx?op=700&IdRegistration=" + IdRegistration + "&IdCurrentMatter=" + IdMatter + "&typeUser=" + CurrentUserType,
+            url: "../Controllers/Controlador.ashx?op=700&IdRegistration=" + IdRegistration + "&IdCurrentMatter=" + IdMatter + "&Group=" + Group,
             method: "POST",
             dataType: "json",
             async: true,
             success: function (result) {
                 if (result !== null) {
+                    $("#currentTable").children().remove();
+                    $("#currentTable").append("<table id=\"tblusuarios\">");
                     var arrColumns = [];
                     arrColumns.push({ "data": "IdStuden", "sTitle": "IdStuden", "orderable": true, "sType": "int" });
                     arrColumns.push({ "data": "StudenName", "sTitle": "Nombre", "orderable": true, "sType": "string" });
-                    arrColumns.push({ "data": "Note1", "sTitle": "Note1", "orderable": true, "sType": "string" });
-                    arrColumns.push({ "data": "Note2", "sTitle": "Note2", "orderable": true, "sType": "string" });
-                    arrColumns.push({ "data": "Note3", "sTitle": "Note3", "orderable": true, "sType": "string" });
-                    arrColumns.push({ "data": "Note4", "sTitle": "Note4", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note1", "sTitle": "Nota 1", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note2", "sTitle": "Nota 2", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note3", "sTitle": "Nota 3", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note4", "sTitle": "Nota 4", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "NoteTotal", "sTitle": "Nota Total", "orderable": true, "sType": "string" });
 
                     var tbl = $("#tblusuarios").DataTable({
                         data: result,
@@ -354,7 +360,6 @@ function GetCurrentDetailStudents(IdRegistration, IdMatter) {
                         "fnDrawCallback": function (oSettings) {
                             $("#tblusuarios tbody tr").contextmenu({
                                 menu: [
-                                    { title: "Eliminar", cmd: "Eliminar", uiIcon: "ui-icon-volume-off ui-icon-filter" },
                                     { title: "Modificar", cmd: "Modificar", uiIcon: "ui-icon-volume-off ui-icon-filter" }
                                 ],
                                 select: function (event, ui) {
@@ -362,44 +367,14 @@ function GetCurrentDetailStudents(IdRegistration, IdMatter) {
                                     var colvindex = ui.target.parent().children().index(ui.target);
                                     var colindex = $('#tblusuarios thead tr th:eq(' + colvindex + ')').data('column-index');
                                     switch (ui.cmd) {
-                                        case "Eliminar":
-                                            if (confirm("Desea eliminar el registro: " + tbl.row('.selected').data()['Login'] + "?") == true) {
-
-                                                $.ajax({
-                                                    url: "../controladores/controladorCI.ashx",
-                                                    method: "POST",
-                                                    data: {
-                                                        "op": 300
-                                                        , "action": "borrar"
-                                                        , "login": tbl.row('.selected').data()['Login']
-                                                    },
-                                                    dataType: "json",
-                                                    async: true,
-                                                    success: function (result) {
-                                                        tbl.row('.selected').remove();
-                                                        tbl.draw();
-                                                        alert("El registro se ha eliminado satisfactoriamente");
-                                                    },
-                                                    error: function (result) {
-                                                        alert("El registro no se ha eliminado satisfactoriamente, intentelo nuevamente.");
-                                                    }
-                                                });
-                                            }
-                                            break;
                                         case "Modificar":
-                                            $("#Login").val(tbl.row('.selected').data()['Login']).attr('disabled', 'disabled');
-                                            $("#Cedula").val(tbl.row('.selected').data()['Cedula']);
-                                            $("#Nombre").val(tbl.row('.selected').data()['Nombre']);
-                                            $("#Celular").val(tbl.row('.selected').data()['Celular']);
-                                            $("#AviancaPlus").val(tbl.row('.selected').data()['AviancaPlus']);
-                                            $("#OnePass").val(tbl.row('.selected').data()['OnePass']);
-                                            $("#Gerencia").val(tbl.row('.selected').data()['Gerencia']);
-                                            $("#Cargo").val(tbl.row('.selected').data()['Cargo']);
-                                            $("#Email").val(tbl.row('.selected').data()['Email']);
-                                            $("#FechaNacimiento").val(tbl.row('.selected').data()['FechaNacimiento']);
-                                            $("#Activo").val(tbl.row('.selected').data()['ACTIVO']);
-
-                                            $("#modalAdminUser").modal('toggle');
+                                            $("#idUserNotes").val(tbl.row('.selected').data()['IdStuden']);
+                                            $("#cStudentName").text('Notas ' + tbl.row('.selected').data()['StudenName']);
+                                            $("#mNote1").val(tbl.row('.selected').data()['Note1']);
+                                            $("#mNote2").val(tbl.row('.selected').data()['Note2']);
+                                            $("#mNote3").val(tbl.row('.selected').data()['Note3']);
+                                            $("#mNote4").val(tbl.row('.selected').data()['Note4']);
+                                            $("#modalNotes").modal('toggle');
                                             break;
                                     }
                                 },

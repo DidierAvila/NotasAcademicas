@@ -18,6 +18,7 @@ namespace NotasAcademicasNegocio.Datos
         public Nullable<int> IdMateria { get; set; }
         public Nullable<int> IdProfesor { get; set; }
         public string Horario { get; set; }
+        public Nullable<int> Grupo { get; set; }
     
         public virtual Materia Materia { get; set; }
         public virtual Profesor Profesor { get; set; }
