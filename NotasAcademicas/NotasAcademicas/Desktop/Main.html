@@ -321,7 +321,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <b style="font-size: 16px;">Email</b>
-                                <input id="UserEmail" name="UserEmail" type="email" class="form-control" placeholder="Email" />
+                                <input id="UserEmail" type="email" class="form-control" placeholder="Email" />
                             </div>
                             <div class="col-md-6">
                                 <b style="font-size: 16px;">Celular</b>
@@ -373,13 +373,10 @@
                                 </div>
                                 <div class="col-md-6">
                                     <b style="font-size: 16px;">Contraseña</b>
-                                    <input id="UserPassword" name="UserPassword" type="password" class="form-control" placeholder="Contraseña" />
+                                    <input id="UserPassword" type="password" class="form-control" placeholder="Contraseña" />
                                 </div>
                             </div>
                             <br />
-                            <div class="form-group-lg" style="text-align:center">
-                                <a href="#" id="btnUpdateMyProfile" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
-                            </div>
                         </div>
                         <div id="panelTeacher">
                             <h4 style="text-align:center"><b>Información Profesional</b></h4>
@@ -407,9 +404,9 @@
                                 </div>
                             </div>
                             <br />
-                            <div class="form-group-lg" style="text-align:center">
-                                <a href="#" id="btnUpdateMyProfileTeacher" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
-                            </div>
+                        </div>
+                        <div class="form-group-lg" style="text-align:center">
+                            <a href="#" id="btnUpdateMyProfile" style="width:30%" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
                         </div>
                     </form>
                 </div>
@@ -563,88 +560,6 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="modalHome" style="visibility: visible">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formHome">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModColaborador">Colaborador:</label>
-                            <select id="ModHomeSel" name="ModColaborador" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModSupervisor">Supervisor:</label>
-                            <select id="ModHomeSupervisor" name="ModSupervisor" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModAutorizador">Autorizador:</label>
-                            <select id="ModHomeAutorizador" name="ModAutorizador" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarModHomeColaborador" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="modalModNewItinerary">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formModNewItinerary">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModColaborador">Colaborador:</label>
-                            <select id="ModColaboradorNew" name="ModColaborador" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModSupervisor">Supervisor:</label>
-                            <select id="ModSupervisorNew" name="ModSupervisor" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModAutorizador">Autorizador:</label>
-                            <select id="ModAutorizadorNew" name="ModAutorizador" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarModNewItinerary" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
     <!-- modal notes -->
     <div class="modal fade" id="modalNotes">
         <div class="modal-dialog">
@@ -652,12 +567,14 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 id="cStudentName" class="modal-title" />
+                    <input id="currentIdRegistration"  style="visibility:hidden"  type="number" class="form-control" />
+                    <input id="currentIdMatter"  style="visibility:hidden"  type="number" class="form-control" />
+                    <input id="currentGroup"  style="visibility:hidden"  type="number" class="form-control" />
                 </div>
                 <div class="modal-body" style="overflow: hidden">
                     <form style="overflow-y: scroll">
                         <div class="form-group-lg">
-                            <label for="Login">Código estudiante</label>
-                            <input id="idUserNotes" type="number" class="form-control" />
+                            <label for="Login">Código estudiante <label id="currentIdStudent" /></label>
                         </div>
                         <div class="form-group-lg">
                             <label for="Login">Nota1</label>
@@ -687,8 +604,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="btnUpdateNotes" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="btnUpdateNotes" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -696,7 +613,7 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-
+    <!-- modal Teacher -->
     <div class="modal fade" id="modalTeacher">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -707,44 +624,45 @@
                 <div class="modal-body" style="overflow: hidden">
                     <form id="formModUsuarios" style="overflow-y: scroll">
                         <div class="form-group-lg">
-                            <label for="Login">Login:</label>
-                            <input id="celularTeacher" type="number" class="form-control" placeholder="Login" />
+                            <label for="Login">Celular</label>
+                            <input id="celularTeacher" type="number" class="form-control" placeholder="Celular" />
                         </div>
                         <br />
                         <div class="form-group-lg">
-                            <label for="Cedula">Cedula:</label>
-                            <input id="Cedula" name="Cedula" type="number" class="form-control" />
+                            <label for="Cedula">Email</label>
+                            <input id="EmailTeacher" type="email" class="form-control" placeholder="Email" />
                         </div>
                         <br />
                         <div class="form-group-lg">
-                            <label for="Nombre">Nombre Completo:</label>
-                            <input id="Nombre" name="Nombre" type="text" class="form-control" placeholder="Nombre" />
+                            <label for="Nombre">Facultad</label>
+                            <input id="FacultadTeacher" type="text" class="form-control" placeholder="Facultad" />
                         </div>
                         <br />
                         <div class="form-group-lg">
-                            <label for="Celular">Celular:</label>
-                            <input id="Celular" name="Celular" type="tel" class="form-control" />
+                            <label for="Celular">Grado escolaridad</label>
+                            <input id="gradoTeacher" type="text" class="form-control" placeholder="Grado escolaridad" />
                         </div>
                         <br />
                         <div class="form-group-lg">
-                            <label for="OnePass">OnePass:</label>
-                            <input id="OnePass" name="OnePass" type="number" class="form-control" />
+                            <label for="OnePass">Profesión</label>
+                            <input id="ProfesionTeacher" type="text" class="form-control" placeholder="Profesión" />
                         </div>
                         <br />
                         <div class="form-group-lg">
-                            <label for="Cargo">Cargo:</label>
-                            <select id="Cargo" name="Activo" class="form-control"></select>
+                            <label for="Cargo">Idiomas</label>
+                            <input id="IdiamasTeacher" type="text" class="form-control" placeholder="Idiomas" />
                         </div>
                         <br />
                         <div class="form-group-lg">
-
-                            <a href="#" id="btnGuardarModUsuario" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
+                            <label for="Nombre">Contraseña</label>
+                            <input id="PasswordTeacher" type="password" class="form-control" placeholder="Contraseña" />
                         </div>
+                        <br />
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="btnGuardarModTeacher" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -753,6 +671,7 @@
     </div>
     <!-- /.modal -->
 
+    <!-- modal Student -->
     <div class="modal fade" id="modalStuden">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -763,44 +682,25 @@
                 <div class="modal-body" style="overflow: hidden">
                     <form id="formModUsuarios" style="overflow-y: scroll">
                         <div class="form-group-lg">
-                            <label for="Login">Login:</label>
-                            <input id="celularTeacher" type="number" class="form-control" placeholder="Login" />
+                            <label for="Login">Celular</label>
+                            <input id="celularStuden" type="number" class="form-control" placeholder="Celular" />
                         </div>
                         <br />
                         <div class="form-group-lg">
-                            <label for="Cedula">Cedula:</label>
-                            <input id="Cedula" name="Cedula" type="number" class="form-control" />
+                            <label for="Cedula">Email</label>
+                            <input id="EmailStudent" type="email" class="form-control" placeholder="Email" />
                         </div>
                         <br />
                         <div class="form-group-lg">
-                            <label for="Nombre">Nombre Completo:</label>
-                            <input id="Nombre" name="Nombre" type="text" class="form-control" placeholder="Nombre" />
+                            <label for="Nombre">Contraseña</label>
+                            <input id="PasswordStudent" type="password" class="form-control" placeholder="Contraseña" />
                         </div>
                         <br />
-                        <div class="form-group-lg">
-                            <label for="Celular">Celular:</label>
-                            <input id="Celular" name="Celular" type="tel" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="OnePass">OnePass:</label>
-                            <input id="OnePass" name="OnePass" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Cargo">Cargo:</label>
-                            <select id="Cargo" name="Activo" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-
-                            <a href="#" id="btnGuardarModUsuario" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="btnGuardarModStuden" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</button>
                 </div>
             </div>
             <!-- /.modal-content -->

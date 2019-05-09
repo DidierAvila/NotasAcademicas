@@ -116,6 +116,7 @@ namespace NotasAcademicas.Controllers
                             string IdCurrentUser = context.Request["IdCurrentUser"];
                             string typeUser = context.Request["typeUser"];
                             string IdMatter = context.Request["IdMatter"];
+                            string Group = context.Request["Group"];
                             string CurrentTable = string.Empty;
 
                             if (string.IsNullOrEmpty(IdRegistration) || string.IsNullOrEmpty(typeUser))
@@ -123,14 +124,7 @@ namespace NotasAcademicas.Controllers
                                 CurrentTable = "Datos no pueden ser nulos!";
                             }
                             Negocio negocio = new Negocio();
-                            if (typeUser == "student")
-                            {
-                                pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdCurrentUser), int.Parse(IdRegistration), typeUser, ref error);
-                            }
-                            else
-                            {
-                                pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdMatter), int.Parse(IdRegistration), typeUser, ref error);
-                            }
+                            pCurrentMatterViewsList = negocio.GetCurrentMatter(int.Parse(IdCurrentUser), int.Parse(IdMatter), int.Parse(IdRegistration), int.Parse(Group), typeUser, ref error);
 
                             if (error.Length > 0)
                             {
@@ -147,7 +141,13 @@ namespace NotasAcademicas.Controllers
                             #region
                             string IdCurrentUser = context.Request["IdCurrentUser"];
                             string typeUser = context.Request["typeUser"];
-                            string CurrentTable = string.Empty;
+                            string celular = context.Request["celular"];
+                            string email = context.Request["email"];
+                            string facultad = context.Request["facultad"];
+                            string grado = context.Request["grado"];
+                            string profesion = context.Request["profesion"];
+                            string idioma = context.Request["idioma"];
+                            string password = context.Request["password"];
                             bool IsUpdate = false;
 
                             if (string.IsNullOrEmpty(IdCurrentUser) || string.IsNullOrEmpty(typeUser))
@@ -156,8 +156,7 @@ namespace NotasAcademicas.Controllers
                             }
 
                             Negocio negocio = new Negocio();
-                            IsUpdate = negocio.UpdateCurrentUser(int.Parse(IdCurrentUser), typeUser, ref error);
-
+                            IsUpdate = negocio.UpdateCurrentUser(int.Parse(IdCurrentUser), typeUser, celular, email, facultad, grado, profesion, idioma, password, ref error);
                             if (error.Length > 0)
                             {
                                 throw new Exception(error);
@@ -200,98 +199,32 @@ namespace NotasAcademicas.Controllers
                         break;
                     case 800:
                         {
-                            #region Connection to DB
+                            #region Update notes
 
-                            string action = context.Request["action"];
-                            string NameServerDB = string.Empty;
-                            string PortServerDB = string.Empty;
-                            string NameDataBase = string.Empty;
-                            string UserDataBase = string.Empty;
-                            string PasswordDataBase = string.Empty;
-                            string DatabaseEngine = string.Empty;
-                            string value = string.Empty;
+                            string IdCurrentUser = context.Request["IdCurrentUser"];
+                            string IdCurrentMatter = context.Request["IdCurrentMatter"];
+                            string IdRegistration = context.Request["IdRegistration"];
+                            string CurrentGroup = context.Request["Group"];
+                            string note1 = context.Request["note1"];
+                            string note2 = context.Request["note2"];
+                            string note3 = context.Request["note3"];
+                            string note4 = context.Request["note4"];
+                            bool IsUpdate = false;
 
-                            if (action.Equals("Consult"))
+                            if (string.IsNullOrEmpty(IdCurrentUser))
                             {
-                                NameServerDB = cfg.AppSettings.Settings["servidorAdmin"].Value;
-                                PortServerDB = cfg.AppSettings.Settings["puertoServidor"].Value;
-                                NameDataBase = cfg.AppSettings.Settings["nombreDBConsulta"].Value;
-                                UserDataBase = cfg.AppSettings.Settings["usuarioBd"].Value;
-                                PasswordDataBase = "123";//NegocioCI.Desencriptar(cfg.AppSettings.Settings["contrasena"].Value, ref error);
-                                DatabaseEngine = cfg.AppSettings.Settings["driverAdmin"].Value;
-
-                                tipoContenido = "text/json";
-                                value = "<div class=\"panel panel-default\" id=\"panelDataBase\">"
-                                          + "<div class=\"panel-body\">"
-                                             + "<form id=\"formDataBase\">"
-                                               + "<h3 style=\"text-align: center; margin-top: 0px\"><strong>Conexión a BD</strong></h3>"
-                                               + "<br/>"
-                                               + "<div class=\"row\">"
-                                                   + "<div class=\"col-md-6\">"
-                                                    + "<b style=\"font-size: 17px;\">Servidor base de datos</b>"
-                                                    + "<input id=\"DataBaseServer\" type=\"text\" value= '" + NameServerDB + "' class=\"form-control\" placeholder=\"Servidor base de datos\" />"
-                                                  + "</div>"
-                                                  + "<div class=\"col-md-6\">"
-                                                    + "<b style=\"font-size: 17px;\">Puerto base de datos</b>"
-                                                    + "<input id=\"PortDataBase\" type=\"text\" value= '" + PortServerDB + "' class=\"form-control\" placeholder=\"Puerto servidor de la base de datos\" />"
-                                                  + "</div>"
-                                               + "</div>"
-                                               + "<br/>"
-                                               + "<div class=\"row\">"
-                                                  + "<div class=\"col-md-6\">"
-                                                    + "<b style=\"font-size: 17px;\">Nombre base de datos</b>"
-                                                    + "<input id=\"DataBaseName\" type=\"text\" value= '" + NameDataBase + "' class=\"form-control\" placeholder=\"Nombre de la base de datos\" />"
-                                                  + "</div>"
-                                                  + "<div class=\"col-md-6\">"
-                                                    + "<b style=\"font-size: 17px;\">Usuario base de datos</b>"
-                                                    + "<input id=\"UserBaseDatosData\" type=\"text\" value= '" + UserDataBase + "' class=\"form-control\" placeholder=\"Usuario de la base de datos\" />"
-                                                  + "</div>"
-                                               + "</div>"
-                                               + "<br/>"
-                                               + "<div class=\"row\">"
-                                                   + "<div class=\"col-md-6\">"
-                                                       + "<b style=\"font-size: 17px;\">Contraseña usuario base de datos</b>"
-                                                       + "<input id=\"PasswordUserDataBase\" type=\"password\" value= '" + PasswordDataBase + "' class=\"form-control\" placeholder=\"Contraseña de la base de datos\" />"
-                                                   + "</div>"
-                                                   + "<div class=\"col-md-6\">"
-                                                       + "<b style=\"font-size: 17px;\">Motor base de datos</b>"
-                                                       + "<select id=\"MotorDb\" class=\"form-control\">"
-                                                           + "<option>MSSQL</option>"
-                                                           + "<option>MYSQL</option>"
-                                                           + "<option>ORACLE</option>"
-                                                       + "</select>"
-                                                   + "</div>"
-                                               + "</div>"
-                                               + "<br/>"
-                                               + "<div class=\"form-group-lg\">"
-                                                  + "<a href=\"#\" id=\"btnGuardarConfDB\" class=\"btn btn-info btn-lg colorFondo\"><span class=\"glyphicon glyphicon-floppy-disk\"></span> Guardar</a>"
-                                               + "</div>"
-                                             + "</form>"
-                                          + "</div>"
-                                      + "</div>";
-
-                                result = JsonConvert.SerializeObject(value);
+                                throw new Exception("Datos no pueden ser nulos!");
                             }
-                            else
+
+                            Negocio negocio = new Negocio();
+                            IsUpdate = negocio.UpdateCurrentStudenNotes(Convert.ToDouble(note1), Convert.ToDouble(note2), Convert.ToDouble(note3), Convert.ToDouble(note4), int.Parse(IdCurrentUser), int.Parse(IdRegistration), int.Parse(IdCurrentMatter), int.Parse(CurrentGroup), ref error);
+                            if (error.Length > 0)
                             {
-                                NameServerDB = context.Request["NameServer"];
-                                PortServerDB = context.Request["PortServer"];
-                                NameDataBase = context.Request["NameDataBase"];
-                                UserDataBase = context.Request["UserDataBase"];
-                                PasswordDataBase = context.Request["PasswordUserDB"];
-                                PasswordDataBase = context.Request["DatabaseEngine"];
-
-                                cfg.AppSettings.Settings["servidorAdmin"].Value = NameServerDB;
-                                cfg.AppSettings.Settings["puertoServidor"].Value = PortServerDB;
-                                cfg.AppSettings.Settings["nombreDBConsulta"].Value = NameDataBase;
-                                cfg.AppSettings.Settings["usuarioBd"].Value = UserDataBase;
-                                cfg.AppSettings.Settings["contrasena"].Value = "123";//NegocioCI.Encriptar(PasswordDataBase, ref error);
-                                cfg.AppSettings.Settings["driverAdmin"].Value = DatabaseEngine;
-
-                                cfg.Save();
-                                value = "Ok";
-                                result = JsonConvert.SerializeObject(value);
+                                throw new Exception(error);
                             }
+
+                            tipoContenido = "text/json";
+                            result = JsonConvert.SerializeObject(IsUpdate);
 
                             #endregion
                         }

@@ -15,8 +15,11 @@ $(document).ready(function () {
     //Menu buttons
     $("#btnLogOut").click(function () {
         storage = $.sessionStorage;
-        storage.remove('loginusuario');
-        document.location.href = "LoginStudent.html";
+        if (CurrentUserType === "student") {
+            window.location.href = "LoginStudent.html";
+        } else {
+            window.location.href = "LoginTeacher.html";
+        }
     });
 
     $("#btnHome").click(function () {
@@ -40,16 +43,27 @@ $(document).ready(function () {
         GetCurrentProfile();
     });
 
-    $("#btnUpdateMyProfileTeacher").click(function () {
-        UpdateCurrentUser();
+    $("#btnUpdateMyProfile").click(function () {
+        GetCurrentUser();
+    });
+
+    $("#btnGuardarModTeacher").click(function () {
+        UpdateCurrentTeacher();
+    });
+
+    $("#btnGuardarModStuden").click(function () {
+        UpdateCurrentStuden();
+    });
+
+    $("#btnUpdateNotes").click(function () {
+        var idRegistration = $("#currentIdRegistration").text();
+        var idMatter = $("#currentIdMatter").text();
+        var currentGroup = $("#currentGroup").val();
+        UpdateCurrentStudenNotes(idRegistration, idMatter, currentGroup);
     });
 
     $('#modalAlerta').on('hide.bs.modal', function () {
         $("#alertamensaje").html('');
-    });
-
-    $("#btnUpdateMyProfile").click(function () {
-        $("#modalModNewItinerary").modal('toggle');
     });
 
     $('#modalAdminUser').on('hide.bs.modal', function () {
@@ -63,7 +77,7 @@ function poseePermiso() {
     CurrentUserType = storage.get("typeCurrentUser");
     IdCurrentUser = storage.get("idCurrentUser");
     if (!CurrentUserType || !UserCurrentName) {
-        window.location.href = "LoginStudent.html";
+        window.location.href = "LoginTeacher.html";
     }
     $("#currentUserName").text(UserCurrentName);
     if (CurrentUserType === "student") {
@@ -194,7 +208,7 @@ function GetCurrentMatters() {
                     if (CurrentUserType === "student") {
                         $("#ulNotes").children().remove();
                         for (var i = 0; i < result.length; i++) {
-                            $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + "," + result[i].IdMatter + ");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
+                            $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:GetCurrentDetailMatters(" + result[i].IdRegistration + "," + result[i].IdMatter + "," + result[i].Group +");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
                         }
                     } else {
                         $("#ulNotesT").children().remove();
@@ -219,27 +233,27 @@ function GetCurrentMatters() {
     }
 }
 
-function GetCurrentDetailMatters(IdRegistration, IdMatter ) {
-    if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '') {
+function GetCurrentDetailMatters(IdRegistration, IdMatter, Group ) {
+    if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '' && Group !== '') {
         $.ajax({
-            url: "../Controllers/Controlador.ashx?op=500&IdRegistration=" + IdRegistration + "&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType + "&IdMatter=" + IdMatter,
+            url: "../Controllers/Controlador.ashx?op=500&IdRegistration=" + IdRegistration + "&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType + "&IdMatter=" + IdMatter + "&Group=" + Group,
             method: "POST",
             dataType: "json",
             async: true,
             success: function (result) {
                 if (result !== null) {
-                    if (CurrentUserType === "Student") {
-                        $("#CademicPeriod").text(result[IdMatter].CademicPeriod);
-                        $("#schedule").text(result[IdMatter].Schedule);
-                        $("#nameMatter").text(result[IdMatter].Name);
-                        $("#codeMatter").text(result[IdMatter].Code);
-                        $("#teacherMatterName").text(result[IdMatter].TeacherName);
-                        $("#numberCredits").text(result[IdMatter].NamberCredits);
-                        $("#levelMatter").text(result[IdMatter].Level);
-                        $("#noteOne").text(result[IdMatter].Qualifications[0]);
-                        $("#noteTwo").text(result[IdMatter].Qualifications[1]);
-                        $("#noteThree").text(result[IdMatter].Qualifications[2]);
-                        $("#noteFour").text(result[IdMatter].Qualifications[3]);
+                    if (CurrentUserType === "student") {
+                        $("#CademicPeriod").text(result[0].CademicPeriod);
+                        $("#schedule").text(result[0].Schedule);
+                        $("#nameMatter").text(result[0].Name);
+                        $("#codeMatter").text(result[0].Code);
+                        $("#teacherMatterName").text(result[0].TeacherName);
+                        $("#numberCredits").text(result[0].NamberCredits);
+                        $("#levelMatter").text(result[0].Level);
+                        $("#noteOne").text(result[0].Qualifications[0]);
+                        $("#noteTwo").text(result[0].Qualifications[1]);
+                        $("#noteThree").text(result[0].Qualifications[2]);
+                        $("#noteFour").text(result[0].Qualifications[3]);
                         $("#panelNotesStuden").show();
                     } else {
                         $("#CademicPeriodStudent").text(result[0].CademicPeriod);
@@ -265,50 +279,125 @@ function GetCurrentDetailMatters(IdRegistration, IdMatter ) {
     }
 }
 
-function UpdateCurrentUser() {
+function UpdateCurrentTeacher() {
     if (CurrentUserType !== '' && IdCurrentUser !== '') {
-        var currentUser = "IdCurrentUser:" + IdCurrentUser + "Email:" + $("#UserEmail").text() + "Telephono" + "";
         $.ajax({
             url: "../Controllers/Controlador.ashx?op=600&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
             method: "POST",
+            data: {
+                "celular": $("#celularTeacher").val()
+                , "email": $("#EmailTeacher").val()
+                , "facultad": $("#FacultadTeacher").val()
+                , "grado": $("#gradoTeacher").val()
+                , "profesion": $("#ProfesionTeacher").val()
+                , "idioma": $("#IdiamasTeacher").val()
+                , "password": $("#PasswordTeacher").val()
+            },
             dataType: "json",
             async: true,
             success: function (result) {
-                if (result !== null) {
-                    if (CurrentUserType === "student") {
-                        $("#modalStuden").modal('toggle');
-                    }
-                    else {
-                        $("#modalTeacher").modal('toggle');
-                    }
-
-                    //$("#UserName").val(result["UserName"]);
-                    //$("#LastName").val(result["LastName"]);
-                    //$("#UserDocument").val(result["Document"]);
-                    //$("#UserEmail").val(result["Email"]);
-                    //$("#UserPhone").val(result["PhoneNumber"]);
-                    //$("#Nationality").val(result["Nationality"]);
-                    //$("#UserPassword").val(result["Password"]);
-                    //$("#UserBirthDate").val(result["Birthdate"]);
-                    //if (result["Gender"] === "Masculino") {
-                    //    $("#CheckFemale").prop('checked', true);
-                    //} else {
-                    //    $("#CheckMale").prop('checked', true);
-                    //}
-                    //$("#TypeDocument").val(result["DocumentType"]);
-
-                    //var currentArray = result;
-                    //var obj = { one: 1, two: 2, three: 3, four: 4, five: 5 };
-                    //for (var i = 0; i < result.length; i++) {
-                    //    $("#ulNotes").append("<a id=" + result[i].IdMatter + " href=\"javascript:AdminAlimentacionTerrestre();\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[i].NameMatter + "</a>");
-                    //}
-                }
-                else {
-                    alert('Error:' + result["error"]);
+                if (result) {
+                    $("#UserEmail").val($("#EmailTeacher").val());
+                    $("#UserPhone").val($("#celularTeacher").val());
+                    $("#faculty").val($("#FacultadTeacher").val());
+                    $("#educationLevel").val($("#gradoTeacher").val());
+                    $("#profession").val($("#ProfesionTeacher").val());
+                    $("#languages").val($("#IdiamasTeacher").val());
+                    $("#UserPassword").val($("#PasswordTeacher").val());
+                    $("#alertamensaje").text("     El registro fue modificado satisfactoriamente.");
+                    $("#modalTeacher").modal('hide');
+                    $("#modalAlerta").modal('toggle');
+                } else {
+                    $("#alertamensaje").text("     El registro no fue modificado satisfactoriamente. intentelo nuevamente.");
+                    $("#modalAlerta").modal('toggle');
+                    $("#modalTeacher").modal('hide');
                 }
             },
             error: function (result) {
-                alert("failed");
+                $("#alertamensaje").text("     El registro no fue modificado satisfactoriamente. intentelo nuevamente.");
+                $("#modalAlerta").modal('toggle');
+            }
+        });
+    } else {
+        alert("Parámetros vacios!");
+    }
+}
+
+function UpdateCurrentStuden() {
+    if (CurrentUserType !== '' && IdCurrentUser !== '') {
+        $.ajax({
+            url: "../Controllers/Controlador.ashx?op=600&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
+            method: "POST",
+            data: {
+                "celular": $("#celularStuden").val()
+                , "email": $("#EmailStudent").val()
+                , "facultad": $("#FacultadTeacher").val()
+                , "grado": $("#gradoTeacher").val()
+                , "profesion": $("#ProfesionTeacher").val()
+                , "idioma": $("#IdiamasTeacher").val()
+                , "password": $("#PasswordStudent").val()
+            },
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                if (result) {
+                    $("#UserEmail").val($("#EmailStudent").val());
+                    $("#UserPhone").val($("#celularStuden").val());
+                    $("#UserPassword").val($("#PasswordStudent").val());
+                    $("#alertamensaje").text("     La información fue modificado satisfactoriamente.");
+                    $("#modalStuden").modal('hide');
+                    $("#modalAlerta").modal('toggle');
+                } else {
+                    $("#alertamensaje").text("     El registro no fue modificado satisfactoriamente. intentelo nuevamente.");
+                    $("#modalAlerta").modal('toggle');
+                    $("#modalTeacher").modal('hide');
+                }
+            },
+            error: function (result) {
+                $("#alertamensaje").text("     El registro no fue modificado satisfactoriamente. intentelo nuevamente.");
+                $("#modalAlerta").modal('toggle');
+            }
+        });
+    } else {
+        alert("Parámetros vacios!");
+    }
+}
+
+function UpdateCurrentStudenNotes(IdRegistration, IdMatter, Group) {
+    if (IdCurrentUser !== '') {
+        $.ajax({
+            url: "../Controllers/Controlador.ashx?op=800&IdCurrentUser=" + IdCurrentUser + "&IdRegistration=" + IdRegistration + "&IdCurrentMatter=" + IdMatter + "&Group=" + Group,
+            method: "POST",
+            data: {
+                "note1": $("#mNote1").val()
+                , "note2": $("#mNote2").val()
+                , "note3": $("#mNote3").val()
+                , "note4": $("#mNote4").val()
+            },
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                if (result) {
+                    var tbl = $("#tblusuarios").DataTable();
+                    tbl.row('.selected').data({
+                        Note1: $("#mNote1").val()
+                        , Note2: $("#mNote2").val()
+                        , Note3: $("#mNote3").val()
+                        , Note4: $("#mNote4").val()
+                    }).draw();
+
+                    $("#alertamensaje").text("     La información fue modificado satisfactoriamente.");
+                    //$("#modalStuden").modal('hide');
+                    $("#modalAlerta").modal('toggle');
+                } else {
+                    $("#alertamensaje").text("     El registro no fue modificado satisfactoriamente. intentelo nuevamente.");
+                    $("#modalAlerta").modal('toggle');
+                    $("#modalTeacher").modal('hide');
+                }
+            },
+            error: function (result) {
+                $("#alertamensaje").text("     El registro no fue modificado satisfactoriamente. intentelo nuevamente.");
+                $("#modalAlerta").modal('toggle');
             }
         });
     } else {
@@ -318,7 +407,7 @@ function UpdateCurrentUser() {
 
 function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
     if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '' && Group !== '') {
-        GetCurrentDetailMatters(IdRegistration, IdMatter);
+        GetCurrentDetailMatters(IdRegistration, IdMatter, Group);
         $.ajax({
             url: "../Controllers/Controlador.ashx?op=700&IdRegistration=" + IdRegistration + "&IdCurrentMatter=" + IdMatter + "&Group=" + Group,
             method: "POST",
@@ -368,7 +457,10 @@ function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
                                     var colindex = $('#tblusuarios thead tr th:eq(' + colvindex + ')').data('column-index');
                                     switch (ui.cmd) {
                                         case "Modificar":
-                                            $("#idUserNotes").val(tbl.row('.selected').data()['IdStuden']);
+                                            $("#currentIdMatter").val(IdMatter);
+                                            $("#currentIdRegistration").text(IdRegistration);
+                                            $("#currentGroup").text(Group);
+                                            $("#currentIdStudent").text(tbl.row('.selected').data()['IdStuden']);
                                             $("#cStudentName").text('Notas ' + tbl.row('.selected').data()['StudenName']);
                                             $("#mNote1").val(tbl.row('.selected').data()['Note1']);
                                             $("#mNote2").val(tbl.row('.selected').data()['Note2']);
@@ -410,119 +502,26 @@ function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
     }
 }
 
-function getDataUsuarios() {
-    $.ajax({
-        url: "../controladores/controladorCI.ashx",
-        method: "POST",
-        data: { "op": 300, "action": "datos" },
-        dataType: "json",
-        async: true,
-        success: function (result) {
-            var arrColumns = [];
-
-            arrColumns.push({ "data": "Login", "sTitle": "Login", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "Cedula", "sTitle": "Cedula", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "Nombre", "sTitle": "Nombre", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "Celular", "sTitle": "Celular", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "AviancaPlus", "sTitle": "AviancaPlus", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "OnePass", "sTitle": "OnePass", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "Gerencia", "sTitle": "Gerencia", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "Cargo", "sTitle": "Cargo", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "Email", "sTitle": "Email", "orderable": true, "sType": "string" });
-            arrColumns.push({ "data": "FechaNacimiento", "sTitle": "Fecha Nacimiento", "orderable": true, "sType": "date" });
-            arrColumns.push({ "data": "ACTIVO", "sTitle": "Activo", "orderable": true, "sType": "string" });
-
-            var tbl = $("#tblusuarios").DataTable({
-                data: result,
-                "columns": arrColumns,
-                "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "zeroRecords": "No se encontro ningún registro",
-                    "info": "Mostrando página _PAGE_ de _PAGES_",
-                    "infoEmpty": "No se encontro ningún registro",
-                    "infoFiltered": "(filtrado de  _MAX_ total registros)",
-                    "search": "Buscar:",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    },
-                    "loadingRecords": "Cargando registros...",
-                    "processing": "Procesando...",
-                    "ordering": true
-                },
-                "fnDrawCallback": function (oSettings) {
-                    $("#tblusuarios tbody tr").contextmenu({
-                        menu: [
-                            { title: "Eliminar", cmd: "Eliminar", uiIcon: "ui-icon-volume-off ui-icon-filter" },
-                            { title: "Modificar", cmd: "Modificar", uiIcon: "ui-icon-volume-off ui-icon-filter" }
-                        ],
-                        select: function (event, ui) {
-                            var celltext = ui.target.text();
-                            var colvindex = ui.target.parent().children().index(ui.target);
-                            var colindex = $('#tblusuarios thead tr th:eq(' + colvindex + ')').data('column-index');
-                            switch (ui.cmd) {
-                                case "Eliminar":
-                                    if (confirm("Desea eliminar el registro: " + tbl.row('.selected').data()['Login'] + "?") == true) {
-
-                                        $.ajax({
-                                            url: "../controladores/controladorCI.ashx",
-                                            method: "POST",
-                                            data: {
-                                                "op": 300
-                                                , "action": "borrar"
-                                                , "login": tbl.row('.selected').data()['Login']
-                                            },
-                                            dataType: "json",
-                                            async: true,
-                                            success: function (result) {
-                                                tbl.row('.selected').remove();
-                                                tbl.draw();
-                                                alert("El registro se ha eliminado satisfactoriamente");
-                                            },
-                                            error: function (result) {
-                                                alert("El registro no se ha eliminado satisfactoriamente, intentelo nuevamente.");
-                                            }
-                                        });
-                                    }
-                                    break;
-                                case "Modificar":
-                                    $("#Login").val(tbl.row('.selected').data()['Login']).attr('disabled', 'disabled');
-                                    $("#Cedula").val(tbl.row('.selected').data()['Cedula']);
-                                    $("#Nombre").val(tbl.row('.selected').data()['Nombre']);
-                                    $("#Celular").val(tbl.row('.selected').data()['Celular']);
-                                    $("#AviancaPlus").val(tbl.row('.selected').data()['AviancaPlus']);
-                                    $("#OnePass").val(tbl.row('.selected').data()['OnePass']);
-                                    $("#Gerencia").val(tbl.row('.selected').data()['Gerencia']);
-                                    $("#Cargo").val(tbl.row('.selected').data()['Cargo']);
-                                    $("#Email").val(tbl.row('.selected').data()['Email']);
-                                    $("#FechaNacimiento").val(tbl.row('.selected').data()['FechaNacimiento']);
-                                    $("#Activo").val(tbl.row('.selected').data()['ACTIVO']);
-
-                                    $("#modalAdminUser").modal('toggle');
-                                    break;
-                            }
-                        },
-                        beforeOpen: function (event, ui) {
-                            var $menu = ui.menu,
-                                $target = ui.target,
-                                extraData = ui.extraData;
-                            ui.menu.zIndex(9999);
-                        }
-                    });
-                }
-            });
-
-            $('#tblusuarios tbody tr:first').addClass('selected');
-
-            $('#tblusuarios tbody').on('click', 'tr', function () {
-                tbl.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-            });
-        },
-        error: function (result) {
-            alert("failed");
+function GetCurrentUser() {
+    if (CurrentUserType !== '' && IdCurrentUser !== '') {
+        
+        if (CurrentUserType === "student") {
+            $("#EmailStudent").val($("#UserEmail").val());
+            $("#celularStuden").val($("#UserPhone").val());
+            $("#PasswordStudent").val($("#UserPassword").val());
+            $("#modalStuden").modal('toggle');
         }
-    });
+        else {
+            $("#EmailTeacher").val($("#UserEmail").val());
+            $("#celularTeacher").val($("#UserPhone").val());
+            $("#FacultadTeacher").val($("#faculty").val());
+            $("#gradoTeacher").val($("#educationLevel").val());
+            $("#ProfesionTeacher").val($("#profession").val());
+            $("#IdiamasTeacher").val($("#languages").val());
+            $("#PasswordTeacher").val($("#UserPassword").val());
+            $("#modalTeacher").modal('toggle');
+        }
+    } else {
+        alert("Parámetros vacios!");
+    }
 }

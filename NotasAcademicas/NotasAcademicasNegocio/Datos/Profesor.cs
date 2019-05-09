@@ -37,6 +37,7 @@ namespace NotasAcademicasNegocio.Datos
         public string Facultad { get; set; }
         public string GradoEscolaridad { get; set; }
         public string TituloProfesional { get; set; }
+        public string Idiomas { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleMatricula> DetalleMatricula { get; set; }

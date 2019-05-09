@@ -3,6 +3,7 @@ using NotasAcademicasNegocio.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 
 namespace NotasAcademicasNegocio.Negocio
@@ -142,7 +143,7 @@ namespace NotasAcademicasNegocio.Negocio
                                              join Materia m in context.Materia on dm.IdMateria equals m.IdMateria
                                              join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
                                              where de.Id_Fr_Estudiantes_E == idCurrentUser & de.Estado == true && mt.Estado == true
-                                             select new { dm.Id_Fr_Matricula, m.IdMateria, m.Nombre, m.Codigo, m.NumeroCredito, p.IdProfesor, p.Nombres, p.Apellidos }).ToList();
+                                             select new { dm.Id_Fr_Matricula, dm.Grupo, m.IdMateria, m.Nombre, m.Codigo, m.NumeroCredito, p.IdProfesor, p.Nombres, p.Apellidos }).ToList();
 
                         foreach (var item in currentMatter)
                         {
@@ -154,6 +155,7 @@ namespace NotasAcademicasNegocio.Negocio
                             pCurrentMatterView.Code = item.Codigo;
                             pCurrentMatterView.IdTeacher = item.IdProfesor.ToString();
                             pCurrentMatterView.NameTeacher = item.Nombres + " " + item.Apellidos;
+                            pCurrentMatterView.Group = item.Grupo.ToString();
                             pCurrentMatterViewList.Add(pCurrentMatterView);
                         }
                     }
@@ -228,7 +230,7 @@ namespace NotasAcademicasNegocio.Negocio
             }
         }
 
-        public List<PCMatterView> GetCurrentMatter(int idCurrentID, int idRegistration, string typeUser, ref string error)
+        public List<PCMatterView> GetCurrentMatter(int idCurrentID, int idCurrentMatter, int idRegistration, int currentGroup, string typeUser, ref string error)
         {
             List<PCMatterView> pcMatterViewList = new List<PCMatterView>();
             PCMatterView pCMatterView;
@@ -238,27 +240,38 @@ namespace NotasAcademicasNegocio.Negocio
                 {
                     if (typeUser.Equals("student"))
                     {
+                        //var currentMatter = (from dn in context.DetalleNotas
+                        //                     join m in context.Materia on dn.Id_Fr_Materia_N equals m.IdMateria
+                        //                     join e in context.Estudiante on dn.Id_Fr_Estudiantes_N equals e.IdEstudiante
+                        //                     join dm in context.DetalleMatricula on dn.Id_Fr_Matricula_N equals dm.Id_Fr_Matricula
+                        //                     join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
+                        //                     join mt in context.Matricula on dn.Id_Fr_Matricula_N equals mt.IdMatricula
+                        //                     where dn.Id_Fr_Estudiantes_N == idCurrentID && dn.Id_Fr_Matricula_N == idRegistration && dn.Id_Fr_Materia_N == idCurrentMatter
+                        //                     select new { dm.Horario, m.Nivel, mt.PeriodoAcademico, m.IdMateria, m.Nombre, m.Codigo, p.Nombres, p.Apellidos, m.NumeroCredito, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).ToList();
+
                         var currentMatter = (from dn in context.DetalleNotas
                                              join m in context.Materia on dn.Id_Fr_Materia_N equals m.IdMateria
-                                             join e in context.Estudiante on dn.Id_Fr_Estudiantes_N equals e.IdEstudiante
-                                             join dm in context.DetalleMatricula on dn.Id_Fr_Matricula_N equals dm.Id_Fr_Matricula
-                                             join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
                                              join mt in context.Matricula on dn.Id_Fr_Matricula_N equals mt.IdMatricula
-                                             where dn.Id_Fr_Estudiantes_N == idCurrentID && dn.Id_Fr_Matricula_N == idRegistration
-                                             select new { m.Nivel, mt.PeriodoAcademico, m.IdMateria, dm.Horario, m.Nombre, m.Codigo, p.Nombres, p.Apellidos, m.NumeroCredito, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).ToList();
+                                             where dn.Id_Fr_Estudiantes_N == idCurrentID && dn.Id_Fr_Matricula_N == idRegistration && dn.Id_Fr_Materia_N == idCurrentMatter && dn.Grupo == currentGroup
+                                             select new { m.Nivel, m.IdMateria, mt.PeriodoAcademico, m.Nombre, m.Codigo, m.NumeroCredito, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).ToList();
+
+                        var currentDetMat = (from dm in context.DetalleMatricula
+                                               join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
+                                               where dm.IdMateria == idCurrentMatter && dm.Id_Fr_Matricula == idRegistration && dm.Grupo == currentGroup
+                                               select new { dm.Horario, p.Nombres, p.Apellidos }).ToList();
 
                         foreach (var item in currentMatter)
                         {
                             pCMatterView = new PCMatterView();
                             pCMatterView.Qualifications = new List<string>();
                             pCMatterView.Level = (int)item.Nivel;
-                            pCMatterView.Schedule = item.Horario;
+                            pCMatterView.Schedule = currentDetMat[0].Horario;
                             pCMatterView.CademicPeriod = item.PeriodoAcademico;
                             pCMatterView.IdMatter = item.IdMateria.ToString();
                             pCMatterView.Name = item.Nombre;
                             pCMatterView.NamberCredits = (int)item.NumeroCredito;
                             pCMatterView.Code = item.Codigo;
-                            pCMatterView.TeacherName = item.Nombres + " " + item.Apellidos;
+                            pCMatterView.TeacherName = currentDetMat[0].Nombres + " " + currentDetMat[0].Apellidos;
                             pCMatterView.Qualifications.Add(item.Nota1.ToString().Replace(",", "."));
                             pCMatterView.Qualifications.Add(item.Nota2.ToString().Replace(",", "."));
                             pCMatterView.Qualifications.Add(item.Nota3.ToString().Replace(",", "."));
@@ -272,7 +285,7 @@ namespace NotasAcademicasNegocio.Negocio
                                              join m in context.Materia on dm.IdMateria equals m.IdMateria
                                              join p in context.Profesor on dm.IdProfesor equals p.IdProfesor
                                              join mt in context.Matricula on dm.Id_Fr_Matricula equals mt.IdMatricula
-                                             where dm.IdMateria == idCurrentID && dm.Id_Fr_Matricula == idRegistration
+                                             where dm.IdMateria == idCurrentMatter && dm.Id_Fr_Matricula == idRegistration
                                              select new {dm.Grupo, m.Nivel, mt.PeriodoAcademico, m.IdMateria, dm.Horario, m.Nombre, m.Codigo, p.Nombres, p.Apellidos, m.NumeroCredito }).ToList();
 
 
@@ -347,7 +360,7 @@ namespace NotasAcademicasNegocio.Negocio
             }
         }
 
-        public bool UpdateCurrentUser(int idUser, string typeUser, ref string error)
+        public bool UpdateCurrentUser(int idUser, string typeUser, string celular, string email, string facultad, string grado, string profesion, string idioma, string password, ref string error)
         {
             bool Isupdate = false;
             try
@@ -357,17 +370,31 @@ namespace NotasAcademicasNegocio.Negocio
                     if (typeUser.Equals("student"))
                     {
                         Estudiante estudiante = context.Estudiante.SingleOrDefault(e => e.IdEstudiante == idUser);
-
                         if (estudiante != null)
                         {
-                            estudiante.Telefono = "";
-                            estudiante.Email = "";
+                            estudiante.Telefono = celular;
+                            estudiante.Email = email;
+                            estudiante.Clave = password;
+                            context.SaveChanges();
+                            return true;
                         }
                         return Isupdate;
                     }
                     else
                     {
-
+                        Profesor profesor = context.Profesor.SingleOrDefault(e => e.IdProfesor == idUser);
+                        if (profesor != null)
+                        {
+                            profesor.Telefono = celular;
+                            profesor.Email = email;
+                            profesor.Facultad = facultad;
+                            profesor.TituloProfesional = profesion;
+                            profesor.GradoEscolaridad = grado;
+                            profesor.Idiomas = idioma;
+                            profesor.Clave = password;
+                            context.SaveChanges();
+                            return true;
+                        }
                         return Isupdate;
                     }
                 }
@@ -378,5 +405,33 @@ namespace NotasAcademicasNegocio.Negocio
                 return Isupdate;
             }
         }
+
+        public bool UpdateCurrentStudenNotes(double note1, double note2, double note3, double note4, int idStudent, int idRegistration, int idMatter, int currentGroup, ref string error)
+        {
+            bool Isupdate = false;
+            try
+            {
+                using (NotasAcademicasEntities context = new NotasAcademicasEntities())
+                {
+                    DetalleNotas detalleNotas = context.DetalleNotas.SingleOrDefault(e => e.Id_Fr_Estudiantes_N == idStudent && e.Id_Fr_Matricula_N == idRegistration && e.Id_Fr_Materia_N == idMatter && e.Grupo == currentGroup);
+                    if (detalleNotas != null)
+                    {
+                        detalleNotas.Nota1 = (decimal)note1;
+                        detalleNotas.Nota2 = (decimal)note2;
+                        detalleNotas.Nota3 = (decimal)note3;
+                        detalleNotas.Nota4 = (decimal)note4;
+                        context.SaveChanges();
+                        return true;
+                    }
+                    return Isupdate;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                error = ex.ToString();
+                return Isupdate;
+            }
+        }
+
     }
 }
