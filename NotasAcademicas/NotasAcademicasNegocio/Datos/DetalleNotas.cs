@@ -21,11 +21,12 @@ namespace NotasAcademicasNegocio.Datos
         public Nullable<decimal> Nota2 { get; set; }
         public Nullable<decimal> Nota3 { get; set; }
         public Nullable<decimal> Nota4 { get; set; }
-        public Nullable<decimal> Nota5 { get; set; }
         public Nullable<int> Grupo { get; set; }
+        public int IdDetalleNotas { get; set; }
+        public Nullable<decimal> TotalNota { get; set; }
     
-        public virtual Estudiante Estudiante { get; set; }
         public virtual Materia Materia { get; set; }
+        public virtual Estudiante Estudiante { get; set; }
         public virtual Matricula Matricula { get; set; }
     }
 }

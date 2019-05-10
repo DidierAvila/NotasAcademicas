@@ -16,9 +16,9 @@
         <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Estudiante" />
         <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Matricula" />
         <EntityTypeShape EntityType="NotasAcademicasModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="NotasAcademicasModel.DetalleNotas" Width="1.5" PointX="7" PointY="0.875" />
-        <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Estudiante" />
+        <EntityTypeShape EntityType="NotasAcademicasModel.DetalleNotas" Width="1.5" PointX="7" PointY="0.75" />
         <AssociationConnector Association="NotasAcademicasModel.FK_DetalleEstudiantes_Materia" />
+        <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Estudiante" />
         <AssociationConnector Association="NotasAcademicasModel.FK_Notas_Matricula" />
         </Diagram>
     </edmx:Diagrams>

@@ -175,17 +175,15 @@ namespace NotasAcademicas.Controllers
                             Negocio negocio = new Negocio();
                             DataTable currentTableStudens;
                             string IdCurrentMatter = context.Request["IdCurrentMatter"];
-                            string IdRegistration = context.Request["IdRegistration"];
                             string CurrentGroup = context.Request["Group"];
                             string CurrentTable = string.Empty;
 
-                            if (string.IsNullOrEmpty(IdCurrentMatter) || string.IsNullOrEmpty(IdRegistration) || string.IsNullOrEmpty(CurrentGroup))
+                            if (string.IsNullOrEmpty(IdCurrentMatter) || string.IsNullOrEmpty(CurrentGroup))
                             {
                                 throw new Exception("Datos no pueden ser nulos!");
                             }
 
                             currentTableStudens = negocio.GetCurrentStudensByMatter(int.Parse(IdCurrentMatter), int.Parse(CurrentGroup), ref error);
-
                             if (error.Length > 0)
                             {
                                 throw new Exception(error);
@@ -201,23 +199,20 @@ namespace NotasAcademicas.Controllers
                         {
                             #region Update notes
 
-                            string IdCurrentUser = context.Request["IdCurrentUser"];
-                            string IdCurrentMatter = context.Request["IdCurrentMatter"];
-                            string IdRegistration = context.Request["IdRegistration"];
-                            string CurrentGroup = context.Request["Group"];
+                            string currentId = context.Request["currentId"];
                             string note1 = context.Request["note1"];
                             string note2 = context.Request["note2"];
                             string note3 = context.Request["note3"];
                             string note4 = context.Request["note4"];
                             bool IsUpdate = false;
 
-                            if (string.IsNullOrEmpty(IdCurrentUser))
+                            if (string.IsNullOrEmpty(currentId))
                             {
                                 throw new Exception("Datos no pueden ser nulos!");
                             }
 
                             Negocio negocio = new Negocio();
-                            IsUpdate = negocio.UpdateCurrentStudenNotes(Convert.ToDouble(note1), Convert.ToDouble(note2), Convert.ToDouble(note3), Convert.ToDouble(note4), int.Parse(IdCurrentUser), int.Parse(IdRegistration), int.Parse(IdCurrentMatter), int.Parse(CurrentGroup), ref error);
+                            IsUpdate = negocio.UpdateCurrentStudenNotes(Convert.ToDecimal(note1.Replace('.',',')), Convert.ToDecimal(note2.Replace('.', ',')), Convert.ToDecimal(note3.Replace('.', ',')), Convert.ToDecimal(note4.Replace('.', ',')), int.Parse(currentId), ref error);
                             if (error.Length > 0)
                             {
                                 throw new Exception(error);

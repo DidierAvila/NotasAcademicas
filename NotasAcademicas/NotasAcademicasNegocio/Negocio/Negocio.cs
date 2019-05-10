@@ -315,7 +315,7 @@ namespace NotasAcademicasNegocio.Negocio
             }
         }
 
-        public DataTable GetCurrentStudensByMatter(int idCurrentID, int currentGroup, ref string error)
+        public DataTable GetCurrentStudensByMatter(int idMatter, int currentGroup, ref string error)
         {
             DataTable CurrentTable;
             try
@@ -324,10 +324,11 @@ namespace NotasAcademicasNegocio.Negocio
                 {
                     var currentMatter = (from dn in context.DetalleNotas
                                          join e in context.Estudiante on dn.Id_Fr_Estudiantes_N equals e.IdEstudiante
-                                         where dn.Id_Fr_Materia_N == idCurrentID && dn.Grupo == currentGroup
-                                         select new { e.Nombres, e.Apellidos, e.IdEstudiante, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 }).ToList();
+                                         where dn.Id_Fr_Materia_N == idMatter && dn.Grupo == currentGroup
+                                         select new {dn.IdDetalleNotas, e.Nombres, e.Apellidos, e.IdEstudiante, dn.Nota1, dn.Nota2, dn.Nota3, dn.Nota4 , dn.TotalNota }).ToList();
 
                     CurrentTable = new DataTable();
+                    CurrentTable.Columns.Add("Id", typeof(int));
                     CurrentTable.Columns.Add("IdStuden", typeof(int));
                     CurrentTable.Columns.Add("StudenName", typeof(string));
                     CurrentTable.Columns.Add("Note1", typeof(string));
@@ -339,6 +340,7 @@ namespace NotasAcademicasNegocio.Negocio
                     foreach (var item in currentMatter)
                     {
                         var row = CurrentTable.NewRow();
+                        row["Id"] = item.IdDetalleNotas;
                         row["IdStuden"] = item.IdEstudiante;
                         row["StudenName"] = item.Nombres + " " + item.Apellidos;
                         row["Note1"] = item.Nota1.ToString().Replace(",", ".");
@@ -406,20 +408,20 @@ namespace NotasAcademicasNegocio.Negocio
             }
         }
 
-        public bool UpdateCurrentStudenNotes(double note1, double note2, double note3, double note4, int idStudent, int idRegistration, int idMatter, int currentGroup, ref string error)
+        public bool UpdateCurrentStudenNotes(decimal note1, decimal note2, decimal note3, decimal note4, int currentId, ref string error)
         {
             bool Isupdate = false;
             try
             {
                 using (NotasAcademicasEntities context = new NotasAcademicasEntities())
                 {
-                    DetalleNotas detalleNotas = context.DetalleNotas.SingleOrDefault(e => e.Id_Fr_Estudiantes_N == idStudent && e.Id_Fr_Matricula_N == idRegistration && e.Id_Fr_Materia_N == idMatter && e.Grupo == currentGroup);
+                    DetalleNotas detalleNotas = context.DetalleNotas.SingleOrDefault(e => e.IdDetalleNotas == currentId);
                     if (detalleNotas != null)
                     {
-                        detalleNotas.Nota1 = (decimal)note1;
-                        detalleNotas.Nota2 = (decimal)note2;
-                        detalleNotas.Nota3 = (decimal)note3;
-                        detalleNotas.Nota4 = (decimal)note4;
+                        detalleNotas.Nota1 = note1;
+                        detalleNotas.Nota2 = note2;
+                        detalleNotas.Nota3 = note3;
+                        detalleNotas.Nota4 = note4;
                         context.SaveChanges();
                         return true;
                     }

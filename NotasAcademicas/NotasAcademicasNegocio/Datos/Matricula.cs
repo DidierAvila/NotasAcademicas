@@ -18,6 +18,7 @@ namespace NotasAcademicasNegocio.Datos
         public Matricula()
         {
             this.DetalleEstudiantes = new HashSet<DetalleEstudiantes>();
+            this.DetalleNotas = new HashSet<DetalleNotas>();
         }
     
         public int IdMatricula { get; set; }
@@ -27,6 +28,7 @@ namespace NotasAcademicasNegocio.Datos
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleEstudiantes> DetalleEstudiantes { get; set; }
-        public virtual DetalleNotas DetalleNotas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DetalleNotas> DetalleNotas { get; set; }
     }
 }

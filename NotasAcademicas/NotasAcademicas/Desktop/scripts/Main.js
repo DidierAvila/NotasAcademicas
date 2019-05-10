@@ -56,10 +56,7 @@ $(document).ready(function () {
     });
 
     $("#btnUpdateNotes").click(function () {
-        var idRegistration = $("#currentIdRegistration").text();
-        var idMatter = $("#currentIdMatter").text();
-        var currentGroup = $("#currentGroup").val();
-        UpdateCurrentStudenNotes(idRegistration, idMatter, currentGroup);
+        UpdateCurrentStudenNotes($("#currentId").text());
     });
 
     $('#modalAlerta').on('hide.bs.modal', function () {
@@ -363,10 +360,10 @@ function UpdateCurrentStuden() {
     }
 }
 
-function UpdateCurrentStudenNotes(IdRegistration, IdMatter, Group) {
-    if (IdCurrentUser !== '') {
+function UpdateCurrentStudenNotes(currentId) {
+    if (currentId !== '') {
         $.ajax({
-            url: "../Controllers/Controlador.ashx?op=800&IdCurrentUser=" + IdCurrentUser + "&IdRegistration=" + IdRegistration + "&IdCurrentMatter=" + IdMatter + "&Group=" + Group,
+            url: "../Controllers/Controlador.ashx?op=800&currentId=" + currentId,
             method: "POST",
             data: {
                 "note1": $("#mNote1").val()
@@ -380,15 +377,19 @@ function UpdateCurrentStudenNotes(IdRegistration, IdMatter, Group) {
                 if (result) {
                     var tbl = $("#tblusuarios").DataTable();
                     tbl.row('.selected').data({
-                        Note1: $("#mNote1").val()
+                          Id: currentId
+                        , StudenName: $("#cStudentName").text()
+                        , IdStuden: $("#currentIdStudent").text()
+                        , Note1: $("#mNote1").val()
                         , Note2: $("#mNote2").val()
                         , Note3: $("#mNote3").val()
                         , Note4: $("#mNote4").val()
+                        , NoteTotal: "0"
                     }).draw();
 
                     $("#alertamensaje").text("     La información fue modificado satisfactoriamente.");
-                    //$("#modalStuden").modal('hide');
                     $("#modalAlerta").modal('toggle');
+                    $("#modalNotes").modal('hide');
                 } else {
                     $("#alertamensaje").text("     El registro no fue modificado satisfactoriamente. intentelo nuevamente.");
                     $("#modalAlerta").modal('toggle');
@@ -418,6 +419,7 @@ function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
                     $("#currentTable").children().remove();
                     $("#currentTable").append("<table id=\"tblusuarios\">");
                     var arrColumns = [];
+                    arrColumns.push({ "data": "Id", "sTitle": "Id", "orderable": true, "sType": "int", "display": "none" });
                     arrColumns.push({ "data": "IdStuden", "sTitle": "IdStuden", "orderable": true, "sType": "int" });
                     arrColumns.push({ "data": "StudenName", "sTitle": "Nombre", "orderable": true, "sType": "string" });
                     arrColumns.push({ "data": "Note1", "sTitle": "Nota 1", "orderable": true, "sType": "string" });
@@ -457,9 +459,7 @@ function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
                                     var colindex = $('#tblusuarios thead tr th:eq(' + colvindex + ')').data('column-index');
                                     switch (ui.cmd) {
                                         case "Modificar":
-                                            $("#currentIdMatter").val(IdMatter);
-                                            $("#currentIdRegistration").text(IdRegistration);
-                                            $("#currentGroup").text(Group);
+                                            $("#currentId").text(tbl.row('.selected').data()['Id']);
                                             $("#currentIdStudent").text(tbl.row('.selected').data()['IdStuden']);
                                             $("#cStudentName").text('Notas ' + tbl.row('.selected').data()['StudenName']);
                                             $("#mNote1").val(tbl.row('.selected').data()['Note1']);
@@ -481,11 +481,15 @@ function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
                     });
 
                     $('#tblusuarios tbody tr:first').addClass('selected');
-
                     $('#tblusuarios tbody').on('click', 'tr', function () {
                         tbl.$('tr.selected').removeClass('selected');
                         $(this).addClass('selected');
                     });
+
+                    $('table tr > td:nth-child(1), table tr > th:nth-child(1)')
+                        .attr('style', 'display: none;');
+                    $('table tr > td:nth-child(2), table tr > th:nth-child(2)')
+                        .attr('style', 'display: none;');
 
                     $("#panelNotesTeacher").show();
                 }

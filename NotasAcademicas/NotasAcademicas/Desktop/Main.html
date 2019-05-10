@@ -567,9 +567,6 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 id="cStudentName" class="modal-title" />
-                    <input id="currentIdRegistration"  style="visibility:hidden"  type="number" class="form-control" />
-                    <input id="currentIdMatter"  style="visibility:hidden"  type="number" class="form-control" />
-                    <input id="currentGroup"  style="visibility:hidden"  type="number" class="form-control" />
                 </div>
                 <div class="modal-body" style="overflow: hidden">
                     <form style="overflow-y: scroll">
@@ -604,6 +601,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
+                    <div><label for="Re" id="currentId" /></div>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     <button id="btnUpdateNotes" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</button>
                 </div>
@@ -612,7 +610,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
+
     <!-- modal Teacher -->
     <div class="modal fade" id="modalTeacher">
         <div class="modal-dialog">
@@ -622,7 +620,7 @@
                     <h4 class="modal-title">Datos profesor</h4>
                 </div>
                 <div class="modal-body" style="overflow: hidden">
-                    <form id="formModUsuarios" style="overflow-y: scroll">
+                    <form style="overflow-y: scroll">
                         <div class="form-group-lg">
                             <label for="Login">Celular</label>
                             <input id="celularTeacher" type="number" class="form-control" placeholder="Celular" />
@@ -669,7 +667,6 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
 
     <!-- modal Student -->
     <div class="modal fade" id="modalStuden">
@@ -680,7 +677,7 @@
                     <h4 class="modal-title">Datos Estudiante</h4>
                 </div>
                 <div class="modal-body" style="overflow: hidden">
-                    <form id="formModUsuarios" style="overflow-y: scroll">
+                    <form style="overflow-y: scroll">
                         <div class="form-group-lg">
                             <label for="Login">Celular</label>
                             <input id="celularStuden" type="number" class="form-control" placeholder="Celular" />
@@ -707,367 +704,14 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
-
-
-    <div class="modal fade" id="modalAdminUser">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body" style="overflow: hidden">
-                    <form id="formModUsuarios" style="overflow-y: scroll">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Login">Login:</label>
-                            <input id="Login" name="Login" type="text" class="form-control" placeholder="Login" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Cedula">Cedula:</label>
-                            <input id="Cedula" name="Cedula" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Nombre">Nombre Completo:</label>
-                            <input id="Nombre" name="Nombre" type="text" class="form-control" placeholder="Nombre" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Celular">Celular:</label>
-                            <input id="Celular" name="Celular" type="tel" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="AviancaPlus">AviancaPlus:</label>
-                            <input id="AviancaPlus" name="AviancaPlus" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="OnePass">OnePass:</label>
-                            <input id="OnePass" name="OnePass" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Gerencia">Gerencia:</label>
-                            <select id="Gerencia" name="Activo" class="form-control"></select>
-
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Cargo">Cargo:</label>
-                            <select id="Cargo" name="Activo" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Email">Email:</label>
-                            <input id="Email" name="Email" type="email" class="form-control" placeholder="Email" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="FechaNacimiento">Fecha de Nacimiento:</label>
-                            <input id="FechaNacimiento" name="FechaNacimiento" type="datetime-local" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="Activo">Activo:</label>
-                            <select id="Activo" name="Activo" class="form-control">
-                                <option>1</option>
-                                <option>0</option>
-                            </select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-
-                            <a href="#" id="btnGuardarModUsuario" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="modalModColaboradoresAutorizadores">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formModColaboradoresAutorizadores">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModColaborador">Colaborador:</label>
-                            <select id="ModColaborador" name="ModColaborador" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModSupervisor">Supervisor:</label>
-                            <select id="ModSupervisor" name="ModSupervisor" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModAutorizador">Autorizador:</label>
-                            <select id="ModAutorizador" name="ModAutorizador" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarModColaborador" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="modalModSecretariasGerencia">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formModSecretariasGerencia">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModSecretaria">Secretaria:</label>
-                            <select id="ModSecretaria" name="ModSecretaria" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModGerencia">Gerencia:</label>
-                            <select id="ModGerencia" name="ModGerencia" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarModSecretariasGerencia" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="modalModAlimentacionTerrestre">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formModAlimentacionTerrestre">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModAlimentaciondia">Alimentacion Dia:</label>
-                            <input id="ModAlimentaciondia" name="ModAlimentaciondia" type="text" class="form-control" placeholder="Alimentacion Dia" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModAlimentaciondiaValor">Valor Tarifa:</label>
-                            <input id="ModAlimentaciondiaValor" name="ModAlimentaciondiaValor" type="number" class="form-control" placeholder="Valor Tarifa" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarModAlimentacionTerrestre" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="modalModHotelAsumido">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formModHotelAsumido">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTipoViaje">Tipo Viaje:</label>
-                            <input id="ModTipoViaje" name="ModTipoViaje" type="text" class="form-control" placeholder="Tipo Viaje" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModValorViaje">Valor Tarifa:</label>
-                            <input id="ModValorViaje" name="ModValorViaje" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarModHotelAsumido" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="modalTarifaPeaje">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formModTarifaPeaje">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModDepartamentoOrigen">Departamento Origen:</label>
-                            <select id="ModDepartamentoOrigen" name="ModDepartamentoOrigen" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModMunicipioOrigen">Municipio Origen:</label>
-                            <select id="ModMunicipioOrigen" name="ModMunicipioOrigen" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModDepartamentoDestino">Departamento Destino:</label>
-                            <select id="ModDepartamentoDestino" name="ModDepartamentoDestino" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModMunicipioDestino">Municipio Destino:</label>
-                            <select id="ModMunicipioDestino" name="ModMunicipioDestino" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModCosto">Costo:</label>
-                            <input id="ModCosto" name="ModCosto" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-
-                            <a href="#" id="btnGuardarModTarifaPeaje" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="modalTarifaTerrestre">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formModTarifaTerrestre">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTerrestreDepartamentoOrigen">Departamento Origen:</label>
-                            <select id="ModTerrestreDepartamentoOrigen" name="ModTerrestreDepartamentoOrigen" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTerrestreMunicipioOrigen">Municipio Origen:</label>
-                            <select id="ModTerrestreMunicipioOrigen" name="ModTerrestreMunicipioOrigen" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTerrestreDepartamentoDestino">Departamento Destino:</label>
-                            <select id="ModTerrestreDepartamentoDestino" name="ModTerrestreDepartamentoDestino" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTerrestreMunicipioDestino">Municipio Destino:</label>
-                            <select id="ModTerrestreMunicipioDestino" name="ModTerrestreMunicipioDestino" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTerrestrePrimerDia">Primer Dia:</label>
-                            <input id="ModTerrestrePrimerDia" name="ModTerrestrePrimerDia" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTerrestreSegundoDia">Segundo Dia:</label>
-                            <input id="ModTerrestreSegundoDia" name="ModTerrestreSegundoDia" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTerrestreTransporte">Transporte:</label>
-                            <!--<input id="ModTerrestreTransporte" name="ModTerrestreTransporte" type="text" class="form-control" />-->
-                            <select id="ModTerrestreTransporte" name="ModTerrestreTransporte" class="form-control"></select>
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-
-                            <a href="#" id="btnGuardarModTarifaTerrestre" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-
+    
+    <!-- /.modal-dialog -->
     <div class="modal fade" id="modalAlerta">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
+                    <h4 class="modal-title">Información</h4>
                 </div>
                 <div class="jumbotron">
                     <p id="alertamensaje"></p>
@@ -1076,47 +720,8 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
                 </div>
             </div>
-            <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
-
-    <div class="modal fade" id="modalModTarifaExtranjero">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Datos de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <form id="formModTarifaExtranjero">
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModCargoExtranjero">Tipo Viaje:</label>
-                            <input list="Cargos" name="ModCargoExtranjero" id="ModCargoExtranjero" class="Cargo" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <label for="ModTarifaExtranjero">Valor Tarifa:</label>
-                            <input id="ModTarifaExtranjero" name="ModTarifaExtranjero" type="number" class="form-control" />
-                        </div>
-                        <br />
-                        <div class="form-group-lg">
-                            <a href="#" id="btnGuardarModTarifaExtranjero" class="btn btn-info btn-lg colorFondo"><span class="glyphicon glyphicon-floppy-disk"></span>Guardar</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
 
     <footer id="barraBase" class="navbar-default navbar-fixed-bottom text-center" style="height:23px">
         <p style="float:left; color:#ffffff; margin:4px; font-size:12px">© 2019 Notas académicas</p>
