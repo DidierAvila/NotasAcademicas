@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 
 namespace NotasAcademicasNegocio.Negocio
 {
@@ -347,7 +349,7 @@ namespace NotasAcademicasNegocio.Negocio
                         row["Note2"] = item.Nota2.ToString().Replace(",", ".");
                         row["Note3"] = item.Nota3.ToString().Replace(",", ".");
                         row["Note4"] = item.Nota4.ToString().Replace(",", ".");
-                        row["NoteTotal"] = item.Nota4.ToString().Replace(",", ".");
+                        row["NoteTotal"] = item.TotalNota.ToString().Replace(",", ".");
                         CurrentTable.Rows.Add(row);
                     }
                 }
@@ -411,6 +413,7 @@ namespace NotasAcademicasNegocio.Negocio
         public bool UpdateCurrentStudenNotes(decimal note1, decimal note2, decimal note3, decimal note4, int currentId, ref string error)
         {
             bool Isupdate = false;
+            decimal TopeCorte = 1.25M;
             try
             {
                 using (NotasAcademicasEntities context = new NotasAcademicasEntities())
@@ -422,6 +425,7 @@ namespace NotasAcademicasNegocio.Negocio
                         detalleNotas.Nota2 = note2;
                         detalleNotas.Nota3 = note3;
                         detalleNotas.Nota4 = note4;
+                        detalleNotas.TotalNota = ((note1 * TopeCorte)/5) + (note2 * TopeCorte) / 5+ (note3 * TopeCorte) / 5+ (note4 * TopeCorte) / 5;
                         context.SaveChanges();
                         return true;
                     }
@@ -435,5 +439,44 @@ namespace NotasAcademicasNegocio.Negocio
             }
         }
 
+        public bool SendEmail(int idStudent, ref string error)
+        {
+            try
+            {
+                string Email = string.Empty;
+                string Name = string.Empty;
+                using (NotasAcademicasEntities context = new NotasAcademicasEntities())
+                {
+                    Estudiante estudiante = context.Estudiante.SingleOrDefault(e => e.IdEstudiante == idStudent);
+                    if (estudiante != null)
+                    {
+                        Email = estudiante.Email;
+                        Name = estudiante.Nombres + " " + estudiante.Apellidos;
+                    }
+                }
+
+                SmtpClient SmtpServer = new SmtpClient("smtp.live.com");
+                var mail = new MailMessage();
+                mail.From = new MailAddress("gio_1120@hotmail.com");
+                mail.To.Add(Email);
+                mail.Subject = "Notas académicas";
+                mail.IsBodyHtml = true;
+                string htmlBody;
+                htmlBody = "Hola,\n"+ Name + ", Se ha ingresado una nueva calificación, ingresa al portal de Notas académicas!\n"
+                            + "link:http://localhost:56859/Desktop/LoginStudent.html";
+                mail.Body = htmlBody;
+                SmtpServer.Port = 587;
+                SmtpServer.UseDefaultCredentials = false;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("gio_1120@hotmail.com", "Yosaberla2020");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(mail);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.ToString();
+                return false;
+            }  
+        }
     }
 }

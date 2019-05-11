@@ -56,7 +56,7 @@ $(document).ready(function () {
     });
 
     $("#btnUpdateNotes").click(function () {
-        UpdateCurrentStudenNotes($("#currentId").text());
+        UpdateCurrentStudenNotes($("#currentId").text(), $("#currentIdStudent").text());
     });
 
     $('#modalAlerta').on('hide.bs.modal', function () {
@@ -130,6 +130,7 @@ function GetCurrentMattersMenu(){
     $("#panelMyItinerary").hide();
     $("#panelNotesTeacher").hide();
     $("#panelCalendary").hide();
+    $("#panelNotesStuden").hide();
 }
 
 function Calendary() {
@@ -193,7 +194,11 @@ function GetCurrentProfile() {
 }
 
 function GetCurrentMatters() {
+    $("#panelHome").hide();
+    $("#panelMyProfile").hide();
+    $("#panelMyItinerary").hide();
     $("#panelCalendary").hide();
+    $("#panelNotesStuden").hide();
     if (IdCurrentUser !== '' || CurrentUserType !== '') {
         $.ajax({
             url: "../Controllers/Controlador.ashx?op=400&IdCurrentStudent=" + IdCurrentUser + "&typeUser=" + CurrentUserType,
@@ -213,9 +218,6 @@ function GetCurrentMatters() {
                             $("#ulNotesT").append("<a id=" + result[j].IdMatter + " href=\"javascript:GetCurrentDetailStudents(" + result[j].IdRegistration + "," + result[j].IdMatter + "," + result[j].Group +");\" class=\"list-group-item\"><span class=\"glyphicon glyphicon-book\"></span>" + " " + result[j].NameMatter + "</a>");
                         }
                     }
-                    $("#panelHome").hide();
-                    $("#panelMyProfile").hide();
-                    $("#panelMyItinerary").hide();
                 }
                 else {
                     alert('Error:' + result["error"]);
@@ -230,7 +232,12 @@ function GetCurrentMatters() {
     }
 }
 
-function GetCurrentDetailMatters(IdRegistration, IdMatter, Group ) {
+function GetCurrentDetailMatters(IdRegistration, IdMatter, Group) {
+    $("#panelHome").hide();
+    $("#panelMyProfile").hide();
+    $("#panelMyItinerary").hide();
+    $("#panelCalendary").hide();
+    $("#panelNotesStuden").hide();
     if (IdRegistration !== '' && CurrentUserType !== '' && IdMatter !== '' && Group !== '') {
         $.ajax({
             url: "../Controllers/Controlador.ashx?op=500&IdRegistration=" + IdRegistration + "&IdCurrentUser=" + IdCurrentUser + "&typeUser=" + CurrentUserType + "&IdMatter=" + IdMatter + "&Group=" + Group,
@@ -360,7 +367,7 @@ function UpdateCurrentStuden() {
     }
 }
 
-function UpdateCurrentStudenNotes(currentId) {
+function UpdateCurrentStudenNotes(currentId, currentIdStuden) {
     if (currentId !== '') {
         $.ajax({
             url: "../Controllers/Controlador.ashx?op=800&currentId=" + currentId,
@@ -384,12 +391,13 @@ function UpdateCurrentStudenNotes(currentId) {
                         , Note2: $("#mNote2").val()
                         , Note3: $("#mNote3").val()
                         , Note4: $("#mNote4").val()
-                        , NoteTotal: "0"
+                        , NoteTotal: getCurrentTotalNotes($("#mNote1").val(), $("#mNote2").val(), $("#mNote3").val(), $("#mNote4").val())
                     }).draw();
 
                     $("#alertamensaje").text("     La información fue modificado satisfactoriamente.");
                     $("#modalAlerta").modal('toggle');
                     $("#modalNotes").modal('hide');
+                    SendEmail(currentIdStuden);
                 } else {
                     $("#alertamensaje").text("     El registro no fue modificado satisfactoriamente. intentelo nuevamente.");
                     $("#modalAlerta").modal('toggle');
@@ -404,6 +412,10 @@ function UpdateCurrentStudenNotes(currentId) {
     } else {
         alert("Parámetros vacios!");
     }
+}
+
+function getCurrentTotalNotes(note1, note2, note3, note4) {
+    return note1 * 1.25 / 5 + note2 * 1.25 / 5 + note3 * 1.25 / 5 + note4 * 1.25 / 5;
 }
 
 function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
@@ -422,10 +434,10 @@ function GetCurrentDetailStudents(IdRegistration, IdMatter, Group) {
                     arrColumns.push({ "data": "Id", "sTitle": "Id", "orderable": true, "sType": "int", "display": "none" });
                     arrColumns.push({ "data": "IdStuden", "sTitle": "IdStuden", "orderable": true, "sType": "int" });
                     arrColumns.push({ "data": "StudenName", "sTitle": "Nombre", "orderable": true, "sType": "string" });
-                    arrColumns.push({ "data": "Note1", "sTitle": "Nota 1", "orderable": true, "sType": "string" });
-                    arrColumns.push({ "data": "Note2", "sTitle": "Nota 2", "orderable": true, "sType": "string" });
-                    arrColumns.push({ "data": "Note3", "sTitle": "Nota 3", "orderable": true, "sType": "string" });
-                    arrColumns.push({ "data": "Note4", "sTitle": "Nota 4", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note1", "sTitle": "Nota 1 25%", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note2", "sTitle": "Nota 2 25%", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note3", "sTitle": "Nota 3 25%", "orderable": true, "sType": "string" });
+                    arrColumns.push({ "data": "Note4", "sTitle": "Nota 4 25%", "orderable": true, "sType": "string" });
                     arrColumns.push({ "data": "NoteTotal", "sTitle": "Nota Total", "orderable": true, "sType": "string" });
 
                     var tbl = $("#tblusuarios").DataTable({
@@ -525,6 +537,29 @@ function GetCurrentUser() {
             $("#PasswordTeacher").val($("#UserPassword").val());
             $("#modalTeacher").modal('toggle');
         }
+    } else {
+        alert("Parámetros vacios!");
+    }
+}
+
+function SendEmail(IdStudent) {
+    if (IdStudent !== '') {
+        $.ajax({
+            url: "../Controllers/Controlador.ashx?op=900&IdStudent=" + IdStudent,
+            method: "POST",
+            dataType: "json",
+            async: true,
+            success: function (result) {
+                if (result !== null) {
+                }
+                else {
+                    alert('Error:' + result["error"]);
+                }
+            },
+            error: function (result) {
+                alert("failed");
+            }
+        });
     } else {
         alert("Parámetros vacios!");
     }

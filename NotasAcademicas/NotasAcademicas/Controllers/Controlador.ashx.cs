@@ -226,7 +226,28 @@ namespace NotasAcademicas.Controllers
                         break;
                     case 900:
                         {
-                           
+                            #region Notificate
+
+                            string IdStudent = context.Request["IdStudent"];
+                            bool IsUpdate = false;
+
+                            if (string.IsNullOrEmpty(IdStudent))
+                            {
+                                throw new Exception("Datos no pueden ser nulos!");
+                            }
+
+                            Negocio negocio = new Negocio();
+                            IsUpdate = negocio.SendEmail(int.Parse(IdStudent), ref error);
+                            //Negocio.SendEmailWithOutlook("solo_mundos@hotmail.com","Calificaciones","Se ha ingresado una nueva nota");
+                            if (error.Length > 0)
+                            {
+                                throw new Exception(error);
+                            }
+
+                            tipoContenido = "text/json";
+                            result = JsonConvert.SerializeObject(IsUpdate);
+
+                            #endregion
                         }
                         break;
                     case 910:
